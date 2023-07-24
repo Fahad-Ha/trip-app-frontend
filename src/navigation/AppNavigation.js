@@ -29,7 +29,6 @@ export default function AppNavigation() {
           backgroundColor: "#ffffff",
           borderRadius: 15,
           height: 70,
-          // overflow: "hidden",
           ...styles.shadow,
         },
       }}
