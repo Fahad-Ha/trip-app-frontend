@@ -1,5 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native"; // Import getFocusedRouteNameFromRoute
+import {
+  getFocusedRouteNameFromRoute,
+  useNavigation,
+} from "@react-navigation/native"; // Import getFocusedRouteNameFromRoute
 
 import ROUTES from ".";
 import Explore from "../screens/Explore";
@@ -34,30 +37,63 @@ export default function AppNavigation() {
           backgroundColor: "#ffffff",
           borderRadius: 15,
           height: 70,
-          overflow: "hidden",
+          // overflow: "hidden",
           ...styles.shadow,
         },
       }}
     >
       <Tab.Screen name={ROUTES.APPROUTES.EXPLORE} component={Explore} />
       <Tab.Screen
-        options={({ route, focused }) => ({
-          tabBarIconStyle: {
-            backgroundColor:
-              route.name == ROUTES.APPROUTES.ADD_TRIP ? "blue" : "black",
-            borderRadius: 15,
-            width: 60,
-            marginVertical: 5,
-            ...styles.shadow,
-          },
-          headerShown: false,
-          tabBarShowLabel: () => null,
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="add" color={"white"} size={32} />
-          ),
-        })}
         name={ROUTES.APPROUTES.ADD_TRIP}
         component={AddTrip}
+        options={({ navigation }) => {
+          console.log(navigation);
+
+          const colors = {
+            active: {
+              primary: "darkblue",
+            },
+            inActive: {
+              primary: "blue",
+            },
+          };
+
+          return {
+            tabBarButton: (props) => {
+              return (
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    bottom: 40,
+                    borderRadius: 100,
+                    height: 100,
+                    maxWidth: 100,
+                    overflow: "hidden",
+                    ...styles.shadow,
+                  }}
+                  onPress={() => navigation.navigate(ROUTES.APPROUTES.ADD_TRIP)}
+                >
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor:
+                        colors[navigation.isFocused() ? "active" : "inActive"]
+                          .primary,
+                    }}
+                  >
+                    <Ionicons
+                      name="add"
+                      size={52}
+                      color={navigation.isFocused() ? "black" : "white"}
+                    />
+                  </View>
+                </TouchableOpacity>
+              );
+            },
+          };
+        }}
       />
       <Tab.Screen name={ROUTES.APPROUTES.PROFILE} component={AddTrip} />
     </Tab.Navigator>
@@ -70,6 +106,16 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 0,
       height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.5,
+    elevation: 5,
+  },
+  shadowTop: {
+    shadowColor: "#7F5DF0",
+    shadowOffset: {
+      width: 0,
+      height: -10,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
