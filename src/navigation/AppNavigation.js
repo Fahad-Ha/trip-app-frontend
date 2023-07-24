@@ -1,9 +1,12 @@
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native"; // Import getFocusedRouteNameFromRoute
+import { createStackNavigator } from "@react-navigation/stack";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 import ROUTES from ".";
 import Explore from "../screens/Explore";
 import AddTrip from "../screens/AddTrip";
+import TripDetailScreen from "../screens/TripDetail";
 import { Ionicons } from "@expo/vector-icons";
 import {
   View,
@@ -14,15 +17,14 @@ import {
 } from "react-native";
 
 const Tab = createBottomTabNavigator();
-
-// const focusedRouteName = getFocusedRouteNameFromRoute(route);
+const Stack = createStackNavigator();
 
 export default function AppNavigation() {
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarLabelStyle: {
-          display: "none", // Hide labels on focus for the "AddTrip" tab
+          display: "none",
         },
         tabBarShowLabel: false,
         tabBarStyle: {
@@ -39,7 +41,7 @@ export default function AppNavigation() {
         },
       }}
     >
-      <Tab.Screen name={ROUTES.APPROUTES.EXPLORE} component={Explore} />
+      <Tab.Screen name={ROUTES.APPROUTES.EXPLORE} component={ExploreStack} />
       <Tab.Screen
         options={({ route, focused }) => ({
           tabBarIconStyle: {
@@ -76,3 +78,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 });
+
+const ExploreStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Explore" component={Explore} />
+      <Stack.Screen name="TripDetail" component={TripDetailScreen} />
+    </Stack.Navigator>
+  );
+};
