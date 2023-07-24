@@ -19,7 +19,6 @@ export default function AddTrip() {
         ></TextInput>
         <Text className="mb-1">Description</Text>
         <TextInput
-          multiline
           className="bg-gray-100 rounded-xl p-2 mb-6"
           placeholder="Description"
         ></TextInput>
