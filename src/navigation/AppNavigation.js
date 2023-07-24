@@ -1,20 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  getFocusedRouteNameFromRoute,
-  useNavigation,
-} from "@react-navigation/native"; // Import getFocusedRouteNameFromRoute
 
 import ROUTES from ".";
 import Explore from "../screens/Explore";
 import AddTrip from "../screens/AddTrip";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { Entypo } from "@expo/vector-icons";
+
+import { View, Text, SafeAreaView, StyleSheet, Pressable } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,12 +29,19 @@ export default function AppNavigation() {
           backgroundColor: "#ffffff",
           borderRadius: 15,
           height: 70,
-          // overflow: "hidden",
           ...styles.shadow,
         },
       }}
     >
-      <Tab.Screen name={ROUTES.APPROUTES.EXPLORE} component={Explore} />
+      <Tab.Screen
+        name={ROUTES.APPROUTES.EXPLORE}
+        component={Explore}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="search" color={color} size={size} />
+          ),
+        }}
+      />
       <Tab.Screen
         name={ROUTES.APPROUTES.ADD_TRIP}
         component={AddTrip}
@@ -51,23 +50,23 @@ export default function AppNavigation() {
 
           const colors = {
             active: {
-              primary: "darkblue",
+              primary: "#312e81",
             },
             inActive: {
-              primary: "blue",
+              primary: "#4f46e5",
             },
           };
 
           return {
             tabBarButton: (props) => {
               return (
-                <TouchableOpacity
+                <Pressable
                   style={{
                     flex: 1,
-                    bottom: 40,
+                    bottom: 30,
                     borderRadius: 100,
-                    height: 100,
-                    maxWidth: 100,
+                    height: 80,
+                    maxWidth: 80,
                     overflow: "hidden",
                     ...styles.shadow,
                   }}
@@ -83,19 +82,23 @@ export default function AppNavigation() {
                           .primary,
                     }}
                   >
-                    <Ionicons
-                      name="add"
-                      size={52}
-                      color={navigation.isFocused() ? "black" : "white"}
-                    />
+                    <Ionicons name="add" size={52} color={"white"} />
                   </View>
-                </TouchableOpacity>
+                </Pressable>
               );
             },
           };
         }}
       />
-      <Tab.Screen name={ROUTES.APPROUTES.PROFILE} component={AddTrip} />
+      <Tab.Screen
+        name={ROUTES.APPROUTES.PROFILE}
+        component={AddTrip}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Entypo name="circle" color={color} size={size} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
