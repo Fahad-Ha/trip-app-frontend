@@ -26,6 +26,9 @@ const Login = ({ navigation }) => {
       saveToken(data.token);
       setUser(checkToken());
     },
+    onError: (err) => {
+      console.log("err", err);
+    },
   });
 
   const handleLogin = () => {
@@ -51,7 +54,9 @@ const Login = ({ navigation }) => {
         className="w-4/5 h-12 mb-2 py-2 px-4 border-s border-gray-300 rounded bg-[#1c1c1c] text-white "
         placeholder="Username"
         value={userInfo.username}
-        onChangeText={(username) => setUserInfo({ ...userInfo, username })}
+        onChangeText={(username) =>
+          setUserInfo({ ...userInfo, username: username.toLowerCase() })
+        }
         placeholderTextColor="#ffffffec"
       />
       <TextInput

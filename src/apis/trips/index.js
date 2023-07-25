@@ -12,6 +12,11 @@ const getTripId = async (id) => {
   return res.data;
 };
 
+const deleteTrip = async (tripId) => {
+  const { data } = await instance.delete(`/trip/delete/${tripId}`);
+  return data;
+};
+
 const addTrip = async (data) => {
   const formData = new FormData();
 
@@ -31,4 +36,5 @@ const addTrip = async (data) => {
   return res.data;
 };
 
-export { getAllTrips, getTripId, addTrip };
+
+export { getAllTrips, getTripId, addTrip, deleteTrip };
