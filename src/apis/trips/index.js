@@ -1,16 +1,16 @@
 import instance from "..";
 
-//test it
-// const getAllTrips = async () => {
-//   const res = await instance.get("/trips");
-//   return res.data;
-// };
+// test it
+const getAllTrips = async () => {
+  const res = await instance.get("/trips");
+  return res.data;
+};
 
 // test it
-// const getTripId = async (id) => {
-//   const res = await instance.get(`/trips/${id}`);
-//   return res.data;
-// };
+const getTripId = async (id) => {
+  const res = await instance.get(`/trips/${id}`);
+  return res.data;
+};
 
 const addTrip = async (data) => {
   const formData = new FormData();
@@ -31,8 +31,4 @@ const addTrip = async (data) => {
   return res.data;
 };
 
-export {
-  // getAllTrips,
-  // getTripId,
-  addTrip,
-};
+export { getAllTrips, getTripId, addTrip };

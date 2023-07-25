@@ -12,7 +12,7 @@ const DarkTheme = {
   dark: true,
   colors: {
     primary: "green",
-    background: "black",
+    background: "#232323",
     card: "transparent",
     text: "#ffffff80",
     border: "#ffffff",
@@ -33,18 +33,14 @@ const LightTheme = {
 export default function App() {
   const [user, setUser] = useState(false);
 
-  
-
   return (
     <QueryClientProvider client={new QueryClient()}>
-
       <UserContext.Provider value={{ user, setUser }}>
         <NavigationContainer theme={DarkTheme}>
           {!user ? <AuthNavigation /> : <AppNavigation />}
           <StatusBar />
         </NavigationContainer>
       </UserContext.Provider>
-
     </QueryClientProvider>
   );
 }

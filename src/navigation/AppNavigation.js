@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
 import { View, Text, SafeAreaView, StyleSheet, Pressable } from "react-native";
+import ExplorePage from "../screens/ExplorePage";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,7 +34,7 @@ export default function AppNavigation() {
     >
       <Tab.Screen
         name={ROUTES.APPROUTES.EXPLORE}
-        component={Explore}
+        component={ExplorePage}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="search" color={color} size={size} />
