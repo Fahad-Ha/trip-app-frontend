@@ -8,7 +8,7 @@ import {
   Modal,
 } from "react-native";
 import { useMutation } from "react-query";
-import { deleteTrip } from "../../apis/trips/index";
+import { deleteTrip } from "../apis/trips/index";
 
 const DeleteTrip = () => {
   const [open, setOpen] = useState(false);
