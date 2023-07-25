@@ -1,0 +1,13 @@
+ "node_modules/@swc/helpers": {
+      "version": "0.5.1",
+      "resolved": "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.1.tgz",
+      "integrity": "sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==",
+      "dependencies": {
+        "tslib": "^2.4.0"
+      }
+    },
+    "node_modules/@types/hammerjs": {
+      "version": "2.0.41",
+      "resolved": "https://registry.npmjs.org/@types/hammerjs/-/hammerjs-2.0.41.tgz",
+      "integrity": "sha512-ewXv/ceBaJprikMcxCmWU1FKyMAQ2X7a9Gtmzw8fcg2kIePI1crERDM818W+XYrxqdBBOdlf2rm137bU+BltCA=="
+    },

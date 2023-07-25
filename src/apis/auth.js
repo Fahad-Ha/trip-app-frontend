@@ -21,15 +21,15 @@ const register = async (userInfo) => {
   for (const key in userInfo) {
     if (key != "image") {
       formData.append(key, userInfo[key]);
+    } else {
+      formData.append("image", {
+        name: userInfo.image,
+        type: "image/jpeg",
+        uri: userInfo.image,
+      });
     }
   }
-  console.log(userInfo);
-  formData.append("image", {
-    name: userInfo.image,
-    type: "image/jpeg",
-    uri: userInfo.image,
-  });
-
+  console.log(formData);
   const res = await instance.post("/auth/register", formData);
   return res.data;
 };
