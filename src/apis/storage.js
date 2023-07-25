@@ -24,7 +24,7 @@ const removeToken = async () => {
     console.log("Error while trying to delete the token", error);
   }
 };
-removeToken();
+// removeToken();
 const checkToken = async () => {
   const token = await getToken();
   if (token) {
