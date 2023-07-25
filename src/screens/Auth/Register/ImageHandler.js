@@ -25,6 +25,9 @@ const RegisterImage = ({ route, navigation }) => {
       saveToken(data.token);
       setUser(checkToken());
     },
+    onError: (err) => {
+      console.log(err.response?.data);
+    },
   });
 
   useEffect(() => {

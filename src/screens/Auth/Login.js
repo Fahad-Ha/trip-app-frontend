@@ -26,6 +26,9 @@ const Login = ({ navigation }) => {
       saveToken(data.token);
       setUser(checkToken());
     },
+    onError: (err) => {
+      console.log("err", err);
+    },
   });
 
   const handleLogin = () => {
