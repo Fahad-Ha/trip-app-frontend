@@ -46,7 +46,7 @@ const TripDetail = ({ route }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    // <View style={styles.container}>
       <View style={styles.card}>
         <View style={styles.userContainer}>
           <Ionicons name="person-circle-outline" size={40} color="black" />
@@ -80,22 +80,23 @@ const TripDetail = ({ route }) => {
           </View>
         </View>
       </View>
-    </View>
+    // </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     paddingBottom: 80,
   },
   card: {
-    width: "80%",
+    width: "100%",
+    
     borderRadius: 10,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -113,12 +114,13 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 18,
     marginLeft: 10,
-    color: "black",
+    color: "white",
   },
   imageContainer: {
     // Add flexGrow to allow the image to grow on double-tap
     flexGrow: 1,
     overflow: "hidden",
+    
   },
   image: {
     width: "100%",
@@ -126,6 +128,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     resizeMode: "cover",
+  
   },
   details: {
     padding: 15,
@@ -138,7 +141,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     marginVertical: 5,
-    color: "#333",
+    color: "white",
   },
   likeContainer: {
     flexDirection: "row",

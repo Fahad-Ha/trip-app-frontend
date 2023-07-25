@@ -7,7 +7,6 @@ import {
   Image,
   StyleSheet,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 const trips = [
   {
@@ -26,9 +25,7 @@ const trips = [
   },
 ];
 
-const Explore = () => {
-  const navigation = useNavigation();
-
+const Explore = ({ navigation }) => {
   const handleTripPress = (trip) => {
     navigation.navigate("TripDetail", { trip });
   };
