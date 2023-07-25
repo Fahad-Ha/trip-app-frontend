@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
 import { View, Text, SafeAreaView, StyleSheet, Pressable } from "react-native";
+import ExplorePage from "../screens/ExplorePage";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -19,7 +20,7 @@ const ExploreStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name={ROUTES.APPROUTES.EXPLORE}
-        component={Explore}
+        component={ExplorePage}
         options={{ title: false }}
       />
       <Stack.Screen
@@ -53,7 +54,9 @@ export default function AppNavigation() {
     >
       <Tab.Screen
         name={ROUTES.APPROUTES.EXPLORE}
+
         component={ExploreStack}
+
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="search" color={color} size={size} />
