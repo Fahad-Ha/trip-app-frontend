@@ -10,8 +10,6 @@ import { View, Text, SafeAreaView, StyleSheet, Pressable } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
-// const focusedRouteName = getFocusedRouteNameFromRoute(route);
-
 export default function AppNavigation() {
   return (
     <Tab.Navigator
@@ -46,8 +44,6 @@ export default function AppNavigation() {
         name={ROUTES.APPROUTES.ADD_TRIP}
         component={AddTrip}
         options={({ navigation }) => {
-          console.log(navigation);
-
           const colors = {
             active: {
               primary: "#312e81",
