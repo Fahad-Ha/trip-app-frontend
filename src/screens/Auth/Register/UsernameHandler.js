@@ -5,7 +5,7 @@ const RegisterUsername = ({ navigation }) => {
   const [username, setUsername] = useState("");
 
   const handleNext = () => {
-    navigation.navigate("RegisterPassword", { username });
+    navigation.navigate("RegisterPassword", { username: username.toLowerCase() });
   };
 
   return (
