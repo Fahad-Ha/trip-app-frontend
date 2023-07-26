@@ -49,6 +49,7 @@ const UserProfile = () => {
               backgroundColor: "blue",
             }}
           ></View>
+
           <Text style={{ fontSize: 20, color: "white" }}>UserName</Text>
           <View
             style={{
