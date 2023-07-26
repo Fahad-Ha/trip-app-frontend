@@ -42,7 +42,7 @@ export default function AppNavigation() {
         name={ROUTES.APPROUTES.EXPLORE_STACK}
         component={ExploreStack}
         options={{
-          headerShown: false,
+          // headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="search" color={color} size={size} />
           ),

@@ -1,7 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { BASE_URL } from "../apis";
 
 const TripDetail = ({ route }) => {
   const { trip } = route.params;
@@ -47,9 +55,10 @@ const TripDetail = ({ route }) => {
 
   return (
     // <View style={styles.container}>
+    <ScrollView contentContainerStyle={{ flex: 0.9 }}>
       <View style={styles.card}>
         <View style={styles.userContainer}>
-          <Ionicons name="person-circle-outline" size={40} color="black" />
+          <Ionicons name="person-circle-outline" size={40} color="white" />
           <Text style={styles.userName}> {trip.user}</Text>
         </View>
         <TouchableOpacity
@@ -57,29 +66,36 @@ const TripDetail = ({ route }) => {
           activeOpacity={1}
           style={styles.imageContainer}
         >
-          <Image source={{ uri: trip.image }} style={styles.image} />
+          <Image
+            source={{ uri: `${BASE_URL}/${trip.image}` }}
+            style={styles.image}
+          />
         </TouchableOpacity>
-        <View style={styles.details}>
-          <Text style={styles.title}>{trip.title}</Text>
-          <Text style={styles.description}>{trip.description}</Text>
-          <View style={styles.likeContainer}>
+        <View className="items-end m-2">
+          <View className=" flex-row gap-2">
             <TouchableOpacity onPress={handleLikePress}>
               {isLiked ? (
                 <FontAwesome name="heart" size={24} color="red" />
               ) : (
-                <FontAwesome name="heart-o" size={24} color="black" />
+                <FontAwesome name="heart-o" size={24} color="white" />
               )}
             </TouchableOpacity>
             <TouchableOpacity onPress={handleSavePress}>
               <Ionicons
                 name={isSaved ? "bookmark" : "bookmark-outline"}
                 size={24}
-                color={isSaved ? "black" : "black"}
+                color={isSaved ? "white" : "white"}
               />
             </TouchableOpacity>
           </View>
         </View>
+        <View style={styles.details}>
+          <Text style={styles.title}>{trip.title}</Text>
+          <Text style={styles.description}>{trip.description}</Text>
+          <View style={styles.likeContainer}></View>
+        </View>
       </View>
+    </ScrollView>
     // </View>
   );
 };
@@ -94,7 +110,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: "100%",
-    
+
     borderRadius: 10,
     // backgroundColor: "#fff",
     shadowColor: "#000",
@@ -120,15 +136,16 @@ const styles = StyleSheet.create({
     // Add flexGrow to allow the image to grow on double-tap
     flexGrow: 1,
     overflow: "hidden",
-    
+    minHeight: "30%",
+    maxHeight: "70%",
   },
   image: {
     width: "100%",
-    height: 300,
+    height: "100%",
+    width: "100%",
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     resizeMode: "cover",
-  
   },
   details: {
     padding: 15,
@@ -137,6 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginVertical: 10,
+    color: "white",
   },
   description: {
     fontSize: 16,
