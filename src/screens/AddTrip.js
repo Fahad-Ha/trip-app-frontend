@@ -21,10 +21,9 @@ export default function AddTrip() {
   });
 
   return (
-    <View className="flex-1 bg-white justify-center items-center">
-      <Text className="text-xl font-bold absolute top-20">AddTrip</Text>
-      <View className=" w-[70%] ">
-        <Text className="mb-1">Title</Text>
+    <View className="flex-1 items-center">
+      <View className=" w-[70%]  mt-8">
+        <Text className="mb-1 text-white">Title</Text>
         <TextInput
           className="bg-gray-100 rounded-xl mb-6 p-2"
           placeholder="Title"
@@ -32,7 +31,7 @@ export default function AddTrip() {
             setUserInfo({ ...userInfo, title: value });
           }}
         ></TextInput>
-        <Text className="mb-1">Description</Text>
+        <Text className="mb-1 text-white">Description</Text>
         <TextInput
           className="bg-gray-100 rounded-xl p-2 mb-4"
           multiline={true}
@@ -42,7 +41,7 @@ export default function AddTrip() {
             setUserInfo({ ...userInfo, description: value });
           }}
         ></TextInput>
-        <Text className="mt-4 mb-1">Image</Text>
+        <Text className="mt-4 mb-1 text-white">Image</Text>
         <TouchableOpacity className="bg-gray-100 rounded-xl items-center p-8">
           <Ionicons name="add" size={52} color="green" />
         </TouchableOpacity>
