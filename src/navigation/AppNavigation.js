@@ -7,7 +7,7 @@ import ROUTES from ".";
 import AddTrip from "../screens/AddTrip";
 
 import { Ionicons } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 import { View, StyleSheet, Pressable } from "react-native";
 
@@ -35,6 +35,7 @@ export default function AppNavigation() {
           borderRadius: 15,
           height: 70,
           ...styles.shadow,
+          size: 90,
         },
       }}
     >
@@ -44,7 +45,12 @@ export default function AppNavigation() {
         options={{
           // headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="search" color={color} size={size} />
+            <Ionicons
+              name="search"
+              color={color}
+              size={40}
+              style={{ marginTop: 25, height: 40 }}
+            />
           ),
         }}
       />
@@ -100,7 +106,12 @@ export default function AppNavigation() {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Entypo name="circle" color={color} size={size} />
+            <FontAwesome
+              name="user-circle-o"
+              size={40}
+              color={color}
+              style={{ marginTop: 25, height: 40 }}
+            />
           ),
         }}
       />
