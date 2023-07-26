@@ -5,15 +5,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import AppNavigation from "./src/navigation/AppNavigation";
 
 import AuthNavigation from "./src/navigation/AuthNavigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserContext from "./src/context/UserContext";
+import { getToken } from "./src/apis/storage";
 
 const DarkTheme = {
   dark: true,
   colors: {
     primary: "green",
-    background: "black",
+    background: "#232323",
     card: "transparent",
     text: "#ffffff80",
     border: "#ffffff",
@@ -31,28 +32,28 @@ const LightTheme = {
     notification: "rgb(255, 69, 58)",
   },
 };
+
 export default function App() {
   const [user, setUser] = useState(false);
 
-  
+  const getUser = async () => {
+    const token = await getToken();
+    if (token) setUser(true);
+  };
+  useEffect(() => {
+    // getUser();
+  }, []);
 
   return (
     <QueryClientProvider client={new QueryClient()}>
-
       <UserContext.Provider value={{ user, setUser }}>
         <NavigationContainer theme={DarkTheme}>
           {!user ? <AuthNavigation /> : <AppNavigation />}
-          <StatusBar />
         </NavigationContainer>
       </UserContext.Provider>
-
     </QueryClientProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});
+
+

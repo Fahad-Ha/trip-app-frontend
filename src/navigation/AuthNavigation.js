@@ -6,6 +6,7 @@ import UsernameHandler from "../screens/Auth/Register/UsernameHandler";
 import ImageHandler from "../screens/Auth/Register/ImageHandler";
 
 const Stack = createStackNavigator();
+
 export default function AuthNavigation() {
   return (
     <Stack.Navigator>

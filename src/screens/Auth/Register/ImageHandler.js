@@ -47,7 +47,7 @@ const RegisterImage = ({ route, navigation }) => {
           Pick an image
         </Text>
         <Text className=" text-[#ffffffec]  text-center mb-2">
-          Pcik an image for your new account. You can always change it later.
+          Pick an image for your new account. You can always change it later.
         </Text>
       </View>
       <View className="flex-1 items-center justify-center top-[-15%]">

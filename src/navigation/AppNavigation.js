@@ -10,6 +10,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
 import { View, Text, SafeAreaView, StyleSheet, Pressable } from "react-native";
+import ExplorePage from "../components/ExplorePage";
+import UserProfileCard from "../components/UserProfileCard";
+import UserProfile from "../screens/UserProfile";
+import ExploreStack from "./ExploreStack";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -19,7 +23,7 @@ const ExploreStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name={ROUTES.APPROUTES.EXPLORE}
-        component={Explore}
+        component={ExplorePage}
         options={{ title: false }}
       />
       <Stack.Screen
@@ -52,9 +56,12 @@ export default function AppNavigation() {
       }}
     >
       <Tab.Screen
-        name={ROUTES.APPROUTES.EXPLORE}
+
+        name={ROUTES.APPROUTES.EXPLORE_STACK}
         component={ExploreStack}
+
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="search" color={color} size={size} />
           ),
@@ -108,8 +115,9 @@ export default function AppNavigation() {
       />
       <Tab.Screen
         name={ROUTES.APPROUTES.PROFILE}
-        component={AddTrip}
+        component={UserProfile}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Entypo name="circle" color={color} size={size} />
           ),
