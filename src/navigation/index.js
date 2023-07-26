@@ -4,6 +4,7 @@ const ROUTES = {
     EXPLORE: "Explore",
     ADD_TRIP: "Add-trip",
     PROFILE: "Profile",
+    TRIP_DETAIL: "TripDetail",
   },
   AUTHROUTES: {
     LOGIN: "Login",
