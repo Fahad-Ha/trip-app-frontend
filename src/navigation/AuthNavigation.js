@@ -10,22 +10,26 @@ const Stack = createStackNavigator();
 export default function AuthNavigation() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Login" component={Login} options={{ title: "" }} />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerShown: false }}
+      />
 
       <Stack.Screen
         name="RegisterUsername"
         component={UsernameHandler}
-        options={{ title: "" }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="RegisterPassword"
         component={PasswordHandler}
-        options={{ title: "" }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="RegisterImage"
         component={ImageHandler}
-        options={{ title: "" }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

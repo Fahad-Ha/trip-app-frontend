@@ -15,11 +15,11 @@ LogBox.ignoreAllLogs(); //Ignore all log notifications
 const DarkTheme = {
   dark: true,
   colors: {
-    primary:"#1C535A",
+    primary: "#1C535A",
     background: "#232323",
     card: "transparent",
     text: "#ffffff80",
-    border: "#ffffff",
+    // border: "#ffffff",
     notification: "rgb(255, 69, 58)",
   },
 };
