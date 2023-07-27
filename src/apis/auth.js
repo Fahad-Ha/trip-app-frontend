@@ -5,14 +5,10 @@ const login = async (userInfo) => {
   return res.data;
 };
 
-const fetchImageFromUrl = async (imageUrl) => {
-  try {
-    const response = await fetch(imageUrl);
-    const imageBlob = await response.blob();
-    return imageBlob;
-  } catch (error) {
-    throw new Error("Failed to fetch image from URL");
-  }
+const getProfile = async (id) => {
+  const res = await instance.get(`/auth/${id}`);
+
+  return res.data;
 };
 
 const register = async (userInfo) => {
@@ -34,4 +30,4 @@ const register = async (userInfo) => {
   return res.data;
 };
 
-export { login, register };
+export { login, register, getProfile };

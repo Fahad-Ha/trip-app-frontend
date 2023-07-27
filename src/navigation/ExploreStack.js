@@ -1,6 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import ROUTES from ".";
-import ExplorePage from "../components/ExplorePage";
 import MyExplorePage from "../screens/MyExplorePage";
 import TripDetail from "../screens/TripDetail";
 

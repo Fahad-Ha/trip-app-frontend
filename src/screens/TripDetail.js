@@ -10,12 +10,74 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { BASE_URL } from "../apis";
+import { getTripId, likeTrip, saveTrip } from "../apis/trips";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getToken } from "../apis/storage";
+import jwt_decode from "jwt-decode";
+import { getProfile } from "../apis/auth";
 
 const TripDetail = ({ route }) => {
-  const { trip } = route.params;
+  const { oneTrip, userProfile } = route.params;
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
 
+  const {
+    data: trip,
+    isFetching: tripFetching,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["trip"],
+    queryFn: () => getTripId(oneTrip._id),
+  });
+  const { data: profileData, isFetching: profileFetching } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getProfile(userProfile._id),
+  });
+  console.log(profileData);
+
+  const profile = async () => {
+    const token = await getToken();
+    if (token) {
+      try {
+        const decoded = jwt_decode(token);
+        if (trip) {
+          // Set if the user has liked the trip
+          const hasUserAlreadyLiked = trip.likes.includes(decoded._id);
+          setIsLiked(hasUserAlreadyLiked);
+
+          // Set if the user has saved the trip
+          const hasUserAlreadySaved = decoded.savedTrips.includes(trip._id);
+          setIsSaved(hasUserAlreadySaved);
+        }
+      } catch (error) {
+        setUserInfo(false);
+      }
+    } else {
+      setUserInfo(false);
+    }
+  };
+
+  // console.log(profileData, userInfo);
+  useEffect(() => {
+    profile();
+  }, [trip]);
+
+  const { mutate: likeFunc } = useMutation({
+    mutationFn: () => likeTrip(trip?._id),
+    onSuccess: () => {},
+    onError: (err) => {
+      console.log("err", err);
+    },
+  });
+  const { mutate: saveFunc } = useMutation({
+    mutationFn: () => saveTrip(trip?._id),
+    onSuccess: () => {},
+    onError: (err) => {
+      console.log("err", err);
+    },
+  });
   // Ref to keep track of the last tap timestamp for image double-tap
   const lastTapRef = useRef(null);
 
@@ -27,7 +89,7 @@ const TripDetail = ({ route }) => {
     if (lastTapRef.current && now - lastTapRef.current < DOUBLE_PRESS_DELAY) {
       // Double tap detected, toggle like status
       setIsLiked((prevIsLiked) => !prevIsLiked);
-
+      likeFunc();
       // Reset the last tap timestamp
       lastTapRef.current = null;
     } else {
@@ -39,11 +101,14 @@ const TripDetail = ({ route }) => {
   // Function to handle single tap on the heart icon for liking
   const handleLikePress = () => {
     setIsLiked((prevIsLiked) => !prevIsLiked);
+    likeFunc();
   };
 
   // Function to handle the "Save" button press for saving the image
   const handleSavePress = () => {
     setIsSaved((prevIsSaved) => !prevIsSaved);
+
+    saveFunc();
   };
 
   useEffect(() => {
@@ -53,13 +118,20 @@ const TripDetail = ({ route }) => {
     };
   }, []);
 
+  if (tripFetching) return <Text>loading..</Text>;
   return (
     // <View style={styles.container}>
     <ScrollView contentContainerStyle={{ flex: 0.9 }}>
       <View style={styles.card}>
         <View style={styles.userContainer}>
-          <Ionicons name="person-circle-outline" size={40} color="white" />
-          <Text style={styles.userName}> {trip.user}</Text>
+          {/* <Ionicons name="person-circle-outline" size={40} color="white" /> */}
+          <View className="w-10 h-10 overflow-hidden rounded-full border-[1px] border-white">
+            <Image
+              source={{ uri: `${BASE_URL}/${trip?.creator.image}` }}
+              className="w-full h-full"
+            />
+          </View>
+          <Text style={styles.userName}> {trip?.creator.username}</Text>
         </View>
         <TouchableOpacity
           onPress={handleDoubleTap}
@@ -67,31 +139,36 @@ const TripDetail = ({ route }) => {
           style={styles.imageContainer}
         >
           <Image
-            source={{ uri: `${BASE_URL}/${trip.image}` }}
+            source={{ uri: `${BASE_URL}/${trip?.image}` }}
             style={styles.image}
           />
         </TouchableOpacity>
-        <View className="items-end m-2">
-          <View className=" flex-row gap-2">
-            <TouchableOpacity onPress={handleLikePress}>
-              {isLiked ? (
-                <FontAwesome name="heart" size={24} color="red" />
-              ) : (
-                <FontAwesome name="heart-o" size={24} color="white" />
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleSavePress}>
-              <Ionicons
-                name={isSaved ? "bookmark" : "bookmark-outline"}
-                size={24}
-                color={isSaved ? "white" : "white"}
-              />
-            </TouchableOpacity>
+        <View className="flex-1 flex-wrap ">
+          <View className="w-1/2 p-2 h-10">
+            <Text className="text-white">Likes: {trip?.likes.length}</Text>
+          </View>
+          <View className="w-1/2  items-end p-2  h-10">
+            <View className="flex-row gap-2">
+              <TouchableOpacity onPress={handleLikePress}>
+                {isLiked ? (
+                  <FontAwesome name="heart" size={24} color="red" />
+                ) : (
+                  <FontAwesome name="heart-o" size={24} color="white" />
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleSavePress}>
+                <Ionicons
+                  name={isSaved ? "bookmark" : "bookmark-outline"}
+                  size={24}
+                  color={isSaved ? "white" : "white"}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
         <View style={styles.details}>
-          <Text style={styles.title}>{trip.title}</Text>
-          <Text style={styles.description}>{trip.description}</Text>
+          <Text style={styles.title}>{trip?.title}</Text>
+          <Text style={styles.description}>{trip?.description}</Text>
           <View style={styles.likeContainer}></View>
         </View>
       </View>

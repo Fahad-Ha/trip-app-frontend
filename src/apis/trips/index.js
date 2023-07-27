@@ -36,5 +36,13 @@ const addTrip = async (data) => {
   return res.data;
 };
 
+const saveTrip = async (id) => {
+  const res = await instance.put(`/trips/save/${id}`);
+  return res.data;
+};
+const likeTrip = async (id) => {
+  const res = await instance.put(`/trips/like/${id}`);
+  return res.data;
+};
 
-export { getAllTrips, getTripId, addTrip, deleteTrip };
+export { getAllTrips, getTripId, addTrip, deleteTrip, saveTrip, likeTrip };
