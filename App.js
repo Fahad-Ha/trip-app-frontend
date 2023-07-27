@@ -9,11 +9,13 @@ import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserContext from "./src/context/UserContext";
 import { checkToken, getToken } from "./src/apis/storage";
-
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 const DarkTheme = {
   dark: true,
   colors: {
-    primary: "green",
+    primary:"#1C535A",
     background: "#232323",
     card: "transparent",
     text: "#ffffff80",
@@ -34,7 +36,7 @@ const LightTheme = {
 };
 
 export default function App() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(false);
 
   const checkToken = async () => {
     const token = await getToken();
@@ -42,13 +44,10 @@ export default function App() {
     if (token) {
       setUser(true);
     }
-
-    setUser(false);
   };
   useEffect(() => {
     checkToken();
   }, []);
-
   return (
     <QueryClientProvider client={new QueryClient()}>
       <UserContext.Provider value={{ user, setUser }}>

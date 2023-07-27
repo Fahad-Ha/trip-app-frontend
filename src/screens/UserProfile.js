@@ -46,8 +46,7 @@ const UserProfile = () => {
               height: 80,
               borderRadius: 40,
 
-              marginRight: 16,
-              backgroundColor: "blue",
+              backgroundColor: "white",
             }}
           ></View>
           <Text style={{ fontSize: 20, color: "white" }}>UserName</Text>

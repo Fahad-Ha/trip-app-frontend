@@ -42,7 +42,7 @@ export default function TripImageHandler({ image, setImage }) {
   return (
     <TouchableOpacity
       onPress={pickImage}
-      className="bg-gray-100 rounded-xl items-center w-full min-h-30 max-h-80"
+      className="rounded bg-[#1c1c1c] items-center w-full min-h-30 max-h-80"
     >
       {image ? (
         <Image
@@ -50,7 +50,7 @@ export default function TripImageHandler({ image, setImage }) {
           style={{ width: "100%", height: "100%", borderRadius: 10 }}
         />
       ) : (
-        <Ionicons name="add" size={52} color="green" />
+        <Ionicons name="add" size={52} color="#ffffff40"/>
       )}
     </TouchableOpacity>
   );

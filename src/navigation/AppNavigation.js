@@ -8,6 +8,7 @@ import AddTrip from "../screens/AddTrip";
 
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { Feather } from '@expo/vector-icons';
 
 import { View, StyleSheet, Pressable } from "react-native";
 
@@ -31,10 +32,10 @@ export default function AppNavigation() {
           left: 20,
           right: 20,
           elevation: 0,
-          backgroundColor: "#ffffff",
+          // backgroundColor: "#ffffff",
           borderRadius: 15,
           height: 70,
-          ...styles.shadow,
+          // ...styles.shadow,
           size: 90,
         },
       }}
@@ -57,48 +58,65 @@ export default function AppNavigation() {
       <Tab.Screen
         name={ROUTES.APPROUTES.ADD_TRIP}
         component={AddTrip}
-        options={({ navigation }) => {
-          const colors = {
-            active: {
-              primary: "#312e81",
-            },
-            inActive: {
-              primary: "#4f46e5",
-            },
-          };
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="plus-square" size={50}
+            color={color}
+            style={{ marginTop: 25, height: 50 }}/>
+          ),
+          
+        //   ({ navigation }) => {
+        //   const colors = {
+        //     active: {
+        //       primary:  "#1C535A",
+        //     },
+        //     inActive: {
+        //       primary: "gray",
+        //     },
+        //   };
 
-          return {
-            tabBarButton: (props) => {
-              return (
-                <Pressable
-                  style={{
-                    flex: 1,
-                    bottom: 30,
-                    borderRadius: 100,
-                    height: 80,
-                    maxWidth: 80,
-                    overflow: "hidden",
-                    ...styles.shadow,
-                  }}
-                  onPress={() => navigation.navigate(ROUTES.APPROUTES.ADD_TRIP)}
-                >
-                  <View
-                    style={{
-                      flex: 1,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor:
-                        colors[navigation.isFocused() ? "active" : "inActive"]
-                          .primary,
-                    }}
-                  >
-                    <Ionicons name="add" size={52} color={"white"} />
-                  </View>
-                </Pressable>
-              );
-            },
-          };
-        }}
+        //   return {
+        //     tabBarButton: (props) => {
+        //       return (
+        //         <Pressable
+        //           style={{
+        //             flex: 1,
+        //             bottom: 20,
+        //             borderRadius: 100,
+        //             height: 80,
+        //             maxWidth: 80,
+        //             overflow: "hidden",
+        //             borderWidth: 4,
+        //             borderColor:
+        //               colors[navigation.isFocused() ? "active" : "inActive"]
+        //                 .primary,
+        //             ...styles.shadow,
+        //           }}
+        //           onPress={() => navigation.navigate(ROUTES.APPROUTES.ADD_TRIP)}
+        //         >
+        //           <View
+        //             style={{
+        //               flex: 1,
+        //               justifyContent: "center",
+        //               alignItems: "center",
+        //               backgroundColor: "white",
+        //             }}
+        //           >
+        //             <Ionicons
+        //               name="add"
+        //               size={52}
+        //               color={
+        //                 colors[navigation.isFocused() ? "active" : "inActive"]
+        //                   .primary
+        //               }
+        //             />
+        //           </View>
+        //         </Pressable>
+        //       );
+        //     },
+        //   };
+        // }
+      }}
       />
       <Tab.Screen
         name={ROUTES.APPROUTES.PROFILE}
