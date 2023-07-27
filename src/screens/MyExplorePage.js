@@ -66,7 +66,8 @@ export default function MyExplorePage({ navigation }) {
       </TouchableOpacity>
     );
   });
-
+  if (isFetching) return <Text>loading..</Text>;
+  if (error) return <Text>No connection..</Text>;
   return (
     <View
       style={{
