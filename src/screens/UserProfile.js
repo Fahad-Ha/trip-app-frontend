@@ -74,6 +74,12 @@ const UserProfile = ({ navigation }) => {
   });
 
   if (isFetching) return <Text>Loading..</Text>;
+  if (error)
+    return (
+      <View className="mt-20">
+        <Logout />
+      </View>
+    );
   return (
     <View
       style={{
