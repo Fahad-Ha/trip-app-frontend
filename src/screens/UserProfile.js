@@ -6,10 +6,11 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Pressable,
 } from "react-native";
 import Constants from "expo-constants";
 import { LinearGradient } from "expo-linear-gradient";
-import { Feather } from "@expo/vector-icons";
+import { Feather, Entypo } from "@expo/vector-icons";
 
 import React, { useEffect, useState } from "react";
 import Logout from "../components/Logout";
@@ -18,9 +19,13 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../apis";
 import { RefreshControl } from "react-native-gesture-handler";
 import ROUTES from "../navigation";
+import { useNavigation } from "@react-navigation/native";
 
 const UserProfile = ({ navigation }) => {
   const [userProfile, setUserProfile] = useState(null);
+
+  const navigationDrawer = useNavigation();
+
   const {
     data: profileData,
     isFetching,
@@ -47,6 +52,7 @@ const UserProfile = ({ navigation }) => {
   useEffect(() => {
     profile();
   }, []);
+
   console.log(profileData?.trips);
   const sortedList = profileData?.trips?.sort(function (a, b) {
     return new Date(b.createdAt) - new Date(a.createdAt);
@@ -114,6 +120,12 @@ const UserProfile = ({ navigation }) => {
               padding: 16,
             }}
           ></View>
+
+          <View className="absolute right-3 top-14">
+            <Pressable onPress={() => navigationDrawer.openDrawer()}>
+              <Entypo name="menu" size={32} color="white" />
+            </Pressable>
+          </View>
           <View className="w-20 h-20 overflow-hidden rounded-full border-[1px] border-white">
             <Image
               className="w-full h-full"
@@ -122,11 +134,11 @@ const UserProfile = ({ navigation }) => {
               }}
             />
           </View>
+
           <Text style={{ fontSize: 20, color: "white" }}>
             {profileData?.username}
             <Feather name="edit" size={24} color="white" />
           </Text>
-
           <View
             style={{
               flex: 1,

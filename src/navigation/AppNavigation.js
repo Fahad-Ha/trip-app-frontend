@@ -8,7 +8,7 @@ import AddTrip from "../screens/AddTrip";
 
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-import { Feather } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 
 import { View, StyleSheet, Pressable } from "react-native";
 
@@ -60,63 +60,14 @@ export default function AppNavigation() {
         component={AddTrip}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Feather name="plus-square" size={50}
-            color={color}
-            style={{ marginTop: 25, height: 50 }}/>
+            <Feather
+              name="plus-square"
+              size={50}
+              color={color}
+              style={{ marginTop: 25, height: 50 }}
+            />
           ),
-          
-        //   ({ navigation }) => {
-        //   const colors = {
-        //     active: {
-        //       primary:  "#1C535A",
-        //     },
-        //     inActive: {
-        //       primary: "gray",
-        //     },
-        //   };
-
-        //   return {
-        //     tabBarButton: (props) => {
-        //       return (
-        //         <Pressable
-        //           style={{
-        //             flex: 1,
-        //             bottom: 20,
-        //             borderRadius: 100,
-        //             height: 80,
-        //             maxWidth: 80,
-        //             overflow: "hidden",
-        //             borderWidth: 4,
-        //             borderColor:
-        //               colors[navigation.isFocused() ? "active" : "inActive"]
-        //                 .primary,
-        //             ...styles.shadow,
-        //           }}
-        //           onPress={() => navigation.navigate(ROUTES.APPROUTES.ADD_TRIP)}
-        //         >
-        //           <View
-        //             style={{
-        //               flex: 1,
-        //               justifyContent: "center",
-        //               alignItems: "center",
-        //               backgroundColor: "white",
-        //             }}
-        //           >
-        //             <Ionicons
-        //               name="add"
-        //               size={52}
-        //               color={
-        //                 colors[navigation.isFocused() ? "active" : "inActive"]
-        //                   .primary
-        //               }
-        //             />
-        //           </View>
-        //         </Pressable>
-        //       );
-        //     },
-        //   };
-        // }
-      }}
+        }}
       />
       <Tab.Screen
         name={ROUTES.APPROUTES.PROFILE}
@@ -159,3 +110,55 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 });
+
+//   ({ navigation }) => {
+//   const colors = {
+//     active: {
+//       primary:  "#1C535A",
+//     },
+//     inActive: {
+//       primary: "gray",
+//     },
+//   };
+
+//   return {
+//     tabBarButton: (props) => {
+//       return (
+//         <Pressable
+//           style={{
+//             flex: 1,
+//             bottom: 20,
+//             borderRadius: 100,
+//             height: 80,
+//             maxWidth: 80,
+//             overflow: "hidden",
+//             borderWidth: 4,
+//             borderColor:
+//               colors[navigation.isFocused() ? "active" : "inActive"]
+//                 .primary,
+//             ...styles.shadow,
+//           }}
+//           onPress={() => navigation.navigate(ROUTES.APPROUTES.ADD_TRIP)}
+//         >
+//           <View
+//             style={{
+//               flex: 1,
+//               justifyContent: "center",
+//               alignItems: "center",
+//               backgroundColor: "white",
+//             }}
+//           >
+//             <Ionicons
+//               name="add"
+//               size={52}
+//               color={
+//                 colors[navigation.isFocused() ? "active" : "inActive"]
+//                   .primary
+//               }
+//             />
+//           </View>
+//         </Pressable>
+//       );
+//     },
+//   };
+// }

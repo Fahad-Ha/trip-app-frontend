@@ -10,6 +10,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserContext from "./src/context/UserContext";
 import { checkToken, getToken } from "./src/apis/storage";
 import { LogBox } from "react-native";
+import SideDrawer from "./src/navigation/ProfileDrawer";
+
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 const DarkTheme = {
@@ -52,7 +54,7 @@ export default function App() {
     <QueryClientProvider client={new QueryClient()}>
       <UserContext.Provider value={{ user, setUser }}>
         <NavigationContainer theme={DarkTheme}>
-          {!user ? <AuthNavigation /> : <AppNavigation />}
+          {!user ? <AuthNavigation /> : <SideDrawer />}
         </NavigationContainer>
       </UserContext.Provider>
     </QueryClientProvider>
