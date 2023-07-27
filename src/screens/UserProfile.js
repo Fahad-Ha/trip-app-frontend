@@ -3,6 +3,7 @@ import Constants from "expo-constants";
 import { LinearGradient } from "expo-linear-gradient";
 
 import React from "react";
+import Logout from "../components/Logout";
 
 const UserProfile = () => {
   return (
@@ -70,7 +71,7 @@ const UserProfile = () => {
       </View>
       <View style={{ flex: 0.6, backgroundColor: "blue" }}>
         <View style={{ flex: 0.2, backgroundColor: "#232323" }}>
-          <Text style={{ fontSize: 20, color: "#ffff" }}>Bio</Text>
+          <Logout />
         </View>
         <View style={{ flex: 0.8, backgroundColor: "#232323" }}></View>
       </View>

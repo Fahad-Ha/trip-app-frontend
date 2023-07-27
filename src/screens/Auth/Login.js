@@ -40,7 +40,7 @@ const Login = ({ navigation }) => {
       login({ ...userInfo, username: userInfo.username.toLowerCase() }),
     onSuccess: (data) => {
       saveToken(data.token);
-      setUser(checkToken());
+      setUser(true);
     },
     onError: (err) => {
       console.log("err", err);

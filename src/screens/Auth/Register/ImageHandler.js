@@ -23,7 +23,7 @@ const RegisterImage = ({ route, navigation }) => {
     mutationFn: () => register({ ...userInfo, image }),
     onSuccess: (data) => {
       saveToken(data.token);
-      setUser(checkToken());
+      setUser(true);
     },
     onError: (err) => {
       console.log(err.response?.data);
