@@ -73,6 +73,7 @@ export default function MyExplorePage({ navigation }) {
         flex: 1,
       }}
     >
+      <View className=" mb-24 items-center">
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={isFetching} onRefresh={refetch} />
@@ -87,6 +88,7 @@ export default function MyExplorePage({ navigation }) {
       >
         {tripList}
       </ScrollView>
+      </View>
     </View>
   );
 }

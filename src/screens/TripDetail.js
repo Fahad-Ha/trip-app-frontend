@@ -44,11 +44,11 @@ const TripDetail = ({ route }) => {
         const decoded = jwt_decode(token);
         if (trip) {
           // Set if the user has liked the trip
-          const hasUserAlreadyLiked = trip.likes.includes(decoded._id);
+          const hasUserAlreadyLiked = profileData.likedTrips.includes(trip._id);
           setIsLiked(hasUserAlreadyLiked);
 
           // Set if the user has saved the trip
-          const hasUserAlreadySaved = decoded.savedTrips.includes(trip._id);
+          const hasUserAlreadySaved = profileData.savedTrips.includes(trip._id);
           setIsSaved(hasUserAlreadySaved);
         }
       } catch (error) {

@@ -34,7 +34,7 @@ const LightTheme = {
 };
 
 export default function App() {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState();
 
   const checkToken = async () => {
     const token = await getToken();
@@ -53,7 +53,7 @@ export default function App() {
     <QueryClientProvider client={new QueryClient()}>
       <UserContext.Provider value={{ user, setUser }}>
         <NavigationContainer theme={DarkTheme}>
-          {user ? <AuthNavigation /> : <AppNavigation />}
+          {!user ? <AuthNavigation /> : <AppNavigation />}
         </NavigationContainer>
       </UserContext.Provider>
     </QueryClientProvider>
