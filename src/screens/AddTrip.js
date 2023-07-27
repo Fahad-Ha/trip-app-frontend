@@ -6,7 +6,7 @@ import {
   ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addTrip, getAllTrips } from "../apis/trips";
 import React, { useState } from "react";
 import TripImageHandler from "../components/TripImageHandler";
@@ -14,6 +14,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import ROUTES from "../navigation";
 
+ 
 // Define validation schema
 const TripSchema = Yup.object().shape({
   title: Yup.string()
@@ -29,12 +30,13 @@ const TripSchema = Yup.object().shape({
 
 export default function AddTrip({ navigation }) {
   const [backendError, setBackendError] = useState(null);
+  const queryClient = useQueryClient(); // Import and use query client here
 
   const { mutate: addTripFunction } = useMutation({
     mutationFn: addTrip,
     onSuccess: () => {
+      queryClient.invalidateQueries('trips'); 
       navigation.navigate(ROUTES.APPROUTES.EXPLORE);
-      getAllTrips();
     },
     onError: (err) => {
       console.log("err", err);

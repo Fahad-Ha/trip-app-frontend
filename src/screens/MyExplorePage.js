@@ -74,20 +74,20 @@ export default function MyExplorePage({ navigation }) {
       }}
     >
       <View className=" mb-24 items-center">
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-        }
-        // className="flex-1"
-        contentContainerStyle={{
-          flexWrap: "wrap",
-          flexDirection: "row",
-          gap: 1,
-          paddingTop: Constants.statusBarHeight,
-        }}
-      >
-        {tripList}
-      </ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+          }
+          // className="flex-1"
+          contentContainerStyle={{
+            flexWrap: "wrap",
+            flexDirection: "row",
+            gap: 1,
+            paddingTop: Constants.statusBarHeight,
+          }}
+        >
+          {tripList}
+        </ScrollView>
       </View>
     </View>
   );
