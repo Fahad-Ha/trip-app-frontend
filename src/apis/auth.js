@@ -10,6 +10,12 @@ const getProfile = async (id) => {
 
   return res.data;
 };
+const checkUsername = async (username) => {
+  const res = await instance.put(`/auth/username`, { username });
+
+  return res.data;
+};
+
 const getMyProfile = async () => {
   const res = await instance.post(`/auth/my-profile`);
 
@@ -30,9 +36,9 @@ const register = async (userInfo) => {
       });
     }
   }
-  console.log(formData);
+
   const res = await instance.post("/auth/register", formData);
   return res.data;
 };
 
-export { login, register, getProfile, getMyProfile };
+export { login, register, getProfile, getMyProfile, checkUsername };

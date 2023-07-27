@@ -24,7 +24,6 @@ export default function MyExplorePage({ navigation }) {
     queryKey: ["trips"],
     queryFn: () => getAllTrips(),
   });
-  console.log(userProfile);
   const profile = async () => {
     const token = await getToken();
     if (token) {
