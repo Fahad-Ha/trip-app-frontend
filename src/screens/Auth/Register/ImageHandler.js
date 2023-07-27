@@ -42,7 +42,7 @@ const RegisterImage = ({ route, navigation }) => {
 
   return (
     <View className="flex-1 items-center">
-      <View className=" mt-[10] mb-4 w-4/5">
+      <View className=" mt-24 mb-4 w-4/5">
         <Text className=" text-xl text-white text-center font-bold mb-4">
           Pick an image
         </Text>

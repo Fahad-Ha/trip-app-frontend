@@ -77,7 +77,7 @@ const Login = ({ navigation }) => {
 
           return (
             <View>
-              <View className="w-4/5 mt-10 mb-4">
+              <View className="w-4/5 mt-40 mb-4">
                 <Text className="text-xl text-white text-center font-bold mb-4">
                   Login
                 </Text>
