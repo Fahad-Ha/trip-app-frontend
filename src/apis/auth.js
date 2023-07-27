@@ -10,6 +10,11 @@ const getProfile = async (id) => {
 
   return res.data;
 };
+const getMyProfile = async () => {
+  const res = await instance.post(`/auth/my-profile`);
+
+  return res.data;
+};
 
 const register = async (userInfo) => {
   const formData = new FormData();
@@ -30,4 +35,4 @@ const register = async (userInfo) => {
   return res.data;
 };
 
-export { login, register, getProfile };
+export { login, register, getProfile, getMyProfile };

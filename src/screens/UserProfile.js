@@ -1,11 +1,79 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Constants from "expo-constants";
 import { LinearGradient } from "expo-linear-gradient";
+import { Feather } from "@expo/vector-icons";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logout from "../components/Logout";
+import { getMyProfile } from "../apis/auth";
+import { useQuery } from "@tanstack/react-query";
+import { BASE_URL } from "../apis";
+import { RefreshControl } from "react-native-gesture-handler";
+import ROUTES from "../navigation";
 
-const UserProfile = () => {
+const UserProfile = ({ navigation }) => {
+  const [userProfile, setUserProfile] = useState(null);
+  const {
+    data: profileData,
+    isFetching,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getMyProfile(),
+  });
+
+  const profile = async () => {
+    const token = await getToken();
+    if (token) {
+      try {
+        const decoded = jwt_decode(token);
+        setUserProfile(decoded);
+      } catch (error) {
+        setUserInfo(false);
+      }
+    } else {
+      setUserInfo(false);
+    }
+  };
+  useEffect(() => {
+    profile();
+  }, []);
+  console.log(profileData?.trips);
+  const sortedList = profileData?.trips?.sort(function (a, b) {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+  const tripList = sortedList?.map((oneTrip) => {
+    return (
+      <TouchableOpacity
+        key={oneTrip._id}
+        className="w-[33%] h-60 mt-[-1.5%]"
+        onPress={() =>
+          navigation.navigate(ROUTES.APPROUTES.TRIP_DETAIL, {
+            oneTrip,
+            userProfile,
+          })
+        }
+      >
+        <Image
+          className="w-full h-full"
+          source={{
+            uri: `${BASE_URL}/${oneTrip.image}`,
+          }}
+        />
+      </TouchableOpacity>
+    );
+  });
+
+  if (isFetching) return <Text>Loading..</Text>;
   return (
     <View
       style={{
@@ -40,16 +108,19 @@ const UserProfile = () => {
               padding: 16,
             }}
           ></View>
-          <View
-            style={{
-              width: 80,
-              height: 80,
-              borderRadius: 40,
+          <View className="w-20 h-20 overflow-hidden rounded-full border-[1px] border-white">
+            <Image
+              className="w-full h-full"
+              source={{
+                uri: `${BASE_URL}/${profileData?.image}`,
+              }}
+            />
+          </View>
+          <Text style={{ fontSize: 20, color: "white" }}>
+            {profileData?.username}
+            <Feather name="edit" size={24} color="white" />
+          </Text>
 
-              backgroundColor: "white",
-            }}
-          ></View>
-          <Text style={{ fontSize: 20, color: "white" }}>UserName</Text>
           <View
             style={{
               flex: 1,
@@ -68,11 +139,31 @@ const UserProfile = () => {
           </View>
         </LinearGradient>
       </View>
-      <View style={{ flex: 0.6, backgroundColor: "blue" }}>
-        <View style={{ flex: 0.2, backgroundColor: "#232323" }}>
-          <Logout />
+
+      <View
+        style={{
+          flex: 1,
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        <View className=" mb-24 items-center ">
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+            }
+            contentContainerStyle={{
+              flexWrap: "wrap",
+              flexDirection: "row",
+              gap: 1,
+              paddingTop: Constants.statusBarHeight,
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            {tripList}
+          </ScrollView>
         </View>
-        <View style={{ flex: 0.8, backgroundColor: "#232323" }}></View>
       </View>
     </View>
   );
