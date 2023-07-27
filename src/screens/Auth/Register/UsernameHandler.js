@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Text, TextInput, View } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { checkUsername } from "../../../apis/auth";
+import { useMutation } from "@tanstack/react-query";
+import { TouchableHighlight } from "react-native-gesture-handler";
 
 // Define validation schema
 const UsernameSchema = Yup.object().shape({
@@ -11,20 +14,39 @@ const UsernameSchema = Yup.object().shape({
 });
 
 const RegisterUsername = ({ navigation }) => {
+  const [suggestions, setSuggestions] = useState([]);
+  const [username, setUsername] = useState();
+  const { mutate: userNamechecker } = useMutation({
+    mutationFn: checkUsername,
+    onSuccess: (data) => {
+      if (data.suggestions) {
+        setSuggestions(data.suggestions);
+      }
+      if (data.message.includes("available")) {
+        navigation.navigate("RegisterPassword", {
+          username: username.toLowerCase(),
+        });
+      }
+    },
+    onError: (err) => {
+      console.log("err", err);
+    },
+  });
+
   return (
     <Formik
       initialValues={{ username: "" }}
       validationSchema={UsernameSchema}
       onSubmit={(values) => {
-        navigation.navigate("RegisterPassword", {
-          username: values.username.toLowerCase(),
-        });
+        userNamechecker(values.username.toLowerCase());
+        setUsername(values.username.toLowerCase());
       }}
     >
       {({
         handleChange,
         handleBlur,
         handleSubmit,
+        setFieldValue,
         values,
         errors,
         touched,
@@ -50,6 +72,29 @@ const RegisterUsername = ({ navigation }) => {
           {errors.username && touched.username && (
             <Text style={{ color: "red" }}>{errors.username}</Text>
           )}
+          {suggestions.length > 0 && (
+            <View className=" w-[70%]">
+              <Text className=" text-[#ff0000] mb-2 ">
+                username is taken, some suggestions:
+              </Text>
+              <View className=" flex-row flex-wrap mb-2">
+                {suggestions.map((suggestion, index) => (
+                  <TouchableHighlight
+                    className=" m-1 bg-[#1c1c1c] h-8 rounded justify-center items-center p-2"
+                    onPress={() => {
+                      setFieldValue("username", suggestion);
+                      setUsername(suggestion);
+                    }}
+                  >
+                    <Text className="text-white " key={index}>
+                      {suggestion}
+                    </Text>
+                  </TouchableHighlight>
+                ))}
+              </View>
+            </View>
+          )}
+
           <Button title="Next" onPress={handleSubmit} />
         </View>
       )}
