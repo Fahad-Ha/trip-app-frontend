@@ -15,6 +15,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getToken } from "../apis/storage";
 import jwt_decode from "jwt-decode";
 import { getProfile } from "../apis/auth";
+import { RefreshControl } from "react-native-gesture-handler";
 
 const TripDetail = ({ route }) => {
   const { oneTrip, userProfile } = route.params;
@@ -31,7 +32,7 @@ const TripDetail = ({ route }) => {
     queryKey: ["trip"],
     queryFn: () => getTripId(oneTrip._id),
   });
-  const { data: profileData, isFetching: profileFetching } = useQuery({
+  const { data: profileData, isFetching: profileFetching,refetch:profileRefetch } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(userProfile._id),
   });
@@ -121,7 +122,8 @@ const TripDetail = ({ route }) => {
   if (tripFetching) return <Text>loading..</Text>;
   return (
     // <View style={styles.container}>
-    <ScrollView contentContainerStyle={{ flex: 0.9 }}>
+    <ScrollView contentContainerStyle={{ flex: 0.9 }} refreshControl={
+      <RefreshControl refreshing={profileFetching} onRefresh={profileRefetch} />} >
       <View style={styles.card}>
         <View style={styles.userContainer}>
           {/* <Ionicons name="person-circle-outline" size={40} color="white" /> */}
