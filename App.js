@@ -8,7 +8,7 @@ import AuthNavigation from "./src/navigation/AuthNavigation";
 import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserContext from "./src/context/UserContext";
-import { getToken } from "./src/apis/storage";
+import { checkToken, getToken } from "./src/apis/storage";
 
 const DarkTheme = {
   dark: true,
@@ -36,24 +36,26 @@ const LightTheme = {
 export default function App() {
   const [user, setUser] = useState(false);
 
-  const getUser = async () => {
+  const checkToken = async () => {
     const token = await getToken();
-    if (token) setUser(true);
+
+    if (token) {
+      setUser(true);
+    }
+
+    setUser(false);
   };
   useEffect(() => {
-    // getUser();
+    checkToken();
   }, []);
 
   return (
     <QueryClientProvider client={new QueryClient()}>
       <UserContext.Provider value={{ user, setUser }}>
         <NavigationContainer theme={DarkTheme}>
-          {!user ? <AuthNavigation /> : <AppNavigation />}
+          {user ? <AuthNavigation /> : <AppNavigation />}
         </NavigationContainer>
       </UserContext.Provider>
     </QueryClientProvider>
   );
 }
-
-
-

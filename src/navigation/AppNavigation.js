@@ -40,7 +40,7 @@ export default function AppNavigation() {
       }}
     >
       <Tab.Screen
-        name={ROUTES.APPROUTES.EXPLORE_STACK}
+        name={ROUTES.APPROUTES.EXPLORE}
         component={ExploreStack}
         options={{
           // headerShown: false,

@@ -7,62 +7,119 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
-import { addTrip } from "../apis/trips";
+import { addTrip, getAllTrips } from "../apis/trips";
 import React, { useState } from "react";
 import TripImageHandler from "../components/TripImageHandler";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import ROUTES from "../navigation";
 
-export default function AddTrip() {
-  const [userInfo, setUserInfo] = useState({});
-  const [image, setImage] = useState(null);
-  const { mutate: addTripFunction, error } = useMutation({
-    mutationFn: () => addTrip({ ...userInfo, image }),
+// Define validation schema
+const TripSchema = Yup.object().shape({
+  title: Yup.string()
+    .min(3, "Title must be at least 3 characters long.")
+    .max(20, "Title must be less than 20 characters.")
+    .required("Title is required."),
+  description: Yup.string().max(
+    400,
+    "Description must be less than 400 characters."
+  ),
+  image: Yup.string().required("Image is required."),
+});
+
+export default function AddTrip({ navigation }) {
+  const [backendError, setBackendError] = useState(null);
+
+  const { mutate: addTripFunction } = useMutation({
+    mutationFn: addTrip,
     onSuccess: () => {
-      console.log("success");
+      navigation.navigate(ROUTES.APPROUTES.EXPLORE);
+      getAllTrips();
+    },
+    onError: (err) => {
+      console.log("err", err);
+      setBackendError(err.response.data.message); // Assuming error response is in this format
     },
   });
 
   return (
-    <ScrollView contentContainerStyle={{}}>
-      <View className="mb-40 items-center">
-        <View className=" w-[70%]  mt-8 min-h-[100%]">
-          <View>
-            <Text className="mb-1 text-white">Title</Text>
-            <TextInput
-              className="bg-gray-100 rounded-xl mb-6 p-2"
-              placeholder="Title"
-              onChangeText={(value) => {
-                setUserInfo({ ...userInfo, title: value });
-              }}
-            ></TextInput>
+    <Formik
+      initialValues={{ title: "", description: "", image: "" }}
+      validationSchema={TripSchema}
+      onSubmit={(values, { resetForm }) => {
+        addTripFunction(values);
+        resetForm();
+      }}
+    >
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        errors,
+        touched,
+        setFieldValue,
+      }) => (
+        <ScrollView contentContainerStyle={{}}>
+          <View className="mb-40 items-center">
+            <View className=" w-[70%]  mt-8 min-h-[100%]">
+              <View>
+                <Text className="mb-1 text-white">Title</Text>
+                <TextInput
+                  className="bg-gray-100 rounded-xl mb-1 p-2"
+                  placeholder="Title"
+                  onBlur={handleBlur("title")}
+                  onChangeText={handleChange("title")}
+                  value={values.title}
+                />
+                {errors.title && touched.title && (
+                  <Text style={{ color: "red" }}>{errors.title}</Text>
+                )}
+              </View>
+              <View>
+                <Text className="mb-1 mt-4  text-white">Description</Text>
+                <TextInput
+                  className="bg-gray-100 rounded-xl p-2 mb-1"
+                  multiline={true}
+                  returnKeyType="done"
+                  placeholder="Description"
+                  onBlur={handleBlur("description")}
+                  onChangeText={handleChange("description")}
+                  value={values.description}
+                />
+                {errors.description && touched.description && (
+                  <Text style={{ color: "red" }}>{errors.description}</Text>
+                )}
+              </View>
+              <Text className="mt-4 mb-1 text-white">Image</Text>
+              <View className="mb-1">
+                <TripImageHandler
+                  image={values.image}
+                  setImage={(image) => {
+                    setFieldValue("image", image);
+                  }}
+                />
+              </View>
+              {errors.image && touched.image && (
+                <Text style={{ color: "red" }}>{errors.image}</Text>
+              )}
+              {backendError && (
+                <Text style={{ color: "red" }}>{backendError}</Text>
+              )}
+              <View>
+                <TouchableOpacity
+                  onPress={handleSubmit}
+                  className="bg-indigo-600 rounded-xl items-center p-5 mt-6"
+                >
+                  <Text className="text-white text-xl font-semibold">
+                    Add the trip
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-          <View>
-            <Text className="mb-1 text-white">Description</Text>
-            <TextInput
-              className="bg-gray-100 rounded-xl p-2 mb-4"
-              multiline={true}
-              returnKeyType="done"
-              placeholder="Description"
-              onChangeText={(value) => {
-                setUserInfo({ ...userInfo, description: value });
-              }}
-            ></TextInput>
-          </View>
-          <Text className="mt-4 mb-1 text-white">Image</Text>
-          <View>
-            <TripImageHandler image={image} setImage={setImage} />
-          </View>
-          <View>
-            <TouchableOpacity
-              onPress={() => addTripFunction()}
-              className="bg-indigo-600 rounded-xl items-center p-5 mt-6"
-            >
-              <Text className="text-white text-xl font-semibold">
-                Add the trip
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </ScrollView>
+        </ScrollView>
+      )}
+    </Formik>
   );
 }
