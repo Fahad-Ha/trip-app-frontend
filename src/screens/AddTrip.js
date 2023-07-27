@@ -66,11 +66,12 @@ export default function AddTrip({ navigation }) {
               <View>
                 <Text className="mb-1 text-white">Title</Text>
                 <TextInput
-                  className="bg-gray-100 rounded-xl mb-1 p-2"
-                  placeholder="Title"
+                  className="rounded bg-[#1c1c1c] text-white  mb-1 p-2"
+                  placeholder="Title.."
                   onBlur={handleBlur("title")}
                   onChangeText={handleChange("title")}
                   value={values.title}
+                  placeholderTextColor="#ffffff40"
                 />
                 {errors.title && touched.title && (
                   <Text style={{ color: "red" }}>{errors.title}</Text>
@@ -79,13 +80,14 @@ export default function AddTrip({ navigation }) {
               <View>
                 <Text className="mb-1 mt-4  text-white">Description</Text>
                 <TextInput
-                  className="bg-gray-100 rounded-xl p-2 mb-1"
+                  className="rounded bg-[#1c1c1c] text-white p-2 mb-1"
                   multiline={true}
                   returnKeyType="done"
-                  placeholder="Description"
+                  placeholder="Description.."
                   onBlur={handleBlur("description")}
                   onChangeText={handleChange("description")}
                   value={values.description}
+                  placeholderTextColor="#ffffff40"
                 />
                 {errors.description && touched.description && (
                   <Text style={{ color: "red" }}>{errors.description}</Text>
@@ -109,7 +111,7 @@ export default function AddTrip({ navigation }) {
               <View>
                 <TouchableOpacity
                   onPress={handleSubmit}
-                  className="bg-indigo-600 rounded-xl items-center p-5 mt-6"
+                  className="bg-[#1C535A] rounded-xl items-center p-5 mt-6"
                 >
                   <Text className="text-white text-xl font-semibold">
                     Add the trip
