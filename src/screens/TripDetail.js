@@ -69,8 +69,11 @@ const TripDetail = ({ route }) => {
 
   useEffect(() => {
     Image.getSize(`${BASE_URL}/${trip?.image}`, (width, height) => {
-      setImageWidth(width);
-      setImageHeight(height);
+      // If both width and height are greater than zero, set the values.
+      if (width > 0 && height > 0) {
+        setImageWidth(width);
+        setImageHeight(height);
+      }
     });
   }, [trip]);
 
@@ -132,7 +135,7 @@ const TripDetail = ({ route }) => {
       lastTapRef.current = null;
     };
   }, []);
-
+  console.log(imageWidth, imageHeight);
   if (tripFetching) return <Text>loading..</Text>;
   return (
     // <View style={styles.container}>
@@ -165,7 +168,10 @@ const TripDetail = ({ route }) => {
             source={{ uri: `${BASE_URL}/${trip?.image}` }}
             style={{
               width: "100%",
-              aspectRatio: imageWidth / imageHeight, // assuming imageWidth and imageHeight are not zero.
+              aspectRatio:
+                imageWidth && imageHeight
+                  ? imageWidth / imageHeight
+                  : undefined,
               borderTopLeftRadius: 0,
               borderTopRightRadius: 0,
               resizeMode: "cover",
