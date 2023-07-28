@@ -13,12 +13,12 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Feather, Entypo } from "@expo/vector-icons";
 
 import React, { useEffect, useState } from "react";
-import Logout from "../components/Logout";
-import { getMyProfile } from "../apis/auth";
+import Logout from "../../../components/Logout";
+import { getMyProfile } from "../../../apis/auth";
 import { useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "../apis";
+import { BASE_URL } from "../../../apis";
 import { RefreshControl } from "react-native-gesture-handler";
-import ROUTES from "../navigation";
+import ROUTES from "../../../navigation";
 import { useNavigation } from "@react-navigation/native";
 
 const UserProfile = ({ navigation }) => {
@@ -145,18 +145,29 @@ const UserProfile = ({ navigation }) => {
           <View
             style={{
               flex: 1,
-
+              marginBottom: 20,
               width: "100%",
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-around",
             }}
           >
-            <Text style={{ color: "white" }}>Following</Text>
-            {/* <Text>400</Text> */}
-
-            <Text style={{ color: "white" }}>Followers</Text>
-            {/* <Text> 1200</Text> */}
+            <Pressable onPress={() => navigation.navigate("Followings")}>
+              <View>
+                <Text className="text-center text-white">Followings</Text>
+                <Text className="text-center text-white">
+                  {profileData?.followings.length || "0"}
+                </Text>
+              </View>
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate("Followers")}>
+              <View>
+                <Text className="text-center text-white">Followers</Text>
+                <Text className="text-center text-white">
+                  {profileData?.followers.length || "0"}
+                </Text>
+              </View>
+            </Pressable>
           </View>
         </LinearGradient>
       </View>

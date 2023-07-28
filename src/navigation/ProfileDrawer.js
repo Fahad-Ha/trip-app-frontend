@@ -3,7 +3,7 @@ import AppNavigation from "./AppNavigation";
 import { Switch, Text, View } from "react-native";
 import { useContext, useState } from "react";
 import ROUTES from ".";
-import UserProfile from "../screens/UserProfile";
+import UserProfile from "../screens/Auth/Profile/UserProfile";
 
 const Drawer = createDrawerNavigator();
 

@@ -5,6 +5,8 @@ const ROUTES = {
     ADD_TRIP: "Add-trip",
     PROFILE: "Profile",
     TRIP_DETAIL: "TripDetail",
+    FOLLOWERS: "Followers",
+    FOLLOWINGS: "Followings",
   },
   AUTHROUTES: {
     LOGIN: "Login",

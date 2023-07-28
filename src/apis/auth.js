@@ -6,7 +6,7 @@ const login = async (userInfo) => {
 };
 
 const getProfile = async (id) => {
-  const res = await instance.get(`/auth/${id}`);
+  const res = await instance.get(`/auth/profile/${id}`);
 
   return res.data;
 };
@@ -17,7 +17,7 @@ const checkUsername = async (username) => {
 };
 
 const getMyProfile = async () => {
-  const res = await instance.post(`/auth/my-profile`);
+  const res = await instance.get(`/auth/my-profile`);
 
   return res.data;
 };

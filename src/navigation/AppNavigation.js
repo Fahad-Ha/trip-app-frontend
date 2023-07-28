@@ -12,8 +12,9 @@ import { Feather } from "@expo/vector-icons";
 
 import { View, StyleSheet, Pressable } from "react-native";
 
-import UserProfile from "../screens/UserProfile";
+import UserProfile from "../screens/Auth/Profile/UserProfile";
 import ExploreStack from "./ExploreStack";
+import ProfileStack from "./ProfileStack";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -71,7 +72,7 @@ export default function AppNavigation() {
       />
       <Tab.Screen
         name={ROUTES.APPROUTES.PROFILE}
-        component={UserProfile}
+        component={ProfileStack}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
