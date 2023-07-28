@@ -1,14 +1,12 @@
 import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+
 import { NavigationContainer } from "@react-navigation/native";
-import AppNavigation from "./src/navigation/AppNavigation";
 
 import AuthNavigation from "./src/navigation/AuthNavigation";
 import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserContext from "./src/context/UserContext";
-import { checkToken, getToken } from "./src/apis/storage";
+import { getToken } from "./src/apis/storage";
 import { LogBox } from "react-native";
 import SideDrawer from "./src/navigation/ProfileDrawer";
 

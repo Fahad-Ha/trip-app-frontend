@@ -6,6 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Pressable,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -16,12 +18,16 @@ import { getToken } from "../apis/storage";
 import jwt_decode from "jwt-decode";
 import { getProfile } from "../apis/auth";
 import { RefreshControl } from "react-native-gesture-handler";
+import ROUTES from "../navigation";
+import { useRoute } from "@react-navigation/native";
 
-const TripDetail = ({ route }) => {
+const TripDetail = ({ route, navigation }) => {
   const { oneTrip, userProfile } = route.params;
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+
+  const routeName = useRoute();
 
   const {
     data: trip,
@@ -40,7 +46,6 @@ const TripDetail = ({ route }) => {
     queryKey: ["profile"],
     queryFn: () => getProfile(userProfile._id),
   });
-  console.log(profileData);
 
   const profile = async () => {
     const token = await getToken();
@@ -135,8 +140,12 @@ const TripDetail = ({ route }) => {
       lastTapRef.current = null;
     };
   }, []);
-  console.log(imageWidth, imageHeight);
-  if (tripFetching) return <Text>loading..</Text>;
+  if (tripFetching)
+    return (
+      <View className="flex-1 justify-center items-center top-[-15%]">
+        <ActivityIndicator size="large" color="#1C535A" />
+      </View>
+    );
   return (
     // <View style={styles.container}>
     <ScrollView
@@ -149,16 +158,38 @@ const TripDetail = ({ route }) => {
       }
     >
       <View style={styles.card}>
-        <View style={styles.userContainer}>
-          {/* <Ionicons name="person-circle-outline" size={40} color="white" /> */}
-          <View className="w-10 h-10 overflow-hidden rounded-full border-[1px] border-white">
-            <Image
-              source={{ uri: `${BASE_URL}/${trip?.creator.image}` }}
-              className="w-full h-full"
-            />
+        <Pressable
+          onPress={() =>
+            routeName.name == ROUTES.APPROUTES.TRIP_DETAIL
+              ? navigation.push(
+                  ROUTES.APPROUTES.OTHERPROFILEEXPLORE,
+
+                  {
+                    user: { _id: trip?.creator._id },
+                  },
+                  { key: trip?._id }
+                )
+              : navigation.push(
+                  ROUTES.APPROUTES.PROFILE,
+
+                  {
+                    user: { _id: trip?.creator._id },
+                  },
+                  { key: trip?._id }
+                )
+          }
+        >
+          <View style={styles.userContainer}>
+            {/* <Ionicons name="person-circle-outline" size={40} color="white" /> */}
+            <View className="w-10 h-10 overflow-hidden rounded-full border-[1px] border-white">
+              <Image
+                source={{ uri: `${BASE_URL}/${trip?.creator.image}` }}
+                className="w-full h-full"
+              />
+            </View>
+            <Text style={styles.userName}> {trip?.creator.username}</Text>
           </View>
-          <Text style={styles.userName}> {trip?.creator.username}</Text>
-        </View>
+        </Pressable>
         <TouchableOpacity
           onPress={handleDoubleTap}
           activeOpacity={1}
