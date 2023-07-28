@@ -32,7 +32,11 @@ const TripDetail = ({ route }) => {
     queryKey: ["trip"],
     queryFn: () => getTripId(oneTrip._id),
   });
-  const { data: profileData, isFetching: profileFetching,refetch:profileRefetch } = useQuery({
+  const {
+    data: profileData,
+    isFetching: profileFetching,
+    refetch: profileRefetch,
+  } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(userProfile._id),
   });
@@ -59,6 +63,16 @@ const TripDetail = ({ route }) => {
       setUserInfo(false);
     }
   };
+
+  const [imageWidth, setImageWidth] = useState(0);
+  const [imageHeight, setImageHeight] = useState(0);
+
+  useEffect(() => {
+    Image.getSize(`${BASE_URL}/${trip?.image}`, (width, height) => {
+      setImageWidth(width);
+      setImageHeight(height);
+    });
+  }, [trip]);
 
   // console.log(profileData, userInfo);
   useEffect(() => {
@@ -122,8 +136,15 @@ const TripDetail = ({ route }) => {
   if (tripFetching) return <Text>loading..</Text>;
   return (
     // <View style={styles.container}>
-    <ScrollView contentContainerStyle={{ flex: 0.9 }} refreshControl={
-      <RefreshControl refreshing={profileFetching} onRefresh={profileRefetch} />} >
+    <ScrollView
+      contentContainerStyle={{ flex: 0.9 }}
+      refreshControl={
+        <RefreshControl
+          refreshing={profileFetching}
+          onRefresh={profileRefetch}
+        />
+      }
+    >
       <View style={styles.card}>
         <View style={styles.userContainer}>
           {/* <Ionicons name="person-circle-outline" size={40} color="white" /> */}
@@ -142,7 +163,13 @@ const TripDetail = ({ route }) => {
         >
           <Image
             source={{ uri: `${BASE_URL}/${trip?.image}` }}
-            style={styles.image}
+            style={{
+              width: "100%",
+              aspectRatio: imageWidth / imageHeight, // assuming imageWidth and imageHeight are not zero.
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+              resizeMode: "cover",
+            }}
           />
         </TouchableOpacity>
         <View className="flex-1 flex-wrap ">
@@ -214,18 +241,12 @@ const styles = StyleSheet.create({
   imageContainer: {
     // Add flexGrow to allow the image to grow on double-tap
     flexGrow: 1,
-    overflow: "hidden",
-    minHeight: "30%",
-    maxHeight: "70%",
-  },
-  image: {
+    // overflow: "hidden",
+    // minHeight: "20%",
+    // maxHeight: "100%",
     width: "100%",
-    height: "100%",
-    width: "100%",
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    resizeMode: "cover",
   },
+
   details: {
     padding: 15,
   },
