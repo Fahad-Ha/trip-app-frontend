@@ -1,21 +1,22 @@
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import React from "react";
 import FollowList from "../../../components/Profile/FollowList";
-import { getMyFollowers } from "../../../apis/auth";
+import { getMyFollowings } from "../../../apis/auth";
 import { useQuery } from "@tanstack/react-query";
-import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import { RefreshControl } from "react-native-gesture-handler";
 import Constants from "expo-constants";
-const Followers = ({ navigation }) => {
+const OtherFollowings = ({ navigation, route }) => {
+  const { profileData } = route.params;
   const {
-    data: followersData,
+    data: followingsData,
     isFetching,
     error,
     refetch,
   } = useQuery({
     queryKey: ["followings"],
-    queryFn: () => getMyFollowers(),
+    queryFn: () => getMyFollowings(profileData._id),
   });
-
+  console.log(profileData.followings);
   if (isFetching)
     return (
       <View className="flex-1 justify-center items-center top-[-15%]">
@@ -32,10 +33,13 @@ const Followers = ({ navigation }) => {
       }}
     >
       <View>
-        <FollowList followList={followersData?.followers} navigation={navigation}/>
+        <FollowList
+          followList={followingsData?.followings}
+          navigation={navigation}
+        />
       </View>
     </ScrollView>
   );
 };
 
-export default Followers;
+export default OtherFollowings;

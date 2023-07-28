@@ -1,46 +1,49 @@
 import {
   Image,
-  SafeAreaView,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import Constants from "expo-constants";
 import { LinearGradient } from "expo-linear-gradient";
-import { Feather, Entypo } from "@expo/vector-icons";
+import { Feather, Entypo, SimpleLineIcons } from "@expo/vector-icons";
 
 import React, { useEffect, useState } from "react";
 import Logout from "../../../components/Logout";
-import { getMyProfile } from "../../../apis/auth";
-import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../../../apis";
 import { RefreshControl } from "react-native-gesture-handler";
 import ROUTES from "../../../navigation";
 import { useNavigation } from "@react-navigation/native";
+import { getToken } from "../../../apis/storage";
+import jwt_decode from "jwt-decode";
+import { follow } from "../../../apis/auth";
+import { useMutation } from "@tanstack/react-query";
+import { useRoute } from "@react-navigation/native";
 
-const UserProfile = ({ navigation }) => {
+const UserProfile = ({
+  navigation,
+  profileData,
+  isFetching,
+  error,
+  refetch,
+}) => {
   const [userProfile, setUserProfile] = useState(null);
+  const [isFollowed, setIsFollowed] = useState(false);
 
   const navigationDrawer = useNavigation();
-
-  const {
-    data: profileData,
-    isFetching,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["profile"],
-    queryFn: () => getMyProfile(),
-  });
-
+  const routeName = useRoute();
   const profile = async () => {
     const token = await getToken();
     if (token) {
       try {
         const decoded = jwt_decode(token);
+
+        // Set if the user has liked the trip
+        const followed = profileData?.followers.includes(decoded._id);
+        setIsFollowed(followed);
         setUserProfile(decoded);
       } catch (error) {
         setUserInfo(false);
@@ -51,9 +54,8 @@ const UserProfile = ({ navigation }) => {
   };
   useEffect(() => {
     profile();
-  }, []);
+  }, [profileData]);
 
-  console.log(profileData?.trips);
   const sortedList = profileData?.trips?.sort(function (a, b) {
     return new Date(b.createdAt) - new Date(a.createdAt);
   });
@@ -63,10 +65,34 @@ const UserProfile = ({ navigation }) => {
         key={oneTrip._id}
         className="w-[33%] h-60 mt-[-1.5%]"
         onPress={() =>
-          navigation.navigate(ROUTES.APPROUTES.TRIP_DETAIL, {
-            oneTrip,
-            userProfile,
-          })
+          routeName.name == ROUTES.APPROUTES.PROFILE
+            ? navigation.push(
+                ROUTES.APPROUTES.PROFILE_TRIP_DETAIL,
+                {
+                  oneTrip,
+                  userProfile,
+                },
+                { key: profileData?._id }
+              )
+            : routeName.name == ROUTES.APPROUTES.OTHERPROFILE
+            ? navigation.push(
+                ROUTES.APPROUTES.PROFILE_TRIP_DETAIL,
+
+                {
+                  oneTrip,
+                  userProfile,
+                },
+                { key: profileData?._id }
+              )
+            : navigation.push(
+                ROUTES.APPROUTES.TRIP_DETAIL,
+
+                {
+                  oneTrip,
+                  userProfile,
+                },
+                { key: profileData?._id }
+              )
         }
       >
         <Image
@@ -79,7 +105,28 @@ const UserProfile = ({ navigation }) => {
     );
   });
 
-  // if (isFetching) return <Text>Loading..</Text>;
+  const { mutate: followFunc } = useMutation({
+    mutationFn: () => follow(profileData?._id),
+    onSuccess: () => {
+      refetch();
+    },
+    onError: (err) => {
+      console.log("err", err);
+    },
+  });
+
+  const handleFollow = () => {
+    setIsFollowed((prevIsFollowed) => !prevIsFollowed);
+    followFunc();
+  };
+
+  if (isFetching)
+    return (
+      <View className="flex-1 justify-center items-center top-[-15%]">
+        <ActivityIndicator size="large" color="#1C535A" />
+      </View>
+    );
+
   if (error)
     return (
       <View className="mt-20">
@@ -135,13 +182,32 @@ const UserProfile = ({ navigation }) => {
             />
           </View>
 
-          <Text style={{ fontSize: 20, color: "white" }}>
-            {profileData?.username}
-            <Feather name="edit" size={24} color="white" />
-          </Text>
-
-          <Logout />
-
+          {userProfile?._id === profileData?._id ? (
+            <>
+              <Text style={{ fontSize: 20, color: "white" }}>
+                {profileData?.username}
+                <Feather name="edit" size={24} color="white" />
+              </Text>
+              <Logout />
+            </>
+          ) : (
+            <>
+              <Text style={{ fontSize: 20, color: "white" }}>
+                {profileData?.username}
+              </Text>
+              <TouchableOpacity onPress={handleFollow}>
+                {isFollowed ? (
+                  <SimpleLineIcons
+                    name="user-following"
+                    size={24}
+                    color="white"
+                  />
+                ) : (
+                  <SimpleLineIcons name="user-follow" size={24} color="white" />
+                )}
+              </TouchableOpacity>
+            </>
+          )}
           <View
             style={{
               flex: 1,
@@ -152,7 +218,25 @@ const UserProfile = ({ navigation }) => {
               justifyContent: "space-around",
             }}
           >
-            <Pressable onPress={() => navigation.navigate("Followings")}>
+            <Pressable
+              onPress={() =>
+                routeName.name == ROUTES.APPROUTES.OTHERPROFILEEXPLORE
+                  ? navigation.push(
+                      ROUTES.APPROUTES.OTHERFOLLOWINGS_EXPLORE,
+                      {
+                        profileData,
+                      },
+                      { key: profileData?._id }
+                    )
+                  : navigation.push(
+                      ROUTES.APPROUTES.OTHERFOLLOWINGS,
+                      {
+                        profileData,
+                      },
+                      { key: profileData?._id }
+                    )
+              }
+            >
               <View>
                 <Text className="text-center text-white">Followings</Text>
                 <Text className="text-center text-white">
@@ -160,7 +244,25 @@ const UserProfile = ({ navigation }) => {
                 </Text>
               </View>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate("Followers")}>
+            <Pressable
+              onPress={() =>
+                routeName.name == ROUTES.APPROUTES.OTHERPROFILEEXPLORE
+                  ? navigation.push(
+                      ROUTES.APPROUTES.OTHERFOLLOWERS_EXPLORE,
+                      {
+                        profileData,
+                      },
+                      { key: profileData?._id }
+                    )
+                  : navigation.push(
+                      ROUTES.APPROUTES.OTHERFOLLOWERS,
+                      {
+                        profileData,
+                      },
+                      { key: profileData?._id }
+                    )
+              }
+            >
               <View>
                 <Text className="text-center text-white">Followers</Text>
                 <Text className="text-center text-white">
