@@ -19,29 +19,36 @@ export default function ImageHandler({ image, setImage }) {
   };
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images, // only images
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      // Get the file extension
+      let fileExtension = result.assets[0].uri.split(".").pop();
+
+      // Check if the file extension is jpg, jpeg, or png
+      if (["jpg", "jpeg", "png"].includes(fileExtension.toLowerCase())) {
+        setImage(result.assets[0].uri);
+      } else {
+        alert("Only jpg, jpeg, or png images are allowed");
+      }
     }
   };
   const handleImage = () => {
     if (
       image ==
-      "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010"
+      "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
     )
       return null;
     return true;
   };
   const resetImage = () => {
     setImage(
-      "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010"
+      "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
     );
   };
   return (

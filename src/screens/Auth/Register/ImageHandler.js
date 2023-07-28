@@ -11,7 +11,7 @@ const RegisterImage = ({ route, navigation }) => {
   const { username, password } = route.params;
   const [userInfo, setUserInfo] = useState({});
   const [image, setImage] = useState(
-    "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010"
+    "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
   );
   const { setUser } = useContext(UserContext);
 

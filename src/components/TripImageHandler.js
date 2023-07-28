@@ -20,16 +20,23 @@ export default function TripImageHandler({ image, setImage }) {
   };
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images, // only images
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      // Get the file extension
+      let fileExtension = result.assets[0].uri.split(".").pop();
+
+      // Check if the file extension is jpg, jpeg, or png
+      if (["jpg", "jpeg", "png"].includes(fileExtension.toLowerCase())) {
+        setImage(result.assets[0].uri);
+      } else {
+        alert("Only jpg, jpeg, or png images are allowed");
+      }
     }
   };
   const handleImage = () => {
@@ -50,7 +57,7 @@ export default function TripImageHandler({ image, setImage }) {
           style={{ width: "100%", height: "100%", borderRadius: 10 }}
         />
       ) : (
-        <Ionicons name="add" size={52} color="#ffffff40"/>
+        <Ionicons name="add" size={52} color="#ffffff40" />
       )}
     </TouchableOpacity>
   );

@@ -5,11 +5,22 @@ import * as Yup from "yup";
 import { checkUsername } from "../../../apis/auth";
 import { useMutation } from "@tanstack/react-query";
 import { TouchableHighlight } from "react-native-gesture-handler";
-
+// check("username")
+// .isLength({ min: 3 })
+// .withMessage("Username must be at least 3 characters long."),
+// check("username")
+// .matches(/^[a-zA-Z0-9._]*$/)
+// .withMessage(
+//   "Username can only contain alphanumeric characters, periods, and underscores."
+// ),
 // Define validation schema
 const UsernameSchema = Yup.object().shape({
   username: Yup.string()
     .min(3, "Username must be at least 3 characters long.")
+    .matches(
+      /^[a-zA-Z0-9._]*$/,
+      "can only contain letters numbers and underscores"
+    )
     .required("Username is required."),
 });
 
