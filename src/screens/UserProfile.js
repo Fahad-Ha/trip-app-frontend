@@ -79,7 +79,7 @@ const UserProfile = ({ navigation }) => {
     );
   });
 
-  if (isFetching) return <Text>Loading..</Text>;
+  // if (isFetching) return <Text>Loading..</Text>;
   if (error)
     return (
       <View className="mt-20">
