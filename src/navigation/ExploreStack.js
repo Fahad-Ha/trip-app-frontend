@@ -22,7 +22,7 @@ export default function ExploreStack() {
       <Stack.Screen
         name={ROUTES.APPROUTES.TRIP_DETAIL}
         component={TripDetail}
-        options={{ title: "Explore" }}
+        options={{ title: "Explore", headerLeft: false }}
       />
       <Stack.Screen
         name={ROUTES.APPROUTES.OTHERPROFILEEXPLORE}
