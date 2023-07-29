@@ -32,7 +32,12 @@ const addTrip = async (data) => {
     uri: data.image,
   });
 
-  const res = await instance.post("/trips", formData);
+  const res = await instance.post("/trips", formData, {
+    headers: {
+      Accept: "application/json, text/plain, /",
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return res.data;
 };
 

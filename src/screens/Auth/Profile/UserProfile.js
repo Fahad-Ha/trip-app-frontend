@@ -225,7 +225,6 @@ const UserProfile = ({
                 {profileData?.username}
                 <Feather name="edit" size={24} color="white" />
               </Text>
-              <Logout />
             </>
           ) : (
             <>
@@ -318,7 +317,7 @@ const UserProfile = ({
           width: "100%",
         }}
       >
-        <View className=" mb-24 items-center ">
+        <View className=" mb-24 items-center h-full mt-16">
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={isFetching} onRefresh={refetch} />
@@ -327,10 +326,10 @@ const UserProfile = ({
               flexWrap: "wrap",
               flexDirection: "row",
               gap: 1,
-              paddingTop: Constants.statusBarHeight,
-              width: "100%",
+
               height: "100%",
             }}
+            className="w-full "
           >
             {tripList}
           </ScrollView>
