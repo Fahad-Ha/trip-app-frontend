@@ -10,6 +10,9 @@ import TripDetail from "../screens/TripDetail";
 import { View } from "react-native";
 import OtherFollowings from "../screens/Auth/Profile/OtherFollowings";
 import OtherFollowers from "../screens/Auth/Profile/OtherFollowers";
+import AppNavigation from "./AppNavigation";
+import LikedTrips from "../screens/Auth/Profile/LikedTrips";
+import SavedTrips from "../screens/Auth/Profile/SavedTrips";
 
 const Stack = createStackNavigator();
 const BlankHeader = () => (
@@ -39,7 +42,7 @@ export default function ProfileStack() {
         component={Followings}
         options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={ROUTES.APPROUTES.OTHERFOLLOWERS}
         component={OtherFollowers}
         options={{ headerShown: false }}
@@ -53,6 +56,17 @@ export default function ProfileStack() {
         name={ROUTES.APPROUTES.PROFILE_TRIP_DETAIL}
         component={TripDetail}
         options={{ header: () => <BlankHeader /> }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.APPROUTES.PROFILE_SAVED_TRIPS}
+        component={SavedTrips} // Render the bottom tab navigator here
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={ROUTES.APPROUTES.PROFILE_LIKED_TRIPS}
+        component={LikedTrips}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
