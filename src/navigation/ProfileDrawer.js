@@ -4,6 +4,7 @@ import { Switch, Text, View } from "react-native";
 import { useContext, useState } from "react";
 import ROUTES from ".";
 import UserProfile from "../screens/Auth/Profile/UserProfile";
+import Logout from "../components/Logout";
 
 const Drawer = createDrawerNavigator();
 
@@ -11,6 +12,7 @@ const Drawer = createDrawerNavigator();
 const CustomDrawerContent = ({ toggleDarkMode, isDarkMode }) => {
   return (
     <View
+      className="bg-[#1C535A]"
       style={{
         flex: 1,
         padding: 16,
@@ -18,15 +20,15 @@ const CustomDrawerContent = ({ toggleDarkMode, isDarkMode }) => {
       }}
     >
       <View className="rounded-lg bg-red-200 my-auto">
-        <Text className="text-2xl p-2   my-auto  ">Logout</Text>
+        <Logout />
       </View>
       {/* Dark Mode Toggle */}
       <View
-        className=" justify-center items-center pb-2 mt-auto"
+        className=" justify-center items-center pb-2 mt-auto "
         style={{ flexDirection: "row", alignItems: "center" }}
       >
         <Text
-          className="text-xl mx-auto"
+          className="text-xl mx-auto text-gray-100"
           style={{
             marginLeft: 8,
           }}
