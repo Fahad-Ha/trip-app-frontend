@@ -1,4 +1,3 @@
-
 import React from "react";
 import UserProfile from "./UserProfile";
 import { getMyProfile } from "../../../apis/auth";
@@ -14,7 +13,10 @@ const Profile = ({ navigation }) => {
     queryKey: ["profile"],
     queryFn: () => getMyProfile(),
   });
-
+  console.log(
+    "******************************************************************************************",
+    profileData
+  );
   return (
     <UserProfile
       navigation={navigation}
