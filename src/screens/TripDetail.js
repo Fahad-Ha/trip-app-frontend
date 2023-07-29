@@ -130,6 +130,7 @@ const TripDetail = ({ route, navigation }) => {
   // Function to handle the "Save" button press for saving the image
   const handleSavePress = () => {
     setIsSaved((prevIsSaved) => !prevIsSaved);
+
     saveFunc();
   };
 
@@ -208,12 +209,12 @@ const TripDetail = ({ route, navigation }) => {
             }}
           />
         </TouchableOpacity>
-        <View style={styles.buttonContainer}>
-          <View style={styles.buttonWrapper}>
-            <Text style={styles.buttonText}>Likes: {trip?.likes.length}</Text>
+        <View className="flex-1 flex-wrap ">
+          <View className="w-1/2 p-2 h-10">
+            <Text className="text-white">Likes: {trip?.likes.length}</Text>
           </View>
-          <View style={styles.buttonWrapper}>
-            <View style={styles.buttonRow} className=" justify-end">
+          <View className="w-1/2  items-end p-2  h-10">
+            <View className="flex-row gap-2">
               <TouchableOpacity onPress={handleLikePress}>
                 {isLiked ? (
                   <FontAwesome name="heart" size={24} color="red" />
@@ -284,7 +285,7 @@ const styles = StyleSheet.create({
   },
 
   details: {
-    paddingHorizontal: 15,
+    padding: 15,
   },
   title: {
     fontSize: 24,
@@ -302,23 +303,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 10,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 2,
-  },
-  buttonWrapper: {
-    flex: 1,
-    padding: 10,
-    height: 50,
-  },
-  buttonRow: {
-    flexDirection: "row",
-    gap: 10,
-  },
-  buttonText: {
-    color: "white",
   },
 });
 

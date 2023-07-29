@@ -6,6 +6,7 @@ import {
   View,
   Pressable,
   ActivityIndicator,
+  ImageBackground,
 } from "react-native";
 import Constants from "expo-constants";
 import { LinearGradient } from "expo-linear-gradient";
@@ -59,6 +60,7 @@ const UserProfile = ({
   const sortedList = profileData?.trips?.sort(function (a, b) {
     return new Date(b.createdAt) - new Date(a.createdAt);
   });
+  console.log("======================>", userProfile);
   const tripList = sortedList?.map((oneTrip) => {
     return (
       <TouchableOpacity
@@ -146,20 +148,55 @@ const UserProfile = ({
           flex: 0.4,
         }}
       >
-        <LinearGradient
-          // Background Linear Gradient
-          colors={["rgba(255, 255, 255, 0.00)", "#1C535A"]}
-          style={{
-            paddingTop: Constants.statusBarHeight,
+        {!profileData?.headerImage && (
+          <LinearGradient
+            // Background Linear Gradient
+            colors={["rgba(255, 255, 255, 0.00)", "#1C535A"]}
+            style={{
+              paddingTop: Constants.statusBarHeight,
 
+              flex: 1,
+              position: "absolute",
+              borderBottomLeftRadius: 60,
+              borderBottomRightRadius: 60,
+              justifyContent: "center",
+              alignItems: "center",
+              overflow: "hidden",
+              width: "100%",
+              height: "100%",
+            }}
+          ></LinearGradient>
+        )}
+
+        <ImageBackground
+          style={{
             flex: 1,
+            paddingTop: Constants.statusBarHeight,
             borderBottomLeftRadius: 60,
             borderBottomRightRadius: 60,
             justifyContent: "center",
             alignItems: "center",
             overflow: "hidden",
           }}
+          source={{
+            uri: `${BASE_URL}/${profileData?.headerImage}`,
+          }}
         >
+          {profileData?.headerImage && (
+            <View
+              style={{
+                top: 0,
+                bottom: 0,
+                flex: 1,
+                position: "absolute",
+                // zIndex: -1,
+                backgroundColor: "#00000070",
+                opacity: 70,
+                width: "100%",
+              }}
+            />
+          )}
+
           <View
             style={{
               flexDirection: "column",
@@ -240,7 +277,7 @@ const UserProfile = ({
               <View>
                 <Text className="text-center text-white">Followings</Text>
                 <Text className="text-center text-white">
-                  {profileData?.followings.length || "0"}
+                  {profileData?.followings?.length || "0"}
                 </Text>
               </View>
             </Pressable>
@@ -266,12 +303,12 @@ const UserProfile = ({
               <View>
                 <Text className="text-center text-white">Followers</Text>
                 <Text className="text-center text-white">
-                  {profileData?.followers.length || "0"}
+                  {profileData?.followers?.length || "0"}
                 </Text>
               </View>
             </Pressable>
           </View>
-        </LinearGradient>
+        </ImageBackground>
       </View>
 
       <View

@@ -6,10 +6,10 @@ import { getToken } from "./storage";
 const BASE_URL = "http://localhost:8000";
 const instance = axios.create({
   baseURL: BASE_URL,
-  headers: {
-    Accept: "application/json, text/plain, /",
-    "Content-Type": "multipart/form-data",
-  },
+  // headers: {
+  //   Accept: "application/json, text/plain, /",
+  //   "Content-Type": "multipart/form-data",
+  // },
 });
 
 instance.interceptors.request.use(async (config) => {
