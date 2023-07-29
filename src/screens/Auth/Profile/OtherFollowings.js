@@ -16,7 +16,7 @@ const OtherFollowings = ({ navigation, route }) => {
     queryKey: ["followings"],
     queryFn: () => getOtherFollowings(profileData?._id),
   });
-  console.log(profileData.followings);
+
   if (isFetching)
     return (
       <View className="flex-1 justify-center items-center top-[-15%]">

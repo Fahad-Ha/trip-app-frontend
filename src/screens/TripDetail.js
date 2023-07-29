@@ -82,7 +82,6 @@ const TripDetail = ({ route, navigation }) => {
     });
   }, [trip]);
 
-  // console.log(profileData, userInfo);
   useEffect(() => {
     profile();
   }, [trip]);
