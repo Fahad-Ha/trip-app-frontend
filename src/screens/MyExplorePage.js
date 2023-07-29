@@ -85,6 +85,7 @@ export default function MyExplorePage({ navigation }) {
             gap: 1,
             paddingTop: Constants.statusBarHeight,
           }}
+          className="w-full"
         >
           {tripList}
         </ScrollView>
