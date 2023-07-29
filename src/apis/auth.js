@@ -1,6 +1,6 @@
 import instance from ".";
 const register = async (userInfo) => {
-  console.log("first");
+
   const formData = new FormData();
 
   for (const key in userInfo) {
@@ -14,7 +14,7 @@ const register = async (userInfo) => {
       });
     }
   }
-  console.log("first", formData);
+ 
   const res = await instance.post("/auth/register", formData, {
     headers: {
       Accept: "application/json, text/plain, /",

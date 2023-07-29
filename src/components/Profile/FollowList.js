@@ -14,7 +14,7 @@ import { useRoute } from "@react-navigation/native";
 const FollowList = ({ followList, navigation }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const routeName = useRoute();
-  console.log(followList);
+
   const mappedFollowList = followList
     ?.sort((a, b) =>
       a?.username?.toLowerCase().localeCompare(b?.username?.toLowerCase())

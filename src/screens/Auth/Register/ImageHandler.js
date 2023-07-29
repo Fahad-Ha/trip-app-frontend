@@ -21,7 +21,6 @@ const RegisterImage = ({ route, navigation }) => {
     isLoading,
   } = useMutation({
     mutationFn: () => {
-      console.log("SENDING REQUEST TO BACKEND");
       return register({ ...userInfo, image });
     },
     onSuccess: (data) => {
@@ -36,7 +35,7 @@ const RegisterImage = ({ route, navigation }) => {
   useEffect(() => {
     setUserInfo({ ...userInfo, username, password });
   }, []);
-  console.log(userInfo);
+
   const handleRegister = () => {
     // Perform registration logic here, such as calling an API
     // setUserInfo({ ...userInfo, image });

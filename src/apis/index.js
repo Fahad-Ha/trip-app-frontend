@@ -1,15 +1,11 @@
 import axios from "axios";
 
 import { getToken } from "./storage";
-// const BASE_URL = "http://192.168.8.129:8080";
+// const BASE_URL = "http://192.168.8.25:8000";
 
 const BASE_URL = "http://localhost:8000";
 const instance = axios.create({
   baseURL: BASE_URL,
-  // headers: {
-  //   Accept: "application/json, text/plain, /",
-  //   "Content-Type": "multipart/form-data",
-  // },
 });
 
 instance.interceptors.request.use(async (config) => {

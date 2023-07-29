@@ -60,7 +60,7 @@ const UserProfile = ({
   const sortedList = profileData?.trips?.sort(function (a, b) {
     return new Date(b.createdAt) - new Date(a.createdAt);
   });
-  console.log("======================>", userProfile);
+
   const tripList = sortedList?.map((oneTrip) => {
     return (
       <TouchableOpacity

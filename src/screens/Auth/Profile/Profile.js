@@ -13,10 +13,7 @@ const Profile = ({ navigation }) => {
     queryKey: ["profile"],
     queryFn: () => getMyProfile(),
   });
-  console.log(
-    "******************************************************************************************",
-    profileData
-  );
+
   return (
     <UserProfile
       navigation={navigation}

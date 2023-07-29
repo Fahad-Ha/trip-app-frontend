@@ -43,7 +43,6 @@ export default function App() {
 
     if (token) {
       setUser(true);
-      console.log(token);
     }
   };
   useEffect(() => {
