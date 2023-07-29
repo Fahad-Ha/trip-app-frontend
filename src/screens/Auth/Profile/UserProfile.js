@@ -162,7 +162,7 @@ const UserProfile = ({
         >
           <View
             style={{
-              flexDirection: "colum",
+              flexDirection: "column",
               alignItems: "center",
               padding: 16,
             }}
