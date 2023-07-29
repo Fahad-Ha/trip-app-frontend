@@ -13,7 +13,7 @@ const Logout = () => {
         setUser(false);
       }}
     >
-      <Text>Logout</Text>
+      <Text className="text-2xl p-2 text-gray-100  my-auto  ">Logout</Text>
     </TouchableHighlight>
   );
 };

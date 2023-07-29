@@ -15,7 +15,12 @@ const register = async (userInfo) => {
     }
   }
   console.log("first", formData);
-  const res = await instance.post("/auth/register", formData);
+  const res = await instance.post("/auth/register", formData, {
+    headers: {
+      Accept: "application/json, text/plain, /",
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return res.data;
 };
 const login = async (userInfo) => {

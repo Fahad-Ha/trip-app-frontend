@@ -188,7 +188,6 @@ const UserProfile = ({
                 {profileData?.username}
                 <Feather name="edit" size={24} color="white" />
               </Text>
-              <Logout />
             </>
           ) : (
             <>
