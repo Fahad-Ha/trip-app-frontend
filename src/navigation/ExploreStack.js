@@ -3,8 +3,6 @@ import ROUTES from ".";
 import MyExplorePage from "../screens/MyExplorePage";
 import TripDetail from "../screens/TripDetail";
 import OtherUserProfile from "../screens/Auth/Profile/OtherUserProfile";
-import Followers from "../screens/Auth/Profile/Followers";
-import Followings from "../screens/Auth/Profile/Followings";
 import OtherFollowers from "../screens/Auth/Profile/OtherFollowers";
 import OtherFollowings from "../screens/Auth/Profile/OtherFollowings";
 
@@ -22,7 +20,7 @@ export default function ExploreStack() {
       <Stack.Screen
         name={ROUTES.APPROUTES.TRIP_DETAIL}
         component={TripDetail}
-        options={{ title: "Explore" }}
+        options={{ title: "Explore", headerLeft: false }}
       />
       <Stack.Screen
         name={ROUTES.APPROUTES.OTHERPROFILEEXPLORE}
