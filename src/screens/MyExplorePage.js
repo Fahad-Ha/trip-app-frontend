@@ -1,14 +1,12 @@
 import {
   View,
   Text,
-  FlatList,
+ 
   RefreshControl,
   Image,
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-
 import Constants from "expo-constants";
 import { ScrollView } from "react-native";
 import { useQuery } from "@tanstack/react-query";
@@ -70,10 +68,10 @@ export default function MyExplorePage({ navigation }) {
   return (
     <View
       style={{
-        flex: 1,
+        flex: 0.9,
       }}
     >
-      <View className=" mb-24 items-center">
+      <View className=" mb-24 items-center h-full">
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={isFetching} onRefresh={refetch} />
