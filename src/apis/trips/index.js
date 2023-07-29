@@ -13,7 +13,7 @@ const getTripId = async (id) => {
 };
 
 const deleteTrip = async (tripId) => {
-  const { data } = await instance.delete(`/trip/delete/${tripId}`);
+  const { data } = await instance.delete(`/trips/delete/${tripId}`);
   return data;
 };
 
@@ -49,5 +49,22 @@ const likeTrip = async (id) => {
   const res = await instance.put(`/trips/like/${id}`);
   return res.data;
 };
+const getLikedTrips = async () => {
+  const res = await instance.get(`/trips/liked-trips`);
+  return res.data;
+};
+const getSavedTrips = async () => {
+  const res = await instance.get(`/trips/saved-trips`);
+  return res.data;
+};
 
-export { getAllTrips, getTripId, addTrip, deleteTrip, saveTrip, likeTrip };
+export {
+  getAllTrips,
+  getTripId,
+  addTrip,
+  deleteTrip,
+  saveTrip,
+  likeTrip,
+  getLikedTrips,
+  getSavedTrips,
+};

@@ -67,18 +67,9 @@ const UserProfile = ({
         key={oneTrip._id}
         className="w-[33%] h-60 mt-[-1.5%]"
         onPress={() =>
-          routeName.name == ROUTES.APPROUTES.PROFILE
+          routeName.name == ROUTES.APPROUTES.OTHERPROFILEEXPLORE
             ? navigation.push(
-                ROUTES.APPROUTES.PROFILE_TRIP_DETAIL,
-                {
-                  oneTrip,
-                  userProfile,
-                },
-                { key: profileData?._id }
-              )
-            : routeName.name == ROUTES.APPROUTES.OTHERPROFILE
-            ? navigation.push(
-                ROUTES.APPROUTES.PROFILE_TRIP_DETAIL,
+                ROUTES.APPROUTES.TRIP_DETAIL,
 
                 {
                   oneTrip,
@@ -87,7 +78,7 @@ const UserProfile = ({
                 { key: profileData?._id }
               )
             : navigation.push(
-                ROUTES.APPROUTES.TRIP_DETAIL,
+                ROUTES.APPROUTES.PROFILE_TRIP_DETAIL,
 
                 {
                   oneTrip,
@@ -122,12 +113,12 @@ const UserProfile = ({
     followFunc();
   };
 
-  if (isFetching)
-    return (
-      <View className="flex-1 justify-center items-center top-[-15%]">
-        <ActivityIndicator size="large" color="#1C535A" />
-      </View>
-    );
+  // if (isFetching)
+  //   return (
+  //     <View className="flex-1 justify-center items-center top-[-15%]">
+  //       <ActivityIndicator size="large" color="#1C535A" />
+  //     </View>
+  //   );
 
   if (error)
     return (
@@ -139,14 +130,13 @@ const UserProfile = ({
     <View
       style={{
         flex: 1,
-        backgroundColor: "#232323",
-        // paddingTop: Constants.statusBarHeight,
       }}
     >
       <View
         style={{
           flex: 0.4,
         }}
+        className="mb-2"
       >
         {!profileData?.headerImage && (
           <LinearGradient
@@ -218,32 +208,10 @@ const UserProfile = ({
               }}
             />
           </View>
+          <Text style={{ fontSize: 20, color: "white" }}>
+            {profileData?.username}
+          </Text>
 
-          {userProfile?._id === profileData?._id ? (
-            <>
-              <Text style={{ fontSize: 20, color: "white" }}>
-                {profileData?.username}
-                <Feather name="edit" size={24} color="white" />
-              </Text>
-            </>
-          ) : (
-            <>
-              <Text style={{ fontSize: 20, color: "white" }}>
-                {profileData?.username}
-              </Text>
-              <TouchableOpacity onPress={handleFollow}>
-                {isFollowed ? (
-                  <SimpleLineIcons
-                    name="user-following"
-                    size={24}
-                    color="white"
-                  />
-                ) : (
-                  <SimpleLineIcons name="user-follow" size={24} color="white" />
-                )}
-              </TouchableOpacity>
-            </>
-          )}
           <View
             style={{
               flex: 1,
@@ -254,32 +222,6 @@ const UserProfile = ({
               justifyContent: "space-around",
             }}
           >
-            <Pressable
-              onPress={() =>
-                routeName.name == ROUTES.APPROUTES.OTHERPROFILEEXPLORE
-                  ? navigation.push(
-                      ROUTES.APPROUTES.OTHERFOLLOWINGS_EXPLORE,
-                      {
-                        profileData,
-                      },
-                      { key: profileData?._id }
-                    )
-                  : navigation.push(
-                      ROUTES.APPROUTES.OTHERFOLLOWINGS,
-                      {
-                        profileData,
-                      },
-                      { key: profileData?._id }
-                    )
-              }
-            >
-              <View>
-                <Text className="text-center text-white">Followings</Text>
-                <Text className="text-center text-white">
-                  {profileData?.followings?.length || "0"}
-                </Text>
-              </View>
-            </Pressable>
             <Pressable
               onPress={() =>
                 routeName.name == ROUTES.APPROUTES.OTHERPROFILEEXPLORE
@@ -306,6 +248,39 @@ const UserProfile = ({
                 </Text>
               </View>
             </Pressable>
+            <View>
+              <Text className="text-center text-white">Trips</Text>
+              <Text className="text-center text-white">
+                {profileData?.trips?.length || "0"}
+              </Text>
+            </View>
+
+            <Pressable
+              onPress={() =>
+                routeName.name == ROUTES.APPROUTES.OTHERPROFILEEXPLORE
+                  ? navigation.push(
+                      ROUTES.APPROUTES.OTHERFOLLOWINGS_EXPLORE,
+                      {
+                        profileData,
+                      },
+                      { key: profileData?._id }
+                    )
+                  : navigation.push(
+                      ROUTES.APPROUTES.OTHERFOLLOWINGS,
+                      {
+                        profileData,
+                      },
+                      { key: profileData?._id }
+                    )
+              }
+            >
+              <View>
+                <Text className="text-center text-white">Followings</Text>
+                <Text className="text-center text-white">
+                  {profileData?.followings?.length || "0"}
+                </Text>
+              </View>
+            </Pressable>
           </View>
         </ImageBackground>
       </View>
@@ -315,9 +290,29 @@ const UserProfile = ({
           flex: 1,
           height: "100%",
           width: "100%",
+          alignItems: "center",
         }}
       >
-        <View className=" mb-24 items-center h-full mt-16">
+        {userProfile?._id === profileData?._id ? (
+          <>
+            <Feather name="edit" size={24} color="white" />
+          </>
+        ) : (
+          <>
+            <TouchableOpacity onPress={handleFollow}>
+              {isFollowed ? (
+                <SimpleLineIcons
+                  name="user-following"
+                  size={24}
+                  color="white"
+                />
+              ) : (
+                <SimpleLineIcons name="user-follow" size={24} color="white" />
+              )}
+            </TouchableOpacity>
+          </>
+        )}
+        <View className=" mb-24 items-center h-full mt-2">
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={isFetching} onRefresh={refetch} />
@@ -326,10 +321,9 @@ const UserProfile = ({
               flexWrap: "wrap",
               flexDirection: "row",
               gap: 1,
-
               height: "100%",
             }}
-            className="w-full "
+            className="w-full"
           >
             {tripList}
           </ScrollView>

@@ -20,12 +20,37 @@ import { getProfile } from "../apis/auth";
 import { RefreshControl } from "react-native-gesture-handler";
 import ROUTES from "../navigation";
 import { useRoute } from "@react-navigation/native";
+import SimpleMenu from "../components/SimpleMenu";
+
+import Svg, { Path } from "react-native-svg";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from "react-native-reanimated";
+
+const Heart = ({ color }) => (
+  <Svg >
+    <Path
+      fill={color}
+      d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z"
+    />
+  </Svg>
+);
 
 const TripDetail = ({ route, navigation }) => {
   const { oneTrip, userProfile } = route.params;
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [likeCounter, setLikeCounter] = useState(null);
+  const scale = useSharedValue(0);
+
+  const animatedHeartStyles = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
 
   const routeName = useRoute();
 
@@ -56,10 +81,11 @@ const TripDetail = ({ route, navigation }) => {
           // Set if the user has liked the trip
           const hasUserAlreadyLiked = profileData.likedTrips.includes(trip._id);
           setIsLiked(hasUserAlreadyLiked);
-
+          setLikeCounter(trip?.likes.length);
           // Set if the user has saved the trip
           const hasUserAlreadySaved = profileData.savedTrips.includes(trip._id);
           setIsSaved(hasUserAlreadySaved);
+          setUserInfo(decoded);
         }
       } catch (error) {
         setUserInfo(false);
@@ -88,7 +114,11 @@ const TripDetail = ({ route, navigation }) => {
 
   const { mutate: likeFunc } = useMutation({
     mutationFn: () => likeTrip(trip?._id),
-    onSuccess: () => {},
+    onSuccess: (data) => {
+      setLikeCounter((prevCounter) =>
+        data.message.includes("unliked") ? prevCounter - 1 : prevCounter + 1
+      );
+    },
     onError: (err) => {
       console.log("err", err);
     },
@@ -112,6 +142,13 @@ const TripDetail = ({ route, navigation }) => {
       // Double tap detected, toggle like status
       setIsLiked((prevIsLiked) => !prevIsLiked);
       likeFunc();
+
+      // Trigger the heart pop animation
+      scale.value = withSpring(3, { damping: 10, stiffness: 190 }, () => {
+        // Reset to 0 after popping
+        scale.value = 0;
+      });
+
       // Reset the last tap timestamp
       lastTapRef.current = null;
     } else {
@@ -157,38 +194,45 @@ const TripDetail = ({ route, navigation }) => {
       }
     >
       <View style={styles.card}>
-        <Pressable
-          onPress={() =>
-            routeName.name == ROUTES.APPROUTES.TRIP_DETAIL
-              ? navigation.push(
-                  ROUTES.APPROUTES.OTHERPROFILEEXPLORE,
+        <View style={styles.userContainer}>
+          <Pressable
+            onPress={() =>
+              routeName.name == ROUTES.APPROUTES.TRIP_DETAIL
+                ? navigation.push(
+                    ROUTES.APPROUTES.OTHERPROFILEEXPLORE,
 
-                  {
-                    user: { _id: trip?.creator._id },
-                  },
-                  { key: trip?._id }
-                )
-              : navigation.push(
-                  ROUTES.APPROUTES.PROFILE,
+                    {
+                      user: { _id: trip?.creator._id },
+                    },
+                    { key: trip?._id }
+                  )
+                : navigation.push(
+                    ROUTES.APPROUTES.OTHERPROFILE,
 
-                  {
-                    user: { _id: trip?.creator._id },
-                  },
-                  { key: trip?._id }
-                )
-          }
-        >
-          <View style={styles.userContainer}>
-            {/* <Ionicons name="person-circle-outline" size={40} color="white" /> */}
-            <View className="w-10 h-10 overflow-hidden rounded-full border-[1px] border-white">
-              <Image
-                source={{ uri: `${BASE_URL}/${trip?.creator.image}` }}
-                className="w-full h-full"
-              />
+                    {
+                      user: { _id: trip?.creator._id },
+                    },
+                    { key: trip?._id }
+                  )
+            }
+          >
+            <View style={styles.profileContainer}>
+              <View className="w-10 h-10 overflow-hidden rounded-full border-[1px] border-white">
+                <Image
+                  source={{ uri: `${BASE_URL}/${trip?.creator.image}` }}
+                  className="w-full h-full"
+                />
+              </View>
+              <Text style={styles.userName}> {trip?.creator.username}</Text>
             </View>
-            <Text style={styles.userName}> {trip?.creator.username}</Text>
-          </View>
-        </Pressable>
+          </Pressable>
+          {userInfo?._id === trip?.creator._id && (
+            <View>
+              <SimpleMenu id={trip?._id} navigation={navigation} />
+            </View>
+          )}
+        </View>
+
         <TouchableOpacity
           onPress={handleDoubleTap}
           activeOpacity={1}
@@ -207,10 +251,25 @@ const TripDetail = ({ route, navigation }) => {
               resizeMode: "cover",
             }}
           />
+          <Animated.View
+            style={[
+              {
+                position: "absolute",
+                top: "40%",
+                left: "40%",
+                width: 50,
+                height: 50,
+              },
+              animatedHeartStyles,
+            ]}
+          >
+            <Heart color="white" />
+          </Animated.View>
         </TouchableOpacity>
+
         <View style={styles.buttonContainer}>
           <View style={styles.buttonWrapper}>
-            <Text style={styles.buttonText}>Likes: {trip?.likes.length}</Text>
+            <Text style={styles.buttonText}>Likes: {likeCounter}</Text>
           </View>
           <View style={styles.buttonWrapper}>
             <View style={styles.buttonRow} className=" justify-end">
@@ -245,29 +304,23 @@ const TripDetail = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     paddingBottom: 80,
   },
   card: {
     width: "100%",
-
     borderRadius: 10,
-    // backgroundColor: "#fff",
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 3.84,
-    // elevation: 5,
   },
   userContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     padding: 10,
+  },
+  profileContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   userName: {
     fontSize: 18,
@@ -275,11 +328,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   imageContainer: {
-    // Add flexGrow to allow the image to grow on double-tap
     flexGrow: 1,
-    // overflow: "hidden",
-    // minHeight: "20%",
-    // maxHeight: "100%",
     width: "100%",
   },
 
