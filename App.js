@@ -43,11 +43,12 @@ export default function App() {
 
     if (token) {
       setUser(true);
+      console.log(token);
     }
   };
   useEffect(() => {
     checkToken();
-  }, []);
+  }, [user]);
   return (
     <QueryClientProvider client={new QueryClient()}>
       <UserContext.Provider value={{ user, setUser }}>

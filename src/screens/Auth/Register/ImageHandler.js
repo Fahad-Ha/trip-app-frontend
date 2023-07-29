@@ -20,13 +20,16 @@ const RegisterImage = ({ route, navigation }) => {
     error,
     isLoading,
   } = useMutation({
-    mutationFn: () => register({ ...userInfo, image }),
+    mutationFn: () => {
+      console.log("SENDING REQUEST TO BACKEND");
+      return register({ ...userInfo, image });
+    },
     onSuccess: (data) => {
       saveToken(data.token);
       setUser(true);
     },
     onError: (err) => {
-      console.log(err.response?.data);
+      console.log("========>", err);
     },
   });
 
