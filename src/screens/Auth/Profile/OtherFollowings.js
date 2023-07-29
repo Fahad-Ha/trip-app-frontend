@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import React from "react";
 import FollowList from "../../../components/Profile/FollowList";
-import { getMyFollowings } from "../../../apis/auth";
+import { getOtherFollowings } from "../../../apis/auth";
 import { useQuery } from "@tanstack/react-query";
 import { RefreshControl } from "react-native-gesture-handler";
 import Constants from "expo-constants";
@@ -14,7 +14,7 @@ const OtherFollowings = ({ navigation, route }) => {
     refetch,
   } = useQuery({
     queryKey: ["followings"],
-    queryFn: () => getMyFollowings(profileData._id),
+    queryFn: () => getOtherFollowings(profileData?._id),
   });
   console.log(profileData.followings);
   if (isFetching)
