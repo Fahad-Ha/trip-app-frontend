@@ -10,10 +10,11 @@ import { Entypo } from "@expo/vector-icons";
 import { deleteTrip } from "../apis/trips";
 import { useMutation } from "@tanstack/react-query";
 import { useTheme } from "@react-navigation/native";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function SimpleMenu({ navigation, id }) {
   const theme = useTheme(); // Get the currently active theme
-  console.log(id);
+
   const { mutate: deleteOneTrip } = useMutation({
     mutationFn: deleteTrip,
     onSuccess: () => {
@@ -24,17 +25,6 @@ export default function SimpleMenu({ navigation, id }) {
       console.log("err", err);
     },
   });
-
-  // const { mutate: deleteOneTrip } = useMutation({
-  //   mutationFn: deleteTrip(id),
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries("trips");
-  //     navigation.navigate(ROUTES.APPROUTES.EXPLORE);
-  //   },
-  //   onError: (err) => {
-  //     console.log("err", err);
-  //   },
-  // });
 
   return (
     <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -57,10 +47,10 @@ export default function SimpleMenu({ navigation, id }) {
                 paddingVertical: 4,
               }}
             >
-              Delete
+              <FontAwesome name="trash-o" size={24} color={theme.colors.text} />
             </Text>
           </MenuOption>
-          <MenuOption onSelect={() => alert(`Edit`)}>
+          {/* <MenuOption onSelect={() => alert(`Soon.. :P`)}>
             <Text
               style={{
                 color: "rgba(30, 144, 255, 1)   ",
@@ -70,7 +60,7 @@ export default function SimpleMenu({ navigation, id }) {
             >
               Edit
             </Text>
-          </MenuOption>
+          </MenuOption> */}
         </MenuOptions>
       </Menu>
     </View>

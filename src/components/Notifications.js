@@ -87,9 +87,9 @@ export default function NotificationsExpo() {
 
   return (
     <View>
-      {/* Button to send a custom notification */}
+      {/* Button to send a custom notification
       <Text>Your expo push token: {expoPushToken}</Text>
-      <Button title="Send Notification" onPress={schedulePushNotification} />
+      <Button title="Send Notification" onPress={schedulePushNotification} /> */}
     </View>
   );
 }

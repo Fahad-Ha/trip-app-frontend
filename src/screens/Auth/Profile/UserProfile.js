@@ -221,10 +221,7 @@ const UserProfile = ({
               <Entypo name="menu" size={32} color={theme.colors.text} />
             </Pressable>
           </View>
-          <View
-            style={{ borderColor: theme.colors.text }}
-            className="w-20 h-20 overflow-hidden rounded-full border-[1px] "
-          >
+          <View className="w-20 h-20 overflow-hidden rounded-full border-[1px] border-white">
             <Image
               className="w-full h-full"
               source={{
@@ -238,11 +235,13 @@ const UserProfile = ({
           {userProfile?._id === profileData?._id ? (
             <>
               <View className="m-2 ">
-                <Text style={{ fontSize: 20, color: theme.colors.text }}>
+                <Text style={{ fontSize: 20, color: "white" }}>
                   {profileData?.username}
                 </Text>
                 <View className="absolute left-16">
-                  <Feather name="edit" size={24} color={theme.colors.text} />
+                  <Pressable onPress={() => alert("Soon.. :P")}>
+                    <Feather name="edit" size={24} color="white" />
+                  </Pressable>
                 </View>
               </View>
             </>
@@ -251,21 +250,6 @@ const UserProfile = ({
               <Text style={{ fontSize: 20, color: theme.colors.text }}>
                 {profileData?.username}
               </Text>
-              <TouchableOpacity onPress={handleFollow}>
-                {isFollowed ? (
-                  <SimpleLineIcons
-                    name="user-following"
-                    size={24}
-                    color={theme.colors.text}
-                  />
-                ) : (
-                  <SimpleLineIcons
-                    name="user-follow"
-                    size={24}
-                    color={theme.colors.text}
-                  />
-                )}
-              </TouchableOpacity>
             </>
           )}
 
@@ -299,31 +283,19 @@ const UserProfile = ({
               }
             >
               <View>
-                <Text
-                  style={{ color: theme.colors.text }}
-                  className="text-center "
-                >
+                <Text style={{ color: "white" }} className="text-center ">
                   Followers
                 </Text>
-                <Text
-                  style={{ color: theme.colors.text }}
-                  className="text-center"
-                >
+                <Text style={{ color: "white" }} className="text-center">
                   {profileData?.followers?.length || "0"}
                 </Text>
               </View>
             </Pressable>
             <View>
-              <Text
-                style={{ color: theme.colors.text }}
-                className="text-center "
-              >
+              <Text style={{ color: "white" }} className="text-center ">
                 Trips
               </Text>
-              <Text
-                style={{ color: theme.colors.text }}
-                className="text-center "
-              >
+              <Text style={{ color: "white" }} className="text-center ">
                 {profileData?.trips?.length || "0"}
               </Text>
             </View>
@@ -348,16 +320,10 @@ const UserProfile = ({
               }
             >
               <View>
-                <Text
-                  style={{ color: theme.colors.text }}
-                  className="text-center "
-                >
+                <Text style={{ color: "white" }} className="text-center ">
                   Followings
                 </Text>
-                <Text
-                  style={{ color: theme.colors.text }}
-                  className="text-center "
-                >
+                <Text style={{ color: "white" }} className="text-center ">
                   {profileData?.followings?.length || "0"}
                 </Text>
               </View>
@@ -376,9 +342,7 @@ const UserProfile = ({
         }}
       >
         {userProfile?._id === profileData?._id ? (
-          <>
-            <Feather name="edit" size={24} color={theme.colors.text} />
-          </>
+          <></>
         ) : (
           <>
             <TouchableOpacity onPress={handleFollow}>

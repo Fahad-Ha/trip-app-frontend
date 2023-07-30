@@ -292,7 +292,10 @@ const TripDetail = ({ route, navigation }) => {
             }
           >
             <View style={styles.profileContainer}>
-              <View className="w-10 h-10 overflow-hidden rounded-full border-[1px] border-white">
+              <View
+                className="w-10 h-10 overflow-hidden rounded-full border-[1px] "
+                style={{ borderColor: theme.colors.text }}
+              >
                 <Image
                   source={{ uri: `${BASE_URL}/${trip?.creator.image}` }}
                   className="w-full h-full"

@@ -9,11 +9,12 @@ import {
 } from "react-native";
 import { BASE_URL } from "../../apis";
 import ROUTES from "../../navigation";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useTheme } from "@react-navigation/native";
 
 const FollowList = ({ followList, navigation }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const routeName = useRoute();
+  const theme = useTheme();
   console.log(routeName.name);
   const mappedFollowList = followList
     ?.sort((a, b) =>
@@ -52,13 +53,18 @@ const FollowList = ({ followList, navigation }) => {
           }}
           className="border-t-2  border-[#1c1c1c]"
         >
-          <View className="w-10 h-10 overflow-hidden rounded-full border-[1px] border-white">
+          <View
+            className="w-10 h-10 overflow-hidden rounded-full border-[1px] "
+            style={{ borderColor: theme.colors.text }}
+          >
             <Image
               source={{ uri: `${BASE_URL}/${user?.image}` }}
               className="w-full h-full"
             />
           </View>
-          <Text className="text-white mx-3">{user?.username}</Text>
+          <Text className=" mx-3" style={{ color: theme.colors.text }}>
+            {user?.username}
+          </Text>
         </View>
       </TouchableHighlight>
     ));
