@@ -54,7 +54,9 @@ const RegisterImage = ({ route, navigation }) => {
       </View>
       <View className="flex-1 items-center justify-center top-[-15%]">
         <ImageHandler image={image} setImage={setImage} />
-        <Button title="Register" onPress={handleRegister} />
+        <View className="mt-2">
+          <Button title="Register" onPress={handleRegister} />
+        </View>
       </View>
     </View>
   );

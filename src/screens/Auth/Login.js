@@ -12,6 +12,8 @@ import { checkToken, saveToken } from "../../apis/storage";
 import UserContext from "../../context/UserContext";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { Pressable } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 
 // Define validation schema
 const LoginSchema = Yup.object().shape({
@@ -30,6 +32,11 @@ const LoginSchema = Yup.object().shape({
 const Login = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
   const [backendError, setBackendError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const {
     mutate: loginFunction,
@@ -77,7 +84,7 @@ const Login = ({ navigation }) => {
 
           return (
             <View>
-              <View className="w-4/5 mt-40 mb-4">
+              <View className="w-4/5 mt-40 mb-4 ">
                 <Text className="text-xl text-white text-center font-bold mb-4">
                   Login
                 </Text>
@@ -86,7 +93,7 @@ const Login = ({ navigation }) => {
                 </Text>
               </View>
               <TextInput
-                className=" h-12 mb-2 py-2 px-4 border-s border-gray-300 rounded bg-[#1c1c1c] text-white "
+                className=" h-12 mb-2 py-2 px-4 border-s border-gray-300 rounded-xl bg-[#1c1c1c] text-white "
                 placeholder="Username"
                 onBlur={handleBlur("username")}
                 onChangeText={handleChangeAndResetError("username")}
@@ -96,22 +103,40 @@ const Login = ({ navigation }) => {
               {errors.username && touched.username && (
                 <Text style={{ color: "red" }}>{errors.username}</Text>
               )}
-              <TextInput
-                className="h-12 mb-2 py-2 px-4 border-s border-gray-300 rounded bg-[#1c1c1c] text-white "
-                placeholder="Password"
-                onBlur={handleBlur("password")}
-                onChangeText={handleChangeAndResetError("password")}
-                value={values.password}
-                secureTextEntry
-                placeholderTextColor="#ffffffec"
-              />
+              <View className="relative">
+                <TextInput
+                  className="h-12 mb-2 py-2 px-4 border-s border-gray-300 rounded-xl bg-[#1c1c1c] text-white "
+                  placeholder="Password"
+                  onBlur={handleBlur("password")}
+                  onChangeText={handleChangeAndResetError("password")}
+                  value={values.password}
+                  secureTextEntry={!showPassword}
+                  placeholderTextColor="#ffffffec"
+                />
+                <Pressable
+                  className="absolute p-2 top-4 right-2"
+                  onPress={() => {
+                    toggleShowPassword();
+                  }}
+                >
+                  <FontAwesome
+                    name={showPassword ? "eye" : "eye-slash"}
+                    size={24}
+                    color="gray"
+                    style={{ marginTop: -12 }}
+                  />
+                </Pressable>
+              </View>
               {backendError && (
                 <Text style={{ color: "red" }}>{backendError}</Text>
               )}
               {errors.password && touched.password && (
                 <Text style={{ color: "red" }}>{errors.password}</Text>
               )}
-              <Button title="Login" onPress={handleSubmit} />
+              <View className="mt-2">
+                <Button title="Login" onPress={handleSubmit} />
+              </View>
+
               <TouchableHighlight
                 className="mt-2"
                 onPress={handleRegister}

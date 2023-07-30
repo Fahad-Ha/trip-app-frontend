@@ -221,10 +221,14 @@ const UserProfile = ({
 
           {userProfile?._id === profileData?._id ? (
             <>
-              <Text style={{ fontSize: 20, color: "white" }}>
-                {profileData?.username}
-                <Feather name="edit" size={24} color="white" />
-              </Text>
+              <View className="m-2">
+                <Text style={{ fontSize: 20, color: "white" }}>
+                  {profileData?.username}
+                </Text>
+                <View className="absolute left-16">
+                  <Feather name="edit" size={24} color="white" />
+                </View>
+              </View>
             </>
           ) : (
             <>

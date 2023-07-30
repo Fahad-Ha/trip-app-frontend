@@ -73,7 +73,7 @@ const RegisterUsername = ({ navigation }) => {
             </Text>
           </View>
           <TextInput
-            className="w-4/5 h-12 mb-2 py-2 px-4 border-s border-gray-300 rounded bg-[#1c1c1c] text-white "
+            className="w-4/5 h-12 mb-2 py-2 px-4 border-s border-gray-300 rounded-xl bg-[#1c1c1c] text-white "
             placeholder="Username"
             onBlur={handleBlur("username")}
             onChangeText={handleChange("username")}
@@ -105,8 +105,9 @@ const RegisterUsername = ({ navigation }) => {
               </View>
             </View>
           )}
-
-          <Button title="Next" onPress={handleSubmit} />
+          <View className="mt-2">
+            <Button title="Next" onPress={handleSubmit} />
+          </View>
         </View>
       )}
     </Formik>

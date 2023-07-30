@@ -14,7 +14,6 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import ROUTES from "../navigation";
 
- 
 // Define validation schema
 const TripSchema = Yup.object().shape({
   title: Yup.string()
@@ -35,7 +34,7 @@ export default function AddTrip({ navigation }) {
   const { mutate: addTripFunction } = useMutation({
     mutationFn: addTrip,
     onSuccess: () => {
-      queryClient.invalidateQueries('trips'); 
+      queryClient.invalidateQueries("trips");
       navigation.navigate(ROUTES.APPROUTES.EXPLORE);
     },
     onError: (err) => {
@@ -68,7 +67,7 @@ export default function AddTrip({ navigation }) {
               <View>
                 <Text className="mb-1 text-white">Title</Text>
                 <TextInput
-                  className="rounded bg-[#1c1c1c] text-white  mb-1 p-2"
+                  className="rounded-xl bg-[#1c1c1c] text-white  mb-1 p-2"
                   placeholder="Title.."
                   onBlur={handleBlur("title")}
                   onChangeText={handleChange("title")}
@@ -82,7 +81,7 @@ export default function AddTrip({ navigation }) {
               <View>
                 <Text className="mb-1 mt-4  text-white">Description</Text>
                 <TextInput
-                  className="rounded bg-[#1c1c1c] text-white p-2 mb-1"
+                  className="rounded-xl bg-[#1c1c1c] text-white p-2 mb-1"
                   multiline={true}
                   returnKeyType="done"
                   placeholder="Description.."
