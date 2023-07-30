@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Alert } from "react-native";
 import {
   Menu,
   MenuOptions,
@@ -8,13 +8,14 @@ import {
 } from "react-native-popup-menu";
 import { Entypo } from "@expo/vector-icons";
 import { deleteTrip } from "../apis/trips";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTheme } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
+import ROUTES from "../navigation";
 
 export default function SimpleMenu({ navigation, id }) {
   const theme = useTheme(); // Get the currently active theme
-
+  const queryClient = useQueryClient(); // Import and use query client here
   const { mutate: deleteOneTrip } = useMutation({
     mutationFn: deleteTrip,
     onSuccess: () => {
@@ -39,7 +40,28 @@ export default function SimpleMenu({ navigation, id }) {
           }
         />
         <MenuOptions style={{ backgroundColor: theme.colors.popMenu }}>
-          <MenuOption onSelect={() => deleteOneTrip(id)}>
+          <MenuOption
+            onSelect={() =>
+              Alert.alert(
+                "Are you sure?",
+                "the trip will be deleted permanently!",
+                [
+                  // The "Yes" button
+                  {
+                    text: "Delete",
+                    onPress: () => {
+                      deleteOneTrip(id);
+                    },
+                  },
+                  // The "No" button
+                  // Does nothing but dismiss the dialog when tapped
+                  {
+                    text: "Cancel",
+                  },
+                ]
+              )
+            }
+          >
             <Text
               style={{
                 color: "rgba(255, 69, 0, 1) ",
@@ -47,7 +69,12 @@ export default function SimpleMenu({ navigation, id }) {
                 paddingVertical: 4,
               }}
             >
-              <FontAwesome name="trash-o" size={24} color={theme.colors.text} />
+              <FontAwesome
+                name="trash-o"
+                size={24}
+                color="rgba(255, 69, 0, 1)"
+              />
+              <Text className="text-lg"> Delete Trip</Text>
             </Text>
           </MenuOption>
           {/* <MenuOption onSelect={() => alert(`Soon.. :P`)}>
