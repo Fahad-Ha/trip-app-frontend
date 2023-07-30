@@ -23,6 +23,7 @@ import jwt_decode from "jwt-decode";
 import { follow } from "../../../apis/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useRoute } from "@react-navigation/native";
+import socketIOClient from "socket.io-client";
 
 const UserProfile = ({
   navigation,
@@ -54,7 +55,19 @@ const UserProfile = ({
     }
   };
   useEffect(() => {
-    profile();
+    profile(); // Set up the Socket.IO client
+    const socket = socketIOClient(BASE_URL);
+
+    // Listen for 'notification' events from the server
+    socket.on("notification", (data) => {
+      console.log("Notification received:", data);
+      // Handle the notification (e.g., show a toast or display a notification)
+    });
+
+    // Clean up the Socket.IO client when the component unmounts
+    return () => {
+      socket.disconnect();
+    };
   }, [profileData]);
 
   const sortedList = profileData?.trips?.sort(function (a, b) {
@@ -65,7 +78,7 @@ const UserProfile = ({
     return (
       <TouchableOpacity
         key={oneTrip._id}
-        className="w-[33%] h-60 mt-[-1.5%]"
+        className="w-[33%] h-60 mt-[-1.5%] "
         onPress={() =>
           routeName.name == ROUTES.APPROUTES.OTHERPROFILEEXPLORE
             ? navigation.push(
@@ -111,8 +124,13 @@ const UserProfile = ({
   const handleFollow = () => {
     setIsFollowed((prevIsFollowed) => !prevIsFollowed);
     followFunc();
+    // Emit a 'follow' event to the server with the followerUserId and followedUserId
+    const socket = socketIOClient(BASE_URL);
+    socket.emit("follow", {
+      followerUserId: userProfile?._id,
+      followedUserId: profileData?._id,
+    });
   };
-
   // if (isFetching)
   //   return (
   //     <View className="flex-1 justify-center items-center top-[-15%]">
@@ -208,12 +226,12 @@ const UserProfile = ({
               }}
             />
           </View>
-          <Text style={{ fontSize: 20, color: "white" }}>
+          {/* <Text style={{ fontSize: 20, color: "white" }}>
             {profileData?.username}
-          </Text>
+          </Text> */}
           {userProfile?._id === profileData?._id ? (
             <>
-              <View className="m-2">
+              <View className="m-2 ">
                 <Text style={{ fontSize: 20, color: "white" }}>
                   {profileData?.username}
                 </Text>
@@ -314,6 +332,7 @@ const UserProfile = ({
         </ImageBackground>
       </View>
 
+      {/* Trips List View */}
       <View
         style={{
           flex: 1,
@@ -341,7 +360,7 @@ const UserProfile = ({
             </TouchableOpacity>
           </>
         )}
-        <View className=" mb-24 items-center h-full mt-2">
+        <View className=" mb-24 items-center h-full w-full mt-2">
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={isFetching} onRefresh={refetch} />
@@ -354,7 +373,20 @@ const UserProfile = ({
             }}
             className="w-full"
           >
-            {tripList}
+            {tripList?.length === 0 ? (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                className="my-[50%]"
+              >
+                <Text className="text-white text-4xl  ">No Trips Yet</Text>
+              </View>
+            ) : (
+              tripList
+            )}
           </ScrollView>
         </View>
       </View>
