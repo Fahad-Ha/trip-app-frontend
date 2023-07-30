@@ -211,6 +211,35 @@ const UserProfile = ({
           <Text style={{ fontSize: 20, color: "white" }}>
             {profileData?.username}
           </Text>
+          {userProfile?._id === profileData?._id ? (
+            <>
+              <View className="m-2">
+                <Text style={{ fontSize: 20, color: "white" }}>
+                  {profileData?.username}
+                </Text>
+                <View className="absolute left-16">
+                  <Feather name="edit" size={24} color="white" />
+                </View>
+              </View>
+            </>
+          ) : (
+            <>
+              <Text style={{ fontSize: 20, color: "white" }}>
+                {profileData?.username}
+              </Text>
+              <TouchableOpacity onPress={handleFollow}>
+                {isFollowed ? (
+                  <SimpleLineIcons
+                    name="user-following"
+                    size={24}
+                    color="white"
+                  />
+                ) : (
+                  <SimpleLineIcons name="user-follow" size={24} color="white" />
+                )}
+              </TouchableOpacity>
+            </>
+          )}
 
           <View
             style={{

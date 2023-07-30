@@ -1,7 +1,16 @@
-import React from "react";
-import { Button, Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
+import {
+  Button,
+  Pressable,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  View,
+} from "react-native";
 import { Formik } from "formik";
+import { FontAwesome } from "@expo/vector-icons";
 import * as Yup from "yup";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 // Define validation schema
 const PasswordSchema = Yup.object().shape({
@@ -16,6 +25,11 @@ const PasswordSchema = Yup.object().shape({
 
 const RegisterPassword = ({ route, navigation }) => {
   const { username } = route.params;
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   return (
     <Formik
@@ -47,18 +61,35 @@ const RegisterPassword = ({ route, navigation }) => {
             </Text>
           </View>
           <TextInput
-            className="w-4/5 h-12 mb-2 py-2 px-4 border-s border-gray-300 rounded bg-[#1c1c1c] text-white "
+            className="w-4/5 h-12 mb-2 py-2 px-4 border-s border-gray-300 rounded-xl bg-[#1c1c1c] text-white relative"
             placeholder="Password"
-            secureTextEntry
+            secureTextEntry={!showPassword}
             onBlur={handleBlur("password")}
             onChangeText={handleChange("password")}
             value={values.password}
             placeholderTextColor="#ffffffec"
           />
+
+          <Pressable
+            className="absolute p-2 top-56 mt-2 right-12"
+            onPress={() => {
+              toggleShowPassword();
+            }}
+          >
+            <FontAwesome
+              name={showPassword ? "eye" : "eye-slash"}
+              size={24}
+              color="gray"
+              style={{ marginTop: -12 }}
+            />
+          </Pressable>
+
           {errors.password && touched.password && (
             <Text style={{ color: "red" }}>{errors.password}</Text>
           )}
-          <Button title="Next" onPress={handleSubmit} />
+          <View className="mt-2">
+            <Button title="Next" onPress={handleSubmit} />
+          </View>
         </View>
       )}
     </Formik>
