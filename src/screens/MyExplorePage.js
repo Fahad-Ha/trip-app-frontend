@@ -4,6 +4,7 @@ import {
   RefreshControl,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Constants from "expo-constants";
@@ -39,10 +40,33 @@ export default function MyExplorePage({ navigation }) {
   useEffect(() => {
     profile();
   }, []);
+  function shuffle(array) {
+    let currentIndex = array.length,
+      randomIndex;
 
-  const sortedList = data?.sort(function (a, b) {
-    return new Date(b.createdAt) - new Date(a.createdAt);
-  });
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+
+    return array;
+  }
+  if (isFetching)
+    return (
+      <View className="flex-1 justify-center items-center top-[-5%]">
+        <ActivityIndicator size="large" color="#1C535A" />
+      </View>
+    );
+  const sortedList = shuffle(data?.length && data);
+
   const tripList = sortedList?.map((oneTrip) => {
     return (
       <TouchableOpacity

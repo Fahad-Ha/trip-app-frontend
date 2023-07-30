@@ -143,8 +143,10 @@ const TripDetail = ({ route, navigation }) => {
 
     if (lastTapRef.current && now - lastTapRef.current < DOUBLE_PRESS_DELAY) {
       // Double tap detected, toggle like status
-      setIsLiked((prevIsLiked) => !prevIsLiked);
-      likeFunc();
+      if (!isLiked) {
+        setIsLiked((prevIsLiked) => !prevIsLiked);
+        likeFunc();
+      }
 
       // Trigger the heart pop animation
       scale.value = withSpring(3, { damping: 10, stiffness: 190 }, () => {
