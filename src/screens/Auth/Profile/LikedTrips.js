@@ -68,7 +68,12 @@ const SavedTrips = ({ navigation }) => {
     >
       <View className=" mb-24 items-center h-full">
         <View className="mt-20">
-          <Text className=" text-xl font-bold">Liked Trips</Text>
+          <Text
+            className=" text-xl font-bold"
+            style={{ color: theme.colors.text }}
+          >
+            Liked Trips
+          </Text>
         </View>
         <ScrollView
           refreshControl={
@@ -84,24 +89,24 @@ const SavedTrips = ({ navigation }) => {
           className="w-full"
         >
           {tripList?.length === 0 ? (
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                className="my-[50%]"
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              className="my-[50%]"
+            >
+              <Text
+                style={{ color: theme.colors.text }}
+                className=" text-4xl  "
               >
-                <Text
-                  style={{ color: theme.colors.text }}
-                  className=" text-4xl  "
-                >
-                  No Liked Trips Yet
-                </Text>
-              </View>
-            ) : (
-              tripList
-            )}
+                No Liked Trips Yet
+              </Text>
+            </View>
+          ) : (
+            tripList
+          )}
         </ScrollView>
       </View>
     </View>
