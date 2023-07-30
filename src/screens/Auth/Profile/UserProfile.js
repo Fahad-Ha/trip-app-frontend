@@ -221,9 +221,7 @@ const UserProfile = ({
               <Entypo name="menu" size={32} color={theme.colors.text} />
             </Pressable>
           </View>
-          <View
-            className="w-20 h-20 overflow-hidden rounded-full border-[1px] border-white"
-          >
+          <View className="w-20 h-20 overflow-hidden rounded-full border-[1px] border-white">
             <Image
               className="w-full h-full"
               source={{
@@ -241,30 +239,17 @@ const UserProfile = ({
                   {profileData?.username}
                 </Text>
                 <View className="absolute left-16">
-                  <Feather name="edit" size={24} color="white" />
+                  <Pressable onPress={() => alert("Soon.. :P")}>
+                    <Feather name="edit" size={24} color="white" />
+                  </Pressable>
                 </View>
               </View>
             </>
           ) : (
             <>
-              <Text style={{ fontSize: 20, color: theme.colors.text}}>
+              <Text style={{ fontSize: 20, color: theme.colors.text }}>
                 {profileData?.username}
               </Text>
-              {/* <TouchableOpacity onPress={handleFollow}>
-                {isFollowed ? (
-                  <SimpleLineIcons
-                    name="user-following"
-                    size={24}
-                    color={theme.colors.text}
-                  />
-                ) : (
-                  <SimpleLineIcons
-                    name="user-follow"
-                    size={24}
-                    color={theme.colors.text}
-                  />
-                )}
-              </TouchableOpacity> */}
             </>
           )}
 
@@ -298,31 +283,19 @@ const UserProfile = ({
               }
             >
               <View>
-                <Text
-                  style={{ color: "white" }}
-                  className="text-center "
-                >
+                <Text style={{ color: "white" }} className="text-center ">
                   Followers
                 </Text>
-                <Text
-                  style={{ color: "white" }}
-                  className="text-center"
-                >
+                <Text style={{ color: "white" }} className="text-center">
                   {profileData?.followers?.length || "0"}
                 </Text>
               </View>
             </Pressable>
             <View>
-              <Text
-                style={{ color: "white" }}
-                className="text-center "
-              >
+              <Text style={{ color: "white" }} className="text-center ">
                 Trips
               </Text>
-              <Text
-                style={{ color: "white" }}
-                className="text-center "
-              >
+              <Text style={{ color: "white" }} className="text-center ">
                 {profileData?.trips?.length || "0"}
               </Text>
             </View>
@@ -347,16 +320,10 @@ const UserProfile = ({
               }
             >
               <View>
-                <Text
-                  style={{ color: "white"}}
-                  className="text-center "
-                >
+                <Text style={{ color: "white" }} className="text-center ">
                   Followings
                 </Text>
-                <Text
-                  style={{ color: "white" }}
-                  className="text-center "
-                >
+                <Text style={{ color: "white" }} className="text-center ">
                   {profileData?.followings?.length || "0"}
                 </Text>
               </View>

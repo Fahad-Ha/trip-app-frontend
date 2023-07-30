@@ -10,12 +10,13 @@ import { Entypo } from "@expo/vector-icons";
 import { deleteTrip } from "../apis/trips";
 import { useMutation } from "@tanstack/react-query";
 import { useTheme } from "@react-navigation/native";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function SimpleMenu({ navigation, id }) {
   const theme = useTheme(); // Get the currently active theme
 
   const { mutate: deleteOneTrip } = useMutation({
-    mutationFn: deleteTrip(id),
+    mutationFn: deleteTrip,
     onSuccess: () => {
       queryClient.invalidateQueries("trips");
       navigation.navigate(ROUTES.APPROUTES.EXPLORE);
@@ -38,7 +39,7 @@ export default function SimpleMenu({ navigation, id }) {
           }
         />
         <MenuOptions style={{ backgroundColor: theme.colors.popMenu }}>
-          <MenuOption onSelect={() => deleteOneTrip()}>
+          <MenuOption onSelect={() => deleteOneTrip(id)}>
             <Text
               style={{
                 color: "rgba(255, 69, 0, 1) ",
@@ -46,10 +47,10 @@ export default function SimpleMenu({ navigation, id }) {
                 paddingVertical: 4,
               }}
             >
-              Delete
+              <FontAwesome name="trash-o" size={24} color={theme.colors.text} />
             </Text>
           </MenuOption>
-          <MenuOption onSelect={() => alert(`Edit`)}>
+          {/* <MenuOption onSelect={() => alert(`Soon.. :P`)}>
             <Text
               style={{
                 color: "rgba(30, 144, 255, 1)   ",
@@ -59,7 +60,7 @@ export default function SimpleMenu({ navigation, id }) {
             >
               Edit
             </Text>
-          </MenuOption>
+          </MenuOption> */}
         </MenuOptions>
       </Menu>
     </View>
