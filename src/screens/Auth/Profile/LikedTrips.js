@@ -36,7 +36,7 @@ const SavedTrips = ({ navigation }) => {
   }, []);
 
   const sortedList = trips?.sort(function (a, b) {
-    return new Date(b.createdAt) - new Date(a.createdAt);
+    return new Date(a.createdAt) - new Date(b.createdAt);
   });
   const tripList = sortedList?.map((oneTrip) => {
     return (

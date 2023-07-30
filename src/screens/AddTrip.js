@@ -41,7 +41,7 @@ export default function AddTrip({ navigation }) {
     mutationFn: addTrip,
     onSuccess: () => {
       queryClient.invalidateQueries("trips");
-      navigation.navigate(ROUTES.APPROUTES.EXPLORE);
+      navigation.navigate(ROUTES.APPROUTES.PROFILE);
     },
     onError: (err) => {
       console.log("err", err);

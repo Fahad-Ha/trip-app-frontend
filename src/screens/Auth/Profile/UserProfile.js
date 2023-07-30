@@ -7,6 +7,7 @@ import {
   Pressable,
   ActivityIndicator,
   ImageBackground,
+  Alert,
 } from "react-native";
 import Constants from "expo-constants";
 import { LinearGradient } from "expo-linear-gradient";
@@ -345,21 +346,44 @@ const UserProfile = ({
           <></>
         ) : (
           <>
-            <TouchableOpacity onPress={handleFollow}>
-              {isFollowed ? (
+            {isFollowed ? (
+              <TouchableOpacity
+                onPress={() => {
+                  Alert.alert(
+                    "Are you sure?",
+                    "you will no longer be following this user!",
+                    [
+                      // The "Yes" button
+                      {
+                        text: "Unfollow",
+                        onPress: () => {
+                          handleFollow();
+                        },
+                      },
+                      // The "No" button
+                      // Does nothing but dismiss the dialog when tapped
+                      {
+                        text: "Cancel",
+                      },
+                    ]
+                  );
+                }}
+              >
                 <SimpleLineIcons
                   name="user-following"
                   size={24}
                   color={theme.colors.text}
                 />
-              ) : (
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={handleFollow}>
                 <SimpleLineIcons
                   name="user-follow"
                   size={24}
                   color={theme.colors.text}
                 />
-              )}
-            </TouchableOpacity>
+              </TouchableOpacity>
+            )}
           </>
         )}
         <View className=" mb-24 items-center h-full w-full mt-2">
@@ -371,7 +395,6 @@ const UserProfile = ({
               flexWrap: "wrap",
               flexDirection: "row",
               gap: 1,
-              height: "100%",
             }}
             className="w-full"
           >

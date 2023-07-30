@@ -15,11 +15,13 @@ import { View, StyleSheet, Pressable } from "react-native";
 import UserProfile from "../screens/Auth/Profile/UserProfile";
 import ExploreStack from "./ExploreStack";
 import ProfileStack from "./ProfileStack";
+import { useTheme } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 export default function AppNavigation() {
+  const theme = useTheme(); // Get the currently active theme
   return (
     <Tab.Navigator
       screenOptions={{
@@ -32,7 +34,7 @@ export default function AppNavigation() {
           alignContent: "center",
           justifyContent: "center",
           elevation: 5,
-          backgroundColor: "#121212",
+          backgroundColor: theme.colors.background,
           borderRadius: 15,
           height: 80,
           bottom: -4,
