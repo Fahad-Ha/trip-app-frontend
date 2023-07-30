@@ -14,6 +14,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Pressable } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 
 // Define validation schema
 const LoginSchema = Yup.object().shape({
@@ -33,6 +34,8 @@ const Login = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
   const [backendError, setBackendError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+
+  const theme = useTheme(); // Get the currently active theme
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -85,33 +88,47 @@ const Login = ({ navigation }) => {
           return (
             <View>
               <View className="w-4/5 mt-40 mb-4 ">
-                <Text className="text-xl text-white text-center font-bold mb-4">
+                <Text
+                  style={{ color: theme.colors.text }}
+                  className="text-xl  text-center font-bold mb-4"
+                >
                   Login
                 </Text>
-                <Text className="text-white opacity-75 text-center mb-2">
+                <Text
+                  style={{ color: theme.colors.text }}
+                  className=" opacity-75 text-center mb-2"
+                >
                   Enter your username and password to login.
                 </Text>
               </View>
               <TextInput
-                className=" h-12 mb-2 py-2 px-4 border-s border-gray-300 rounded-xl bg-[#1c1c1c] text-white "
+                style={{
+                  backgroundColor: theme.colors.inputBackground,
+                  color: theme.colors.text,
+                }}
+                className=" h-12 mb-4 py-2 px-4 border-s border-gray-300 rounded-xl  "
                 placeholder="Username"
                 onBlur={handleBlur("username")}
                 onChangeText={handleChangeAndResetError("username")}
                 value={values.username}
-                placeholderTextColor="#ffffffec"
+                placeholderTextColor={theme.colors.inputPlaceholder}
               />
               {errors.username && touched.username && (
                 <Text style={{ color: "red" }}>{errors.username}</Text>
               )}
               <View className="relative">
                 <TextInput
-                  className="h-12 mb-2 py-2 px-4 border-s border-gray-300 rounded-xl bg-[#1c1c1c] text-white "
+                  style={{
+                    backgroundColor: theme.colors.inputBackground,
+                    color: theme.colors.text,
+                  }}
+                  className="h-12 mb-4 py-2 px-4 border-s border-gray-300 rounded-xl "
                   placeholder="Password"
                   onBlur={handleBlur("password")}
                   onChangeText={handleChangeAndResetError("password")}
                   value={values.password}
                   secureTextEntry={!showPassword}
-                  placeholderTextColor="#ffffffec"
+                  placeholderTextColor={theme.colors.inputPlaceholder}
                 />
                 <Pressable
                   className="absolute p-2 top-4 right-2"
@@ -122,8 +139,8 @@ const Login = ({ navigation }) => {
                   <FontAwesome
                     name={showPassword ? "eye" : "eye-slash"}
                     size={24}
-                    color="gray"
-                    style={{ marginTop: -12 }}
+                    color={theme.colors.text}
+                    style={{ marginTop: -12, opacity: 0.6 }}
                   />
                 </Pressable>
               </View>
@@ -136,15 +153,20 @@ const Login = ({ navigation }) => {
               <View className="mt-2">
                 <Button title="Login" onPress={handleSubmit} />
               </View>
-
               <TouchableHighlight
-                className="mt-2"
                 onPress={handleRegister}
                 underlayColor="#00000010"
               >
-                <Text className="text-blue-500 text-center">
-                  Don't have an account? Register
-                </Text>
+                <View className="flex-row justify-center items-center mt-2">
+                  <Text
+                    style={{ color: theme.colors.text }}
+                    className=" text-center"
+                  >
+                    Don't have an account?
+                  </Text>
+
+                  <Text className="text-blue-500 font-semibold"> Register</Text>
+                </View>
               </TouchableHighlight>
             </View>
           );

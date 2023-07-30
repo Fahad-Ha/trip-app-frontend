@@ -24,6 +24,7 @@ import { follow } from "../../../apis/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useRoute } from "@react-navigation/native";
 import socketIOClient from "socket.io-client";
+import { useTheme } from "@react-navigation/native";
 
 const UserProfile = ({
   navigation,
@@ -34,6 +35,8 @@ const UserProfile = ({
 }) => {
   const [userProfile, setUserProfile] = useState(null);
   const [isFollowed, setIsFollowed] = useState(false);
+
+  const theme = useTheme(); // Get the currently active theme
 
   const navigationDrawer = useNavigation();
   const routeName = useRoute();
@@ -215,10 +218,13 @@ const UserProfile = ({
 
           <View className="absolute right-3 top-14">
             <Pressable onPress={() => navigationDrawer.openDrawer()}>
-              <Entypo name="menu" size={32} color="white" />
+              <Entypo name="menu" size={32} color={theme.colors.text} />
             </Pressable>
           </View>
-          <View className="w-20 h-20 overflow-hidden rounded-full border-[1px] border-white">
+          <View
+            style={{ borderColor: theme.colors.text }}
+            className="w-20 h-20 overflow-hidden rounded-full border-[1px] "
+          >
             <Image
               className="w-full h-full"
               source={{
@@ -232,17 +238,17 @@ const UserProfile = ({
           {userProfile?._id === profileData?._id ? (
             <>
               <View className="m-2 ">
-                <Text style={{ fontSize: 20, color: "white" }}>
+                <Text style={{ fontSize: 20, color: theme.colors.text }}>
                   {profileData?.username}
                 </Text>
                 <View className="absolute left-16">
-                  <Feather name="edit" size={24} color="white" />
+                  <Feather name="edit" size={24} color={theme.colors.text} />
                 </View>
               </View>
             </>
           ) : (
             <>
-              <Text style={{ fontSize: 20, color: "white" }}>
+              <Text style={{ fontSize: 20, color: theme.colors.text }}>
                 {profileData?.username}
               </Text>
               <TouchableOpacity onPress={handleFollow}>
@@ -250,10 +256,14 @@ const UserProfile = ({
                   <SimpleLineIcons
                     name="user-following"
                     size={24}
-                    color="white"
+                    color={theme.colors.text}
                   />
                 ) : (
-                  <SimpleLineIcons name="user-follow" size={24} color="white" />
+                  <SimpleLineIcons
+                    name="user-follow"
+                    size={24}
+                    color={theme.colors.text}
+                  />
                 )}
               </TouchableOpacity>
             </>
@@ -289,15 +299,31 @@ const UserProfile = ({
               }
             >
               <View>
-                <Text className="text-center text-white">Followers</Text>
-                <Text className="text-center text-white">
+                <Text
+                  style={{ color: theme.colors.text }}
+                  className="text-center "
+                >
+                  Followers
+                </Text>
+                <Text
+                  style={{ color: theme.colors.text }}
+                  className="text-center"
+                >
                   {profileData?.followers?.length || "0"}
                 </Text>
               </View>
             </Pressable>
             <View>
-              <Text className="text-center text-white">Trips</Text>
-              <Text className="text-center text-white">
+              <Text
+                style={{ color: theme.colors.text }}
+                className="text-center "
+              >
+                Trips
+              </Text>
+              <Text
+                style={{ color: theme.colors.text }}
+                className="text-center "
+              >
                 {profileData?.trips?.length || "0"}
               </Text>
             </View>
@@ -322,8 +348,16 @@ const UserProfile = ({
               }
             >
               <View>
-                <Text className="text-center text-white">Followings</Text>
-                <Text className="text-center text-white">
+                <Text
+                  style={{ color: theme.colors.text }}
+                  className="text-center "
+                >
+                  Followings
+                </Text>
+                <Text
+                  style={{ color: theme.colors.text }}
+                  className="text-center "
+                >
                   {profileData?.followings?.length || "0"}
                 </Text>
               </View>
@@ -343,7 +377,7 @@ const UserProfile = ({
       >
         {userProfile?._id === profileData?._id ? (
           <>
-            <Feather name="edit" size={24} color="white" />
+            <Feather name="edit" size={24} color={theme.colors.text} />
           </>
         ) : (
           <>
@@ -352,10 +386,14 @@ const UserProfile = ({
                 <SimpleLineIcons
                   name="user-following"
                   size={24}
-                  color="white"
+                  color={theme.colors.text}
                 />
               ) : (
-                <SimpleLineIcons name="user-follow" size={24} color="white" />
+                <SimpleLineIcons
+                  name="user-follow"
+                  size={24}
+                  color={theme.colors.text}
+                />
               )}
             </TouchableOpacity>
           </>
@@ -382,7 +420,12 @@ const UserProfile = ({
                 }}
                 className="my-[50%]"
               >
-                <Text className="text-white text-4xl  ">No Trips Yet</Text>
+                <Text
+                  style={{ color: theme.colors.text }}
+                  className=" text-4xl  "
+                >
+                  No Trips Yet
+                </Text>
               </View>
             ) : (
               tripList

@@ -13,6 +13,7 @@ import TripImageHandler from "../components/TripImageHandler";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import ROUTES from "../navigation";
+import { useTheme } from "@react-navigation/native";
 
 // Define validation schema
 const TripSchema = Yup.object().shape({
@@ -29,6 +30,11 @@ const TripSchema = Yup.object().shape({
 
 export default function AddTrip({ navigation }) {
   const [backendError, setBackendError] = useState(null);
+  const theme = useTheme(); // Get the currently active theme
+  const inputBackgroundStyle = {
+    backgroundColor: theme.colors.inputBackground,
+  };
+
   const queryClient = useQueryClient(); // Import and use query client here
 
   const { mutate: addTripFunction } = useMutation({
@@ -65,36 +71,53 @@ export default function AddTrip({ navigation }) {
           <View className="mb-40 items-center ">
             <View className=" w-[70%]  mt-8 min-h-[100%]">
               <View>
-                <Text className="mb-1 text-white">Title</Text>
+                <Text style={{ color: theme.colors.text, marginBottom: 1 }}>
+                  Title
+                </Text>
                 <TextInput
-                  className="rounded-xl bg-[#1c1c1c] text-white  mb-1 p-2"
+                  style={{
+                    backgroundColor: theme.colors.inputBackground,
+                    color: theme.colors.text,
+                  }}
+                  className="rounded-xl  mb-1 p-2"
                   placeholder="Title.."
                   onBlur={handleBlur("title")}
                   onChangeText={handleChange("title")}
                   value={values.title}
-                  placeholderTextColor="#ffffff40"
+                  placeholderTextColor={theme.colors.inputPlaceholder}
                 />
                 {errors.title && touched.title && (
                   <Text style={{ color: "red" }}>{errors.title}</Text>
                 )}
               </View>
               <View>
-                <Text className="mb-1 mt-4  text-white">Description</Text>
+                <Text
+                  style={{ color: theme.colors.text }}
+                  className="mb-1 mt-4  "
+                >
+                  Description
+                </Text>
                 <TextInput
-                  className="rounded-xl bg-[#1c1c1c] text-white p-2 mb-1"
+                  style={{
+                    backgroundColor: theme.colors.inputBackground,
+                    color: theme.colors.text,
+                  }}
+                  className="rounded-xl  text-white p-2 mb-1"
                   multiline={true}
                   returnKeyType="done"
                   placeholder="Description.."
                   onBlur={handleBlur("description")}
                   onChangeText={handleChange("description")}
                   value={values.description}
-                  placeholderTextColor="#ffffff40"
+                  placeholderTextColor={theme.colors.inputPlaceholder}
                 />
                 {errors.description && touched.description && (
                   <Text style={{ color: "red" }}>{errors.description}</Text>
                 )}
               </View>
-              <Text className="mt-4 mb-1 text-white">Image</Text>
+              <Text style={{ color: theme.colors.text }} className="mt-4 mb-1 ">
+                Image
+              </Text>
               <View className="mb-1">
                 <TripImageHandler
                   image={values.image}

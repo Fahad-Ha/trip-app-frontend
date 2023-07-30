@@ -6,6 +6,7 @@ import { register } from "../../../apis/auth";
 import { useMutation } from "@tanstack/react-query";
 import UserContext from "../../../context/UserContext";
 import { checkToken, saveToken } from "../../../apis/storage";
+import { useTheme } from "@react-navigation/native";
 
 const RegisterImage = ({ route, navigation }) => {
   const { username, password } = route.params;
@@ -14,6 +15,8 @@ const RegisterImage = ({ route, navigation }) => {
     "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
   );
   const { setUser } = useContext(UserContext);
+
+  const theme = useTheme(); // Get the currently active theme
 
   const {
     mutate: registerFunction,
@@ -45,10 +48,16 @@ const RegisterImage = ({ route, navigation }) => {
   return (
     <View className="flex-1 items-center">
       <View className=" mt-24 mb-4 w-4/5">
-        <Text className=" text-xl text-white text-center font-bold mb-4">
+        <Text
+          style={{ color: theme.colors.text }}
+          className=" text-xl text-center font-bold mb-4"
+        >
           Pick an image
         </Text>
-        <Text className=" text-[#ffffffec]  text-center mb-2">
+        <Text
+          style={{ color: theme.colors.text }}
+          className=" text-center mb-2"
+        >
           Pick an image for your new account. You can always change it later.
         </Text>
       </View>

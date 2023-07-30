@@ -6,8 +6,11 @@ import { Image } from "react-native";
 import { TouchableHighlight } from "react-native";
 import { StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 
 export default function TripImageHandler({ image, setImage }) {
+  const theme = useTheme(); // Get the currently active theme
+
   useEffect(() => {
     requestImagePickerPermission();
   }, []);
@@ -48,6 +51,9 @@ export default function TripImageHandler({ image, setImage }) {
   };
   return (
     <TouchableOpacity
+      style={{
+        backgroundColor: theme.colors.inputBackground,
+      }}
       onPress={pickImage}
       className="rounded-xl bg-[#1c1c1c] items-center w-full min-h-30 max-h-80 h-32"
     >
@@ -58,7 +64,7 @@ export default function TripImageHandler({ image, setImage }) {
         />
       ) : (
         <View className="items-center justify-center my-auto ">
-          <Ionicons name="add" size={52} color="#ffffff40" />
+          <Ionicons name="add" size={52} color={theme.colors.primary} />
         </View>
       )}
     </TouchableOpacity>
