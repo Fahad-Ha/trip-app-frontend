@@ -51,7 +51,7 @@ const LightTheme = {
 
 export default function App() {
   const [user, setUser] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const checkToken = async () => {
     const token = await getToken();

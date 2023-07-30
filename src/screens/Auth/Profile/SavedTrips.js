@@ -67,7 +67,7 @@ const SavedTrips = ({ navigation }) => {
       }}
     >
       <View className=" mb-24 items-center h-full">
-<View className="mt-20"><Text className=" text-xl font-bold">Saved Trips</Text></View>
+<View className="mt-20"><Text className=" text-xl font-bold"  style={{ color: theme.colors.text }}>Saved Trips</Text></View>
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={isFetching} onRefresh={refetch} />
