@@ -371,7 +371,6 @@ const UserProfile = ({
               flexWrap: "wrap",
               flexDirection: "row",
               gap: 1,
-              height: "100%",
             }}
             className="w-full"
           >
