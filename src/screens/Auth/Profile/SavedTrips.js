@@ -35,9 +35,7 @@ const SavedTrips = ({ navigation }) => {
     profile();
   }, []);
 
-  const sortedList = trips?.sort(function (a, b) {
-    return new Date(a.createdAt) - new Date(b.createdAt);
-  });
+  const sortedList = trips?.reverse();
   const tripList = sortedList?.map((oneTrip) => {
     return (
       <TouchableOpacity
@@ -67,7 +65,14 @@ const SavedTrips = ({ navigation }) => {
       }}
     >
       <View className=" mb-24 items-center h-full">
-<View className="mt-20"><Text className=" text-xl font-bold"  style={{ color: theme.colors.text }}>Saved Trips</Text></View>
+        <View className="mt-20">
+          <Text
+            className=" text-xl font-bold"
+            style={{ color: theme.colors.text }}
+          >
+            Saved Trips
+          </Text>
+        </View>
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={isFetching} onRefresh={refetch} />
@@ -81,25 +86,25 @@ const SavedTrips = ({ navigation }) => {
           }}
           className="w-full"
         >
-           {tripList?.length === 0 ? (
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                className="my-[50%]"
+          {tripList?.length === 0 ? (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              className="my-[50%]"
+            >
+              <Text
+                style={{ color: theme.colors.text }}
+                className=" text-4xl  "
               >
-                <Text
-                  style={{ color: theme.colors.text }}
-                  className=" text-4xl  "
-                >
-                  No Saved Trips Yet
-                </Text>
-              </View>
-            ) : (
-              tripList
-            )}
+                No Saved Trips Yet
+              </Text>
+            </View>
+          ) : (
+            tripList
+          )}
         </ScrollView>
       </View>
     </View>
