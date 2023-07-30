@@ -222,8 +222,7 @@ const UserProfile = ({
             </Pressable>
           </View>
           <View
-            style={{ borderColor: theme.colors.text }}
-            className="w-20 h-20 overflow-hidden rounded-full border-[1px] "
+            className="w-20 h-20 overflow-hidden rounded-full border-[1px] border-white"
           >
             <Image
               className="w-full h-full"
@@ -238,17 +237,17 @@ const UserProfile = ({
           {userProfile?._id === profileData?._id ? (
             <>
               <View className="m-2 ">
-                <Text style={{ fontSize: 20, color: theme.colors.text }}>
+                <Text style={{ fontSize: 20, color: "white" }}>
                   {profileData?.username}
                 </Text>
                 <View className="absolute left-16">
-                  <Feather name="edit" size={24} color={theme.colors.text} />
+                  <Feather name="edit" size={24} color="white" />
                 </View>
               </View>
             </>
           ) : (
             <>
-              <Text style={{ fontSize: 20, color: theme.colors.text }}>
+              <Text style={{ fontSize: 20, color: theme.colors.text}}>
                 {profileData?.username}
               </Text>
               {/* <TouchableOpacity onPress={handleFollow}>
@@ -300,13 +299,13 @@ const UserProfile = ({
             >
               <View>
                 <Text
-                  style={{ color: theme.colors.text }}
+                  style={{ color: "white" }}
                   className="text-center "
                 >
                   Followers
                 </Text>
                 <Text
-                  style={{ color: theme.colors.text }}
+                  style={{ color: "white" }}
                   className="text-center"
                 >
                   {profileData?.followers?.length || "0"}
@@ -315,13 +314,13 @@ const UserProfile = ({
             </Pressable>
             <View>
               <Text
-                style={{ color: theme.colors.text }}
+                style={{ color: "white" }}
                 className="text-center "
               >
                 Trips
               </Text>
               <Text
-                style={{ color: theme.colors.text }}
+                style={{ color: "white" }}
                 className="text-center "
               >
                 {profileData?.trips?.length || "0"}
@@ -349,13 +348,13 @@ const UserProfile = ({
             >
               <View>
                 <Text
-                  style={{ color: theme.colors.text }}
+                  style={{ color: "white"}}
                   className="text-center "
                 >
                   Followings
                 </Text>
                 <Text
-                  style={{ color: theme.colors.text }}
+                  style={{ color: "white" }}
                   className="text-center "
                 >
                   {profileData?.followings?.length || "0"}

@@ -69,7 +69,7 @@ export default function MyExplorePage({ navigation }) {
   return (
     <View
       style={{
-        flex: 0.9,
+        flex: 0.94,
       }}
     >
       <View className=" mb-24 items-center h-full">
