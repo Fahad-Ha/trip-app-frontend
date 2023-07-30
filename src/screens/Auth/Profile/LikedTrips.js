@@ -35,9 +35,7 @@ const SavedTrips = ({ navigation }) => {
     profile();
   }, []);
 
-  const sortedList = trips?.sort(function (a, b) {
-    return new Date(a.createdAt) - new Date(b.createdAt);
-  });
+  const sortedList = trips?.reverse();
   const tripList = sortedList?.map((oneTrip) => {
     return (
       <TouchableOpacity
