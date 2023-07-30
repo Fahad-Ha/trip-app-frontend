@@ -24,6 +24,8 @@ const DarkTheme = {
     inputText: "#FFFFFF", // Text color for text inputs
     inputBackground: "#1c1c1c", // Background color for text inputs
     inputPlaceholder: "#FFFFFF40", // Color for input placeholders
+    popMenu: "#1c1c1c",
+
     // border: "#ffffff",
     notification: "rgb(255, 69, 58)",
     GradientColors: ["#000000", "#1C535A"],
@@ -42,6 +44,7 @@ const LightTheme = {
     inputText: "red", // Text color for text inputs
     inputBackground: "#EAEAEA", // Background color for text inputs
     inputPlaceholder: "#00000080", // Color for input placeholders
+    popMenu: "#F8F8F8",
     GradientColors: ["rgba(255, 255, 255, 0.00)", "#1C535A"],
   },
 };
