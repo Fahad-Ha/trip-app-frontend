@@ -14,7 +14,7 @@ import { useRoute } from "@react-navigation/native";
 const FollowList = ({ followList, navigation }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const routeName = useRoute();
-
+  console.log(routeName.name);
   const mappedFollowList = followList
     ?.sort((a, b) =>
       a?.username?.toLowerCase().localeCompare(b?.username?.toLowerCase())
@@ -25,22 +25,17 @@ const FollowList = ({ followList, navigation }) => {
     .map((user) => (
       <TouchableHighlight
         onPress={() =>
-          //   navigation.push(
-          //     ROUTES.APPROUTES.OTHERPROFILEEXPLORE,
-          //     { user },
-          //     { key: followList?._id }
-          //   )
-          routeName.name == ROUTES.APPROUTES.FOLLOWERS ||
-          ROUTES.APPROUTES.FOLLOWINGS
+          routeName.name !== ROUTES.APPROUTES.OTHERFOLLOWERS &&
+          routeName.name !== ROUTES.APPROUTES.OTHERFOLLOWINGS
             ? navigation.push(
-                ROUTES.APPROUTES.OTHERPROFILE,
+                ROUTES.APPROUTES.OTHERPROFILEEXPLORE,
                 {
                   user,
                 },
                 { key: followList?._id }
               )
             : navigation.push(
-                ROUTES.APPROUTES.OTHERPROFILEEXPLORE,
+                ROUTES.APPROUTES.OTHERPROFILE,
                 {
                   user,
                 },
