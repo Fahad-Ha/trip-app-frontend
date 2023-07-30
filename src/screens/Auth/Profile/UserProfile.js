@@ -251,7 +251,7 @@ const UserProfile = ({
               <Text style={{ fontSize: 20, color: theme.colors.text }}>
                 {profileData?.username}
               </Text>
-              <TouchableOpacity onPress={handleFollow}>
+              {/* <TouchableOpacity onPress={handleFollow}>
                 {isFollowed ? (
                   <SimpleLineIcons
                     name="user-following"
@@ -265,7 +265,7 @@ const UserProfile = ({
                     color={theme.colors.text}
                   />
                 )}
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </>
           )}
 
@@ -376,9 +376,7 @@ const UserProfile = ({
         }}
       >
         {userProfile?._id === profileData?._id ? (
-          <>
-            <Feather name="edit" size={24} color={theme.colors.text} />
-          </>
+          <></>
         ) : (
           <>
             <TouchableOpacity onPress={handleFollow}>

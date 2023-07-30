@@ -8,9 +8,11 @@ import ROUTES from "../../../navigation";
 import { BASE_URL } from "../../../apis/index";
 import jwt_decode from "jwt-decode";
 import { getToken } from "../../../apis/storage";
+import { useTheme } from "@react-navigation/native";
 
 const SavedTrips = ({ navigation }) => {
   const [userProfile, setUserProfile] = useState(null);
+  const theme = useTheme();
   const { data, isFetching, error, refetch } = useQuery({
     queryKey: ["saved-trips"],
     queryFn: () => getSavedTrips(),
@@ -65,7 +67,7 @@ const SavedTrips = ({ navigation }) => {
       }}
     >
       <View className=" mb-24 items-center h-full">
-<View className="mt-20"><Text className="text-white text-xl font-bold">Saved Trips</Text></View>
+<View className="mt-20"><Text className=" text-xl font-bold">Saved Trips</Text></View>
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={isFetching} onRefresh={refetch} />
@@ -79,7 +81,25 @@ const SavedTrips = ({ navigation }) => {
           }}
           className="w-full"
         >
-          {tripList}
+           {tripList?.length === 0 ? (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                className="my-[50%]"
+              >
+                <Text
+                  style={{ color: theme.colors.text }}
+                  className=" text-4xl  "
+                >
+                  No Saved Trips Yet
+                </Text>
+              </View>
+            ) : (
+              tripList
+            )}
         </ScrollView>
       </View>
     </View>

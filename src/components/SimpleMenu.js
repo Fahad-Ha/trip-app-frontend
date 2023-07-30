@@ -13,9 +13,9 @@ import { useTheme } from "@react-navigation/native";
 
 export default function SimpleMenu({ navigation, id }) {
   const theme = useTheme(); // Get the currently active theme
-  console.log(id);
+
   const { mutate: deleteOneTrip } = useMutation({
-    mutationFn: deleteTrip,
+    mutationFn: deleteTrip(id),
     onSuccess: () => {
       queryClient.invalidateQueries("trips");
       navigation.navigate(ROUTES.APPROUTES.EXPLORE);
@@ -24,17 +24,6 @@ export default function SimpleMenu({ navigation, id }) {
       console.log("err", err);
     },
   });
-
-  // const { mutate: deleteOneTrip } = useMutation({
-  //   mutationFn: deleteTrip(id),
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries("trips");
-  //     navigation.navigate(ROUTES.APPROUTES.EXPLORE);
-  //   },
-  //   onError: (err) => {
-  //     console.log("err", err);
-  //   },
-  // });
 
   return (
     <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -49,7 +38,7 @@ export default function SimpleMenu({ navigation, id }) {
           }
         />
         <MenuOptions style={{ backgroundColor: theme.colors.popMenu }}>
-          <MenuOption onSelect={() => deleteOneTrip(id)}>
+          <MenuOption onSelect={() => deleteOneTrip()}>
             <Text
               style={{
                 color: "rgba(255, 69, 0, 1) ",

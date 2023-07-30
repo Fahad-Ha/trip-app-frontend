@@ -1,7 +1,6 @@
 import {
   View,
   Text,
- 
   RefreshControl,
   Image,
   TouchableOpacity,
@@ -15,9 +14,11 @@ import { BASE_URL } from "../apis";
 import ROUTES from "../navigation";
 import { getToken } from "../apis/storage";
 import jwt_decode from "jwt-decode";
+import { useTheme } from "@react-navigation/native";
 
 export default function MyExplorePage({ navigation }) {
   const [userProfile, setUserProfile] = useState(null);
+  const theme = useTheme();
   const { data, isFetching, error, refetch } = useQuery({
     queryKey: ["trips"],
     queryFn: () => getAllTrips(),
@@ -81,11 +82,28 @@ export default function MyExplorePage({ navigation }) {
             flexWrap: "wrap",
             flexDirection: "row",
             gap: 1,
-            paddingTop: Constants.statusBarHeight,
           }}
           className="w-full"
         >
-          {tripList}
+          {tripList?.length === 0 ? (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              className="my-[50%]"
+            >
+              <Text
+                style={{ color: theme.colors.text }}
+                className=" text-4xl  "
+              >
+                No Trips Yet
+              </Text>
+            </View>
+          ) : (
+            tripList
+          )}
         </ScrollView>
       </View>
     </View>
