@@ -29,15 +29,13 @@ export default function AppNavigation() {
         tabBarShowLabel: false,
         tabBarStyle: {
           position: "absolute",
-          bottom: 20,
-          left: 20,
-          right: 20,
+          alignContent: "center",
+          justifyContent: "center",
           elevation: 0,
-          // backgroundColor: "#ffffff",
+          backgroundColor: "#121212",
           borderRadius: 15,
-          height: 70,
+          height: 80,
           // ...styles.shadow,
-          size: 90,
         },
       }}
     >
@@ -51,7 +49,7 @@ export default function AppNavigation() {
               name="search"
               color={color}
               size={40}
-              style={{ marginTop: 25, height: 40 }}
+              style={{ height: 40 }}
             />
           ),
         }}
@@ -65,7 +63,7 @@ export default function AppNavigation() {
               name="plus-square"
               size={50}
               color={color}
-              style={{ marginTop: 25, height: 50 }}
+              style={{ height: 50 }}
             />
           ),
         }}
@@ -80,7 +78,7 @@ export default function AppNavigation() {
               name="user-circle-o"
               size={40}
               color={color}
-              style={{ marginTop: 25, height: 40 }}
+              style={{ height: 40 }}
             />
           ),
         }}

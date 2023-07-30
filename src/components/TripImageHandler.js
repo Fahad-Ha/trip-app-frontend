@@ -57,7 +57,7 @@ export default function TripImageHandler({ image, setImage }) {
           style={{ width: "100%", height: "100%", borderRadius: 10 }}
         />
       ) : (
-        <View className="items-center justify-center my-auto">
+        <View className="items-center justify-center my-auto ">
           <Ionicons name="add" size={52} color="#ffffff40" />
         </View>
       )}

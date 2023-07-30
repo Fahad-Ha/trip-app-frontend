@@ -62,7 +62,7 @@ export default function AddTrip({ navigation }) {
         setFieldValue,
       }) => (
         <ScrollView contentContainerStyle={{}}>
-          <View className="mb-40 items-center">
+          <View className="mb-40 items-center ">
             <View className=" w-[70%]  mt-8 min-h-[100%]">
               <View>
                 <Text className="mb-1 text-white">Title</Text>

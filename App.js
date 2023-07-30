@@ -10,6 +10,7 @@ import { getToken } from "./src/apis/storage";
 import { LogBox } from "react-native";
 import SideDrawer from "./src/navigation/ProfileDrawer";
 import { MenuProvider } from "react-native-popup-menu";
+import Notifications from "./src/components/Notifications";
 
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -17,7 +18,7 @@ const DarkTheme = {
   dark: true,
   colors: {
     primary: "#1C535A",
-    background: "#000000",
+    background: "#0d0d0d",
     card: "transparent",
     text: "#ffffff80",
     // border: "#ffffff",
@@ -49,13 +50,15 @@ export default function App() {
   useEffect(() => {
     checkToken();
   }, [user]);
+
   return (
     <QueryClientProvider client={new QueryClient()}>
       <UserContext.Provider value={{ user, setUser }}>
-      <MenuProvider overlayColor="rgba(0, 0, 0, 0.3)">
-        <NavigationContainer theme={DarkTheme}>
-          {!user ? <AuthNavigation /> : <SideDrawer />}
-        </NavigationContainer>
+        <MenuProvider overlayColor="rgba(0, 0, 0, 0.3)">
+          <NavigationContainer theme={DarkTheme}>
+            <Notifications />
+            {!user ? <AuthNavigation /> : <SideDrawer />}
+          </NavigationContainer>
         </MenuProvider>
       </UserContext.Provider>
     </QueryClientProvider>
