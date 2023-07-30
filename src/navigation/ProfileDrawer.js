@@ -11,11 +11,14 @@ import LikedTrips from "../screens/Auth/Profile/LikedTrips";
 import { useNavigation } from "@react-navigation/native";
 import SavedTrips from "../screens/Auth/Profile/SavedTrips";
 import ProfileStack from "./ProfileStack";
+import { useTheme } from "@react-navigation/native";
 
 const Drawer = createDrawerNavigator();
 
 // Custom Drawer Content Component
 const CustomDrawerContent = ({ toggleDarkMode, isDarkMode }) => {
+  const theme = useTheme(); // Get the currently active theme
+
   const navigation = useNavigation();
 
   return (
@@ -26,9 +29,9 @@ const CustomDrawerContent = ({ toggleDarkMode, isDarkMode }) => {
     >
       <LinearGradient
         flex={1}
-        colors={["#000000", "#1C535A"]}
-        start={[3, 0]}
-        end={[1, 1]}
+        colors={theme.colors.GradientColors}
+        start={[1, 0]}
+        end={[0, 1]}
       >
         <View className="mt-[100%] items-center">
           <Pressable
@@ -37,8 +40,15 @@ const CustomDrawerContent = ({ toggleDarkMode, isDarkMode }) => {
             }
           >
             <View className="rounded-xl mx-10 items-center flex-row">
-              <Ionicons name="bookmark-outline" size={24} color="white" />
-              <Text className="text-2xl p-2 text-gray-100  my-auto  ">
+              <Ionicons
+                name="bookmark-outline"
+                size={24}
+                color={theme.colors.text}
+              />
+              <Text
+                style={{ color: theme.colors.text }}
+                className="text-2xl p-2   my-auto  "
+              >
                 Saved Trips
               </Text>
             </View>
@@ -49,23 +59,31 @@ const CustomDrawerContent = ({ toggleDarkMode, isDarkMode }) => {
             }
           >
             <View className="rounded-xl mx-10  items-center mt-6 flex-row">
-              <FontAwesome name="heart-o" size={24} color="white" />
-              <Text className="text-2xl p-2 text-gray-100  my-auto">
+              <FontAwesome name="heart-o" size={24} color={theme.colors.text} />
+              <Text
+                style={{ color: theme.colors.text }}
+                className="text-2xl p-2  my-auto"
+              >
                 Liked Trips
               </Text>
             </View>
           </Pressable>
         </View>
         <View className="rounded-xl  mx-10 justify-center items-center p-1 mt-auto flex-row">
-          <Ionicons name="exit-outline" size={24} color="white" />
+          <Ionicons name="exit-outline" size={24} color={theme.colors.text} />
           <Logout />
         </View>
         {/* Dark Mode Toggle */}
         <View
-          className=" justify-center items-center pb-2 mt-auto "
+          className=" justify-center items-center pb-4 mt-auto "
           style={{ flexDirection: "row", alignItems: "center" }}
         >
-          <Text className="text-xl mx-auto text-gray-100">Dark Mode</Text>
+          <Text
+            style={{ color: theme.colors.text }}
+            className="text-xl mx-auto "
+          >
+            Dark Mode
+          </Text>
           <Switch
             className="scale-125 mx-auto"
             value={isDarkMode}
@@ -77,13 +95,7 @@ const CustomDrawerContent = ({ toggleDarkMode, isDarkMode }) => {
   );
 };
 
-export default function SideDrawer() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const toggleDarkMode = () => {
-    // Implement your dark mode logic here
-    setIsDarkMode((prev) => !prev);
-  };
+export default function SideDrawer({ toggleDarkMode, isDarkMode }) {
   const useLegacyImplementation = Platform.OS !== "android";
 
   return (

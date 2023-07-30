@@ -21,6 +21,7 @@ import { RefreshControl } from "react-native-gesture-handler";
 import ROUTES from "../navigation";
 import { useRoute } from "@react-navigation/native";
 import SimpleMenu from "../components/SimpleMenu";
+import { useTheme } from "@react-navigation/native";
 
 import Svg, { Path } from "react-native-svg";
 import Animated, {
@@ -30,7 +31,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 const Heart = ({ color }) => (
-  <Svg >
+  <Svg>
     <Path
       fill={color}
       d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z"
@@ -45,6 +46,8 @@ const TripDetail = ({ route, navigation }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [likeCounter, setLikeCounter] = useState(null);
   const scale = useSharedValue(0);
+
+  const theme = useTheme(); // Get the currently active theme
 
   const animatedHeartStyles = useAnimatedStyle(() => {
     return {
@@ -176,12 +179,84 @@ const TripDetail = ({ route, navigation }) => {
       lastTapRef.current = null;
     };
   }, []);
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      paddingBottom: 80,
+    },
+    card: {
+      width: "100%",
+      borderRadius: 10,
+    },
+    userContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: 10,
+    },
+    profileContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    userName: {
+      fontSize: 18,
+      marginLeft: 10,
+      color: theme.colors.text,
+    },
+    imageContainer: {
+      flexGrow: 1,
+      width: "100%",
+    },
+
+    details: {
+      paddingHorizontal: 15,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: "bold",
+      marginVertical: 10,
+      color: theme.colors.text,
+    },
+    description: {
+      fontSize: 16,
+      marginVertical: 5,
+      color: theme.colors.text,
+    },
+    likeContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginTop: 10,
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: 2,
+    },
+    buttonWrapper: {
+      flex: 1,
+      padding: 10,
+      height: 50,
+    },
+    buttonRow: {
+      flexDirection: "row",
+      gap: 10,
+    },
+    buttonText: {
+      color: theme.colors.text,
+    },
+  });
+
   if (tripFetching)
     return (
       <View className="flex-1 justify-center items-center top-[-15%]">
         <ActivityIndicator size="large" color="#1C535A" />
       </View>
     );
+
   return (
     // <View style={styles.container}>
     <ScrollView
@@ -277,14 +352,18 @@ const TripDetail = ({ route, navigation }) => {
                 {isLiked ? (
                   <FontAwesome name="heart" size={24} color="red" />
                 ) : (
-                  <FontAwesome name="heart-o" size={24} color="white" />
+                  <FontAwesome
+                    name="heart-o"
+                    size={24}
+                    color={theme.colors.text}
+                  />
                 )}
               </TouchableOpacity>
               <TouchableOpacity onPress={handleSavePress}>
                 <Ionicons
                   name={isSaved ? "bookmark" : "bookmark-outline"}
                   size={24}
-                  color={isSaved ? "white" : "white"}
+                  color={isSaved ? theme.colors.text : theme.colors.text}
                 />
               </TouchableOpacity>
             </View>
@@ -300,75 +379,5 @@ const TripDetail = ({ route, navigation }) => {
     // </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingBottom: 80,
-  },
-  card: {
-    width: "100%",
-    borderRadius: 10,
-  },
-  userContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 10,
-  },
-  profileContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  userName: {
-    fontSize: 18,
-    marginLeft: 10,
-    color: "white",
-  },
-  imageContainer: {
-    flexGrow: 1,
-    width: "100%",
-  },
-
-  details: {
-    paddingHorizontal: 15,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginVertical: 10,
-    color: "white",
-  },
-  description: {
-    fontSize: 16,
-    marginVertical: 5,
-    color: "white",
-  },
-  likeContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 2,
-  },
-  buttonWrapper: {
-    flex: 1,
-    padding: 10,
-    height: 50,
-  },
-  buttonRow: {
-    flexDirection: "row",
-    gap: 10,
-  },
-  buttonText: {
-    color: "white",
-  },
-});
 
 export default TripDetail;

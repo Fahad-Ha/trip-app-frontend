@@ -5,6 +5,8 @@ import * as Yup from "yup";
 import { checkUsername } from "../../../apis/auth";
 import { useMutation } from "@tanstack/react-query";
 import { TouchableHighlight } from "react-native-gesture-handler";
+import { useTheme } from "@react-navigation/native";
+
 // check("username")
 // .isLength({ min: 3 })
 // .withMessage("Username must be at least 3 characters long."),
@@ -27,6 +29,9 @@ const UsernameSchema = Yup.object().shape({
 const RegisterUsername = ({ navigation }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [username, setUsername] = useState();
+
+  const theme = useTheme(); // Get the currently active theme
+
   const { mutate: userNamechecker } = useMutation({
     mutationFn: checkUsername,
     onSuccess: (data) => {
@@ -64,21 +69,31 @@ const RegisterUsername = ({ navigation }) => {
       }) => (
         <View className="flex-1 items-center ">
           <View className=" mt-24 mb-4 w-4/5">
-            <Text className=" text-xl text-white text-center font-bold mb-4">
-              Pick username
+            <Text
+              style={{ color: theme.colors.text }}
+              className=" text-xl  text-center font-bold mb-4"
+            >
+              Pick Username
             </Text>
-            <Text className=" text-[#ffffffec]  text-center mb-2">
+            <Text
+              style={{ color: theme.colors.text }}
+              className="  text-center mb-2"
+            >
               Choose a username for your new account. You can always change it
               later.
             </Text>
           </View>
           <TextInput
+            style={{
+              backgroundColor: theme.colors.inputBackground,
+              color: theme.colors.text,
+            }}
             className="w-4/5 h-12 mb-2 py-2 px-4 border-s border-gray-300 rounded-xl bg-[#1c1c1c] text-white "
             placeholder="Username"
             onBlur={handleBlur("username")}
             onChangeText={handleChange("username")}
             value={values.username}
-            placeholderTextColor="#ffffffec"
+            placeholderTextColor={theme.colors.inputPlaceholder}
           />
           {errors.username && touched.username && (
             <Text style={{ color: "red" }}>{errors.username}</Text>
@@ -91,13 +106,14 @@ const RegisterUsername = ({ navigation }) => {
               <View className=" flex-row flex-wrap mb-2">
                 {suggestions.map((suggestion, index) => (
                   <TouchableHighlight
+                    style={{ backgroundColor: theme.colors.inputBackground }}
                     className=" m-1 bg-[#1c1c1c] h-8 rounded justify-center items-center p-2"
                     onPress={() => {
                       setFieldValue("username", suggestion);
                       setUsername(suggestion);
                     }}
                   >
-                    <Text className="text-white " key={index}>
+                    <Text style={{ color: theme.colors.text }} key={index}>
                       {suggestion}
                     </Text>
                   </TouchableHighlight>

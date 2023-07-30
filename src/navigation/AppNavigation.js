@@ -31,10 +31,11 @@ export default function AppNavigation() {
           position: "absolute",
           alignContent: "center",
           justifyContent: "center",
-          elevation: 0,
+          elevation: 5,
           backgroundColor: "#121212",
           borderRadius: 15,
           height: 80,
+          bottom: -4,
           // ...styles.shadow,
         },
       }}
