@@ -31,9 +31,12 @@ const TripSchema = Yup.object().shape({
 export default function AddTrip({ navigation }) {
   const [backendError, setBackendError] = useState(null);
   const theme = useTheme(); // Get the currently active theme
-  const inputBackgroundStyle = {
-    backgroundColor: theme.colors.inputBackground,
-  };
+
+  function extractHashtags(text) {
+    const regex = /#\w+/g;
+    const matches = text.match(regex);
+    return matches || [];
+  }
 
   const queryClient = useQueryClient(); // Import and use query client here
 
@@ -53,8 +56,9 @@ export default function AddTrip({ navigation }) {
     <Formik
       initialValues={{ title: "", description: "", image: "" }}
       validationSchema={TripSchema}
-      onSubmit={(values, { resetForm }) => {
-        addTripFunction(values);
+      onSubmit={async (values, { resetForm }) => {
+        const hashtagsList = await extractHashtags(values.description);
+        addTripFunction({ ...values, hashtags: hashtagsList });
         resetForm();
       }}
     >

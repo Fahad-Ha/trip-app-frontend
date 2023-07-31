@@ -13,6 +13,7 @@ import OtherFollowers from "../screens/Auth/Profile/OtherFollowers";
 import AppNavigation from "./AppNavigation";
 import LikedTrips from "../screens/Auth/Profile/LikedTrips";
 import SavedTrips from "../screens/Auth/Profile/SavedTrips";
+import HashtagTrips from "../screens/HashtagTrips";
 
 const Stack = createStackNavigator();
 const BlankHeader = () => (
@@ -66,6 +67,11 @@ export default function ProfileStack() {
       <Stack.Screen
         name={ROUTES.APPROUTES.PROFILE_LIKED_TRIPS}
         component={LikedTrips}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={ROUTES.APPROUTES.HASHTAG_PROFILE}
+        component={HashtagTrips}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

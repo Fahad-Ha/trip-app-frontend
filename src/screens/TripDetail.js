@@ -182,6 +182,57 @@ const TripDetail = ({ route, navigation }) => {
     };
   }, []);
 
+  function extractHashtags(text) {
+    if (typeof text !== "string") {
+      console.error("Invalid argument: text must be a string");
+      return [];
+    }
+
+    const regex = /#\w+/g;
+    return text.match(regex) || [];
+  }
+
+  function removeHashtags(text) {
+    if (typeof text !== "string") {
+      console.error("Invalid argument: text must be a string");
+      return "";
+    }
+
+    const regex = /#\w+/g;
+    const newText = text.replace(regex, "");
+    return newText.trim();
+  }
+
+  function generateHashtagComponents(hashtags) {
+    return hashtags?.map((hashtag, index) => (
+      <Pressable
+        key={index}
+        onPress={() =>  routeName.name == ROUTES.APPROUTES.TRIP_DETAIL
+          ? navigation.push(
+              ROUTES.APPROUTES.HASHTAG_EXPLORE,
+
+              {
+                hashtag
+              },
+              { key: trip?._id }
+            )
+          : navigation.push(
+              ROUTES.APPROUTES.HASHTAG_PROFILE,
+
+              {
+                hashtag
+              },
+              { key: trip?._id }
+            )}
+      >
+        <Text style={{ color: "blue" }}>{hashtag} </Text>
+      </Pressable>
+    ));
+  }
+  const hashtags = extractHashtags(trip?.description);
+  const newText = removeHashtags(trip?.description);
+  const hashtagComponents = generateHashtagComponents(hashtags);
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -376,7 +427,10 @@ const TripDetail = ({ route, navigation }) => {
         </View>
         <View style={styles.details}>
           <Text style={styles.title}>{trip?.title}</Text>
-          <Text style={styles.description}>{trip?.description}</Text>
+          <Text style={styles.description}>{newText}</Text>
+          <View className="flex-row flex-wrap">
+            {hashtagComponents && hashtagComponents}
+          </View>
           <View style={styles.likeContainer}></View>
         </View>
       </View>

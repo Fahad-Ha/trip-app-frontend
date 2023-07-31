@@ -5,6 +5,7 @@ import TripDetail from "../screens/TripDetail";
 import OtherUserProfile from "../screens/Auth/Profile/OtherUserProfile";
 import OtherFollowers from "../screens/Auth/Profile/OtherFollowers";
 import OtherFollowings from "../screens/Auth/Profile/OtherFollowings";
+import HashtagTrips from "../screens/HashtagTrips";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,11 @@ export default function ExploreStack() {
       <Stack.Screen
         name={ROUTES.APPROUTES.OTHERFOLLOWINGS_EXPLORE}
         component={OtherFollowings}
+        options={{ headerShown: false }}
+      />
+       <Stack.Screen
+        name={ROUTES.APPROUTES.HASHTAG_EXPLORE}
+        component={HashtagTrips}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

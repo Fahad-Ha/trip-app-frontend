@@ -58,21 +58,21 @@ const UserProfile = ({
       setUserInfo(false);
     }
   };
-  useEffect(() => {
-    profile(); // Set up the Socket.IO client
-    const socket = socketIOClient(BASE_URL);
+  // useEffect(() => {
+  //   profile(); // Set up the Socket.IO client
+  //   const socket = socketIOClient(BASE_URL);
 
-    // Listen for 'notification' events from the server
-    socket.on("notification", (data) => {
-      console.log("Notification received:", data);
-      // Handle the notification (e.g., show a toast or display a notification)
-    });
+  //   // Listen for 'notification' events from the server
+  //   socket.on("notification", (data) => {
+  //     console.log("Notification received:", data);
+  //     // Handle the notification (e.g., show a toast or display a notification)
+  //   });
 
-    // Clean up the Socket.IO client when the component unmounts
-    return () => {
-      socket.disconnect();
-    };
-  }, [profileData]);
+  //   // Clean up the Socket.IO client when the component unmounts
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, [profileData]);
 
   const sortedList = profileData?.trips?.sort(function (a, b) {
     return new Date(b.createdAt) - new Date(a.createdAt);
@@ -129,11 +129,11 @@ const UserProfile = ({
     setIsFollowed((prevIsFollowed) => !prevIsFollowed);
     followFunc();
     // Emit a 'follow' event to the server with the followerUserId and followedUserId
-    const socket = socketIOClient(BASE_URL);
-    socket.emit("follow", {
-      followerUserId: userProfile?._id,
-      followedUserId: profileData?._id,
-    });
+    // const socket = socketIOClient(BASE_URL);
+    // socket.emit("follow", {
+    //   followerUserId: userProfile?._id,
+    //   followedUserId: profileData?._id,
+    // });
   };
   // if (isFetching)
   //   return (
