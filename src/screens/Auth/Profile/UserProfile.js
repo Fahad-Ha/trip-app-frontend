@@ -58,21 +58,9 @@ const UserProfile = ({
       setUserInfo(false);
     }
   };
-  // useEffect(() => {
-  //   profile(); // Set up the Socket.IO client
-  //   const socket = socketIOClient(BASE_URL);
-
-  //   // Listen for 'notification' events from the server
-  //   socket.on("notification", (data) => {
-  //     console.log("Notification received:", data);
-  //     // Handle the notification (e.g., show a toast or display a notification)
-  //   });
-
-  //   // Clean up the Socket.IO client when the component unmounts
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, [profileData]);
+  useEffect(() => {
+    profile(); // Set up the Socket.IO client
+  }, [profileData]);
 
   const sortedList = profileData?.trips?.sort(function (a, b) {
     return new Date(b.createdAt) - new Date(a.createdAt);
