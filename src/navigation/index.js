@@ -20,6 +20,9 @@ const ROUTES = {
     OTHERFOLLOWINGS: "other-Followings",
     OTHERFOLLOWERS_EXPLORE: "Explore-Followers",
     OTHERFOLLOWINGS_EXPLORE: "Explore-Followings",
+
+    HASHTAG_EXPLORE: "hashtag-explore",
+    HASHTAG_PROFILE: "hashtag-profile",
   },
   AUTHROUTES: {
     LOGIN: "Login",
