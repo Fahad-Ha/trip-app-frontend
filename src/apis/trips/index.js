@@ -1,8 +1,13 @@
 import instance from "..";
 
 // test it
-const getAllTrips = async () => {
-  const res = await instance.get("/trips/gettrips");
+const getAllTrips = async (page = 1) => {
+  console.log("Fetching page:", page);
+  const res = await instance.get("/trips/gettrips", {
+    params: {
+      page: page,
+    },
+  });
   return res.data;
 };
 

@@ -65,7 +65,7 @@ export default function MyExplorePage({ navigation }) {
         <ActivityIndicator size="large" color="#1C535A" />
       </View>
     );
-  const sortedList = shuffle(data?.length && data);
+  const sortedList = data && shuffle(data?.length && data);
 
   const tripList = sortedList?.map((oneTrip) => {
     return (
@@ -133,3 +133,109 @@ export default function MyExplorePage({ navigation }) {
     </View>
   );
 }
+
+/////////////////////
+// import React, { useEffect, useState } from "react";
+// import {
+//   View,
+//   Text,
+//   RefreshControl,
+//   Image,
+//   TouchableOpacity,
+//   ActivityIndicator,
+//   FlatList,
+// } from "react-native";
+// import Constants from "expo-constants";
+// import { useInfiniteQuery } from "@tanstack/react-query";
+
+// import { BASE_URL } from "../apis";
+// import ROUTES from "../navigation";
+// import { getToken } from "../apis/storage";
+// import jwt_decode from "jwt-decode";
+// import { useTheme } from "@react-navigation/native";
+// import { getAllTrips } from "../apis/trips";
+
+// export default function MyExplorePage({ navigation }) {
+//   const [userProfile, setUserProfile] = useState(null);
+//   const theme = useTheme();
+//   const {
+//     data,
+//     error,
+//     fetchNextPage,
+//     hasNextPage,
+//     isFetchingNextPage,
+//     status,
+//   } = useInfiniteQuery({
+//     queryKey: "trips",
+//     queryFn: ({ pageParam = 1 }) => getAllTrips(pageParam),
+//     getNextPageParam: (lastPage) => lastPage.nextPage,
+//   });
+
+//   useEffect(() => {
+//     (async () => {
+//       const token = await getToken();
+//       if (token) {
+//         try {
+//           const decoded = jwt_decode(token);
+//           setUserProfile(decoded);
+//         } catch (error) {
+//           setUserInfo(false);
+//         }
+//       } else {
+//         setUserInfo(false);
+//       }
+//     })();
+//   }, []);
+
+//   const handleLoadMore = () => {
+//     if (hasNextPage) {
+//       fetchNextPage();
+//     }
+//   };
+
+//   if (status === "loading")
+//     return (
+//       <View className="flex-1 justify-center items-center top-[-5%]">
+//         <ActivityIndicator size="large" color="#1C535A" />
+//       </View>
+//     );
+
+//   if (status === "error") return <Text>No connection..</Text>;
+// console.log(data?.pages.flatMap((pageData) => pageData.trips))
+//   return (
+//     <View
+//       style={{
+//         flex: 0.94,
+//       }}
+//     >
+//       <View className=" mb-24 items-center h-full">
+//         <FlatList
+//           data={data?.pages.flatMap((pageData) => pageData.trips)}
+//           keyExtractor={(item) => item._id}
+//           onEndReached={handleLoadMore}
+//           onEndReachedThreshold={0.1}
+//           renderItem={({ item }) => (
+//             <TouchableOpacity
+//               key={item._id}
+//               className="w-[33%] h-60 mt-[-1.5%]"
+//               onPress={() =>
+//                 navigation.navigate(ROUTES.APPROUTES.TRIP_DETAIL, {
+//                   oneTrip: item,
+//                   userProfile,
+//                 })
+//               }
+//             >
+//               <Image
+//                 className="w-full h-full"
+//                 source={{
+//                   uri: `${BASE_URL}/${item.image}`,
+//                 }}
+//               />
+//             </TouchableOpacity>
+//           )}
+//         />
+//       </View>
+//       {isFetchingNextPage && <ActivityIndicator size="large" color="#1C535A" />}
+//     </View>
+//   );
+// }
